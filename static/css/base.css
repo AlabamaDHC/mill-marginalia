@@ -1,0 +1,95 @@
+html {
+    background-color: #f8f8f8;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.primary-color { color: #39383a; }
+
+.primary-color-background { background-color: #39383a; }
+
+.secondary-color { color: #f8f8f8; }
+
+.secondary-color-background { background-color: #f8f8f8; }
+
+.accent-color-background { background-color: #26a69a; }
+
+.accent-color { color: #26a69a; }
+
+.btn:hover, .btn-large:hover {
+	color: #f8f8f8;
+	background-color: #39383a;
+}
+
+#logo {
+	/*margin-top: 10px;*/
+	/*height: 40px;*/
+}
+
+.icon-header {
+	margin-top: 0px;
+}
+
+.icon {
+	margin-bottom: 0px;
+}
+
+.parallax-container {
+	min-height: 380px;
+	line-height: 0;
+	height: auto;
+ 	color: rgba(255,255,255,.9);
+}
+
+.parallax-container .section {
+	width: 100%;
+}
+
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+	padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+footer.page-footer {
+	margin: 0;
+}
+
+#parallax-img-1 {
+	transform: translate3d(-50%, 90px, 0px) !important;
+    filter: blur(0px) brightness(65%);
+}
+
+nav ul a.active {
+    background-color: rgba(0, 0, 0, 0.34);
+}
+
+blockquote {
+    border-left-color: #26a69a;
+}
