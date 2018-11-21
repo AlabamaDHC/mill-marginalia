@@ -1,3 +1,5 @@
+#file used for setup on ADHC server
+
 #!/usr/bin/python
 #PROJECT_DIR = '/srv/www/adhc/apps/testapp2/'
 

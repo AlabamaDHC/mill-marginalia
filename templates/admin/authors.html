@@ -1,0 +1,222 @@
+{% set active_page = 'authors' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    .card .card-content {
+        padding: 16px;
+
+    }
+
+    .card-header {
+        margin-top: 0px;
+
+    }
+
+    .card-image {
+        width: 260px;
+
+    }
+
+    .card-image img {
+        height: auto;
+    }
+
+    ul.paginate-links {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pagination li.active {
+        background-color: #26a69a;
+    }
+
+    .pagination li a {
+        font-size: 1.5rem;
+    }
+
+    .spinner-layer {
+        border-color: #26a69a;
+    }
+
+    #loading-container {
+        margin-top: 1rem;
+    }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Authors</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div id="app" class="section">
+
+        <div id="loading-container" v-if="loading" class="col s12 m7 center-align">
+            <div v-if="loading" class="preloader-wrapper big active">
+                <div class="spinner-layer">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="!loading" class="section">
+            <paginate name="authors" :list="authors" :per="25">
+            <template v-for="item in paginated('authors')">
+                <div class="col s12 m7">
+                    <div class="card horizontal">
+                        <div class="card-image">
+                            <img class="circle responsive-img" v-bind:src="'/static/assets/authors/'+item.image" v-bind:alt="item.first_name+' '+item.last_name+' painting/portrait'">
+                            <div class="image-source">[[ item.image_caption ]]</div>
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <h4 v-if="item.first_name" class="card-header">[[ item.last_name ]], [[ item.first_name ]]</h4>
+                                <h4 v-else class="card-header">[[ item.last_name ]]</h4>
+                                <a v-bind:href="'/authors/edit/'+item.id"class="waves-effect waves-light btn">Edit</a>
+                                 <template v-for="book in item.books">
+                                     <ul v-if="book.number_of_volumes && book.volumes[0].volume_number == 1" class="collapsible">
+                                         <li style="margin-left: 0px; margin-right: 0px;">
+                                            <div class="collapsible-header">
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+                                                    <div class="col s12 m11 l11">
+                                                        <h5>[[ book.volumes[0].title ]]</h5>
+                                                        <h6 v-if="book.volumes[0].subtitle && book.volumes[0].edition">[[ book.volumes[0].subtitle ]] [[ book.volumes[0].edition ]] Ed ([[ book.number_of_volumes ]] Vols)</h6>
+                                                        <h6 v-else-if="book.volumes[0].subtitle">[[ book.volumes[0].subtitle ]] ([[ book.number_of_volumes ]] Vols)</h6>
+                                                        <h6 v-else-if="book.volumes[0].edition">[[ book.volumes[0].edition ]] Ed ([[ book.number_of_volumes ]] Vols)</h6>
+                                                        <h6 v-else>([[ book.number_of_volumes ]] Vols)</h6>
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            <a v-bind:href="'/library/multivol/'+book.slug_set" class="btn-floating btn-large waves-effect waves-light primary-color-background right">
+                                                                <i class="material-icons" style="width: 56px;">arrow_forward[[book.books]]</i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                     </ul>
+                                 </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </paginate>
+            <div class="center-align">
+                <paginate-links for="authors" :classes="{'ul': 'pagination', 'li': 'waves-effect'}" :show-step-links="true" :step-links="{ next: '>', prev: '<' }"/>
+            </div>
+        </div>
+
+        <div class="col s12 m7">
+            <div class="card horizontal">
+                <div class="card-stacked">
+                    <div class="card-content">
+
+
+                        <template>
+                            <h5>Author</h5>
+                            <form class="col s12" action="#">
+
+                                <label class="active" for="first_name">First Name</label>
+                                <input v-bind:value="authors[0].first_name" id="first_name" type="text" class="validate">
+
+
+                                <label class="active" for="last_name">Last Name</label>
+                                <input v-bind:value="authors[0].last_name" id="last_name" type="text" class="validate">
+
+
+                                <label class="active" for="last_name">Image name including extension (Image must already be in server directory. No upload through admin interface.) Placeholder Image: placeholder.png</label>
+                                <input v-bind:value="authors[0].image" id="last_name" type="text" class="validate">
+
+
+                                <label class="active" for="last_name">Image Caption</label>
+                                <input v-bind:value="authors[0].image_caption" id="last_name" type="text" class="validate">
+
+                                <input type="checkbox" class="filled-in" checked="checked" />
+                                <span>Public</span>
+
+                                <p>
+                                    <label>
+                                        <input type="checkbox" class="filled-in" checked="checked" />
+                                        <span>Filled in</span>
+                                    </label>
+                                </p>
+
+
+                            </form>
+
+                            <br>
+                            <p>[[ authors[0] ]]</p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+        $('.modal').modal();
+        M.updateTextFields();
+    });
+})(jQuery);
+</script>
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        authors: [],
+        paginate: ['authors'],
+        loading: true
+    },
+    created: function () {
+            axios.get('{{request.url_root}}{{api_route}}')
+                .then(function (response) {
+                    console.log(response.data);
+                    app.authors = response.data.data.sort(function (a, b) {
+                        return a.last_name.localeCompare(b.last_name);
+                    });
+                    app.loading = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    delimiters: ['[[',']]'],
+    mounted: function () {
+        M.updateTextFields();
+
+    }
+})
+</script>
+</body>
+</html>

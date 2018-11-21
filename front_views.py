@@ -45,7 +45,7 @@ def show_metadata(slugs):
 @app.route('/authors')
 def show_authors():
     authors = Author.query.filter_by(public=True).order_by(Author.last_name)
-    return render_template('front/authors.html', authors=authors)
+    return render_template('front/authors.html', authors=authors, api_route='api/authors')
 
 
 @app.route('/volumes')
@@ -276,6 +276,8 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Word Map', image='word map', subtypes=''))   #no image?
 
     return render_template('front/static/marginalia-examples.html', examples=examples)
+
+
 
 @app.route('/OLD/library/multivol/<spine_slug>')
 def show_book_multi_vol_OLD(spine_slug):

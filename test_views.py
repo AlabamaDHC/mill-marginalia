@@ -1,19 +1,68 @@
+from copy import deepcopy
+
 import flask
 from flask import render_template
 from flask_security import login_required
+from flask_sqlalchemy import model
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, make_transient
 
 from app import app, db
-# from models import Book, Page, Marginalia, Author
 
 from models.author import Author
 from models.book import Book
 from models.page import Page
 from models.marginalia import Marginalia
-from models.import_models import ImportItem
-
-from pathlib import Path
 
 import os.path
+
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Boolean
+
+
+
+# There is probably a better, less crude way to do this but it was done in a hurry and it seems to work.
+# I was using this to copy data from the Staging to Production only. If you want to copy from Testing to production
+# I suggest doing a sql dump or using something like DataGrip
+@app.route('/copy_db')
+def copy_db():
+    # src_engine = app.config['SQLALCHEMY_DATABASE_URI']
+    # dest_engine = app.config['SQLALCHEMY_BINDS']['TEST_STAGING']
+
+    src_engine = create_engine('mysql+pymysql://root@localhost/mill')
+    dest_engine = create_engine('mysql+pymysql://root@localhost/mill_staging?charset=utf8')
+
+    metadata = MetaData(bind=dest_engine)
+
+    # Drop and create new tables. This will delete all data in destination database!
+    tables = ['marginalia', 'page', 'book', 'author', 'user']
+    for t in tables:
+        table = Table(t, metadata, autoload=True, autoload_with=src_engine)
+
+        try:
+            table.drop(dest_engine)
+        except:
+            print("Table {} already doesn't exists", t)
+
+
+    for t in reversed(tables):
+        table = Table(t, metadata, autoload=True, autoload_with=src_engine)
+        table.create(dest_engine)
+
+
+    Session = sessionmaker()
+    dest_session = Session(bind=dest_engine)
+    # src_session = Session(bind=dest_engine)
+
+    #copy all data to new tables in destination database
+    objects = [Author, Book, Page, Marginalia]
+    for obj in objects:
+        query = db.session.query(obj).all()
+        for item in query:
+            make_transient(item)
+            # item._oid = None          not needed?
+            dest_session.add(item)
+        dest_session.commit()
+    return 'Done'
 
 
 

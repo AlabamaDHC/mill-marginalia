@@ -48,8 +48,39 @@ def api_metadata(slugs):
     return render_template('front/metadata.html', metadata=query)
 
 
-@app.route('/api/book/<book_id>')
-def api_book(book_id):
+
+@app.route('/api/volumes/<book_id>')
+def api_select_volume(book_id):
+    # book = Book.query.filter_by(slug=book_slug).first_or_404()
+    volume = Book.query.filter_by(id=book_id).first_or_404()
+
+    volume_json = {
+        'title': volume.title,
+        'subtitle': volume.subtitle,
+        'author': {
+            'first_name': volume.author_first_name,
+            'last_name': volume.author_last_name,
+            'id': volume.author.id,
+            'url': '/api/authors/' + volume.author.id
+        },
+        'edition': volume.edition,
+        'number_of_volumes': volume.number_of_volumes,
+        'publisher': volume.publisher,
+        'place_of_pub': volume.place_of_pub,
+        'year_of_pub': volume.year_of_pub,
+        'full_text_edition_link': volume.full_text_edition_link,
+        'period_translation_link': volume.period_translation_link,
+        'critical_intro': volume.critical_intro,
+        'slug_set': volume.slug,
+        'volumes': []
+    }
+
+
+    return jsonify(p_list)
+
+
+@app.route('/api/volumes/<book_id>/pages')
+def api_book_pages(book_id):
     # book = Book.query.filter_by(slug=book_slug).first_or_404()
     book = Book.query.filter_by(id=book_id).first_or_404()
     p_list = list()
@@ -119,6 +150,73 @@ def api_authors():
                 'first_name': a.first_name,
                 'last_name': a.last_name,
                 'image': a.image,
+                'books': books,
+                'id': a.id,
+            }
+        )
+
+    response = {'meta': meta, 'data': author_json}
+    return jsonify(response)
+
+
+@app.route('/api/authors/<author_id>')
+def api_single_author(author_id):
+
+    query = Author.query.filter_by(id=author_id, public=True)
+    # query = Author.query.filter_by(public=True).order_by(Author.last_name)
+
+    meta = {
+        # 'limit': int_limit,
+        # 'offset': int_offset,
+        'total': Author.query.count()
+    }
+
+    author_json = []
+    for a in query:
+
+        books = dict()
+
+        for b in a.books:
+            if b.spine_image[:-4] in books:
+                books[b.spine_image[:-4]]['volumes'].append(
+                    {
+                        'title': b.title,
+                        'subtitle': b.subtitle,
+                        'edition': b.edition,
+                        'volume_number': b.volume_number,
+                        'part_of_book': b.part_of_book,
+                        'url': url_for('show_book', book_slug=b.slug),
+                        'id': b.id,
+                        'spine': b.spine_image,
+                    }
+
+                )
+                books[b.spine_image[:-4]]['slug_set'] = books[b.spine_image[:-4]]['slug_set']+'+'+b.slug
+
+            else:
+                books[b.spine_image[:-4]] = {
+                        'spine': b.spine_image,
+                        'number_of_volumes': b.number_of_volumes,
+                        'slug_set': b.slug,
+                        'volumes': [
+                            {
+                                'title': b.title,
+                                'subtitle': b.subtitle,
+                                'edition': b.edition,
+                                'volume_number': b.volume_number,
+                                'part_of_book': b.part_of_book,
+                                'url': url_for('show_book', book_slug=b.slug),
+                                'id': b.id,
+                            }
+                        ]
+                    }
+
+        author_json.append(
+            {
+                'first_name': a.first_name,
+                'last_name': a.last_name,
+                'image': a.image,
+                'image_caption': a.image_caption,
                 'books': books,
                 'id': a.id,
             }
@@ -312,4 +410,7 @@ def api_volumes():
 
     response = {'meta': meta, 'data': books_list}
     return jsonify(response)
+
+
+
 

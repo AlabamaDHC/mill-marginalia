@@ -84,13 +84,14 @@
                 <div class="col s12 m7">
                     <div class="card horizontal">
                         <div class="card-image">
-                            <img class="circle responsive-img" v-bind:src="'static/assets/authors/'+item.image" v-bind:alt="item.first_name+' '+item.last_name+' painting/portrait'">
+                            <img class="circle responsive-img" v-bind:src="'/static/assets/authors/'+item.image" v-bind:alt="item.first_name+' '+item.last_name+' painting/portrait'">
                             <div class="image-source">[[ item.image_caption ]]</div>
                         </div>
                         <div class="card-stacked">
                             <div class="card-content">
                                 <h4 v-if="item.first_name" class="card-header">[[ item.last_name ]], [[ item.first_name ]]</h4>
                                 <h4 v-else class="card-header">[[ item.last_name ]]</h4>
+                                {% if edit %}<a v-bind:href="'/authors/edit/'+item.id"class="waves-effect waves-light btn">Edit</a>{% endif %}
                                  <template v-for="book in item.books">
                                      <ul v-if="book.number_of_volumes && book.volumes[0].volume_number == 1" class="collapsible">
                                          <li style="margin-left: 0px; margin-right: 0px;">
@@ -111,6 +112,7 @@
                                                             </a>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </li>
@@ -137,6 +139,7 @@
         $('.button-collapse').sideNav({ edge: 'right'});
         $('.parallax').parallax();
         $('.collapsible').collapsible();
+        $('.modal').modal();
     });
 })(jQuery);
 </script>
@@ -149,9 +152,9 @@ var app = new Vue({
         loading: true
     },
     created: function () {
-            axios.get('{{request.url_root}}api/authors')
+            axios.get('{{request.url_root}}{{api_route}}')
                 .then(function (response) {
-                    {#console.log(response.data);#}
+                    console.log(response.data);
                     app.authors = response.data.data.sort(function (a, b) {
                         return a.last_name.localeCompare(b.last_name);
                     });
