@@ -1,0 +1,162 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/0.10.0/viewer.min.css" />
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    span.badge.new {
+        font-weight: bold;
+    }
+
+    .thumbnail {
+        max-height: 50vh;
+        max-width: 100%;
+        width: auto;
+
+    }
+
+    .materialboxed.active {
+        max-width: inherit;
+
+    }
+
+    img.high-contrast {
+            -webkit-filter: contrast(200%);
+            filter: contrast(200%);
+        }
+
+    {#ul li {#}
+    {#    opacity: 0;#}
+    {#}#}
+    {##}
+    {#.nav-wrapper > ul li {#}
+    {#    opacity: 0;#}
+    {#}#}
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Marginalia Types</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+
+    <div class="section">
+
+        <p class="center"><b>Select a marginalia type to see an example of that type:</b></p>
+
+        <div class="row">
+            <div class="col s12 m4 l4">
+                <ul class="collapsible popout" data-collapsible="accordion" id="list-1">
+                    {% for ex in examples[:14] %}
+                        <li>
+                            <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
+                            <div class="collapsible-body">
+                                <img src="{{ url_for('static', filename='assets/examples/'+ex.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" alt="{{ ex.name }} marginalia example"/>
+                                {% if ex.subtypes %}
+                                    <ul class="collapsible popout" data-collapsible="accordion">
+                                        {% for sub in ex.subtypes %}
+                                            <li>
+                                                <div class="collapsible-header">{{ sub.name }}</div>
+                                                <div class="collapsible-body">
+                                                    <img src="{{ url_for('static', filename='assets/examples/'+sub.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" width="100%" alt="{{ sub.name }} marginalia example">
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+            <div class="col s12 m4 l4">
+                <ul class="collapsible popout" data-collapsible="accordion">
+                    {% for ex in examples[14:28] %}
+                        <li>
+                            <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
+                            <div class="collapsible-body">
+                                <img src="{{ url_for('static', filename='assets/examples/'+ex.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" alt="{{ ex.name }} marginalia example">
+                                {% if ex.subtypes %}
+                                    <ul class="collapsible popout" data-collapsible="accordion">
+                                        {% for sub in ex.subtypes %}
+                                            <li>
+                                                <div class="collapsible-header">{{ sub.name }}</div>
+                                                <div class="collapsible-body">
+                                                    <img src="{{ url_for('static', filename='assets/examples/'+sub.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" alt="{{ sub.name }} marginalia example">
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+            <div class="col s12 m4 l4">
+                <ul class="collapsible popout" data-collapsible="accordion">
+                    {% for ex in examples[28:] %}
+                        <li>
+                            <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
+                            <div class="collapsible-body">
+                                <img src="{{ url_for('static', filename='assets/examples/'+ex.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" alt="{{ ex.name }} marginalia example">
+                                {% if ex.subtypes %}
+                                    <ul class="collapsible popout" data-collapsible="accordion">
+                                        {% for sub in ex.subtypes %}
+                                            <li>
+                                                <div class="collapsible-header">{{ sub.name }}</div>
+                                                <div class="collapsible-body">
+                                                    <img src="{{ url_for('static', filename='assets/examples/'+sub.image+'.jpg') }}" class="materialboxed thumbnail high-contrast" alt="{{ sub.name }} marginalia example">
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/0.10.0/viewer.min.js"></script>
+
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+        $('.materialboxed').materialbox();
+
+        {#Materialize.showStaggeredList('.nav-wrapper > ul');#}
+    });
+})(jQuery);
+</script>
+</body>
+</html>

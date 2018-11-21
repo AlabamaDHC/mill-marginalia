@@ -1,0 +1,77 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Why the Mills & their Marginalia</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>Victorian Britain’s leading philosophical empiricist and liberal theorist—and, perhaps the dominant figure in
+            Victorian intellectual life from the 1860s through the 1880s—John Stuart Mill authored significant works on
+            logic, epistemology, political economy, aesthetics, and social reform.  In addition, as the de facto editor
+            of the <i>London and Westminster Review</i> for nearly four years (1836-1840) and a frequent contributor to the
+            <i>Westminster Review</i>, <i>Fraser’s Magazine</i>, the <i>Edinburgh Review</i>, <i>Tait’s Edinburgh Magazine</i>, and other periodicals,
+            Mill was a prolific author of articles, editorials, and review essays.  Well known to his contemporaries and
+            central to cultural and social historians of the period, his published writing remains a relevant and frequently
+            cited authority for contemporary university students, philosophers, political theorists, and even elected officials.</p>
+
+        <p>John Stuart Mill’s father, James Mill, remains less widely appreciated than his son, and yet was a major intellectual
+            force from the 1810s into the 1830s.  Working with and helping to popularize the theories of Jeremy Bentham,
+            James Mill co-founded the philosophical movement known as Utilitarianism.  At the same time, cooperating with
+            David Ricardo, he helped to establish the principles of classical economics, while his <i>History of British India</i>
+            (1818) not only secured him, and subsequently his son, highly remunerative employment at India House, but also
+            set the tone for British relations with the subcontinent for decades to come.  Finally, James Mill’s experimental
+            program of at-home education had a lasting effect on his eldest son, John Stuart, who discusses his childhood
+            course of reading, subsequent mental breakdown, and ultimate intellectual indebtedness to his father at length
+            in his <i>Autobiography</i> (1873).</p>
+
+        <p>This posthumous publication anchors the first volume of the University of Toronto Press edition of the <i>Collected
+            Works</i> of John Stuart Mill, begun in the 1960s and completed in the 1990s under the editorial direction of J. M.
+            Robson.  Robson and his numerous collaborators were meticulous in tracing textual variants, and many individual
+            volumes contain references to annotations made in early copies in the “SC,” shorthand for Somerville’s John
+            Stuart Mill Library Collection.  In fact, the marks and annotations in the SC extend far beyond copyediting
+            corrections.  Both John Stuart and James Mill were vociferous readers who frequently recorded their own immediate
+            and more considered reactions to what they read in marginal marks and annotations, as well as more fulsome commentary
+            at the conclusions of chapters and on volume endpapers.</p>
+
+        <p>A small number of scholarly studies concerning John Stuart Mill’s annotations, all published prior to the beginning
+            of this project, hint at the marginalia’s potential to enhance our understanding of both Mills’ evolving thought
+            and engagement with both previous and contemporary writers.  Edward Alexander’s “Mill's Marginal Notes on Carlyle's
+            ‘Hudson's Statue’” in <i>English Language Notes</i> 7 (1969) first brought to light Mill’s unvarnished reactions to
+            Thomas Carlyle’s mid-century diatribe against the memorialization of greed.  Mill’s annotations reveal his
+            intellectual rift with his former close friend even as they confirm his skepticism about the judgment of Britain’s
+            commercial class.  In “The J.S. Mill Marginalia in Robert Browning's Pauline: A History and Transcription,”
+            from <i>Papers of the Bibliographical Society of America</i> 66 (1972), William Peterson and Fred Stanley assert Mill’s
+            profound effect on then-fledgling poet Robert Browning’s subsequent career on the basis of their shared annotations
+            in Browning’s Pauline.  More recently, Frank Prochaska’s “Mill and Emerson: Sense and Nonsense” in <i>History Today</i>
+            63 (2013) established, on the basis of hand-annotated volumes of Emerson’s <i>Essays</i>, a previously unknown transatlantic
+            connection between the two authors, thereby inviting a revision to existing scholarship and revealing an acerbically
+            humorous Mill quite at odds with his disinterested published persona.</p>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

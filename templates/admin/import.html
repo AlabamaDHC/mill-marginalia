@@ -1,0 +1,149 @@
+{% extends "admin/admin-template.html" %}
+{% set active_page = 'import' %}
+
+{% block head %}
+<!-- Select2 css-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2.min.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2-bootstrap.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/pmd-select2.css') }}"/>
+{% endblock %}
+
+<style>
+
+    .section-subtitle {
+
+
+    }
+</style>
+
+{% block content %}
+    <div class="container-fluid full-width-container">
+
+        <section class="row" class="section-title">
+            <div class="col-md-9">
+                <h1 class="section-title">
+                    <span>Import</span>
+                </h1>
+                <ol class="breadcrumb text-left">
+                    <li><a href="#">Dashboard</a></li>
+                    <li class="active">Import</li>
+                </ol>
+            </div>
+        </section>
+
+        {% if get_flashed_messages() %}
+            <section class="row" class="section-messages">
+                <div class="col-md-12">
+                    {% for category, message in get_flashed_messages(with_categories=True) %}
+                        <div role="alert" class="alert alert-dismissible {{ category }}">
+                            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                            <b>{{ message | safe}}</b>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+
+        <section class="row" class="section-form" novalidate>
+            <form id="validationForm" action="{{ url_for('admin_import') }}" method="post">
+
+                <div class="col-md-9">
+
+                    <div class="component-box">
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-tabs pmd-tabs-bg">
+                                <div class="pmd-tab-active-bar" style="width: 104px; left: 0px;"></div>
+                                <ul class="nav nav-tabs" role="tablist" style="width: 339.062px;">
+                                    <li role="presentation" class="active"><a href="#fromspreadsheet" aria-controls="fromspreadsheet" role="tab" data-toggle="true" aria-expanded="false">From Spreadsheet</a></li>
+                                    <li role="presentation" class=""><a href="#books" aria-controls="books" role="tab" data-toggle="tab" aria-expanded="false">Books</a></li>
+{#                                    <li role="presentation" class=""><a href="#marginalia" aria-controls="marginalia" role="tab" data-toggle="tab" aria-expanded="false">Marginalia</a></li>#}
+                                </ul>
+                            </div>
+
+                            <div class="pmd-card-body">
+                                <div class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane active" id="fromspreadsheet">
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+
+                                                    <label for="spreadsheet_name" class="control-label">Spreadsheet Name</label>
+                                                    <input name="spreadsheet_name" type="spreadsheet_name" id="spreadsheet_name" class="form-control">
+
+                                                    <label class="control-label">Paste here</label>
+                                                    <textarea name="import_from_spreadsheet" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 450px;"></textarea><span class="pmd-textfield-focused"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="books">
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label class="control-label">Paste here</label>
+                                                    <textarea name="import_books" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 450px;"></textarea><span class="pmd-textfield-focused"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="component-box">
+                        <!--Default tab example -->
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-card-body">
+                                <div class="group-fields clearfix" style="text-align: right">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <button type="submit" class="btn btn-primary pmd-ripple-effect">Run Import</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+            </form>
+        </section>
+
+        <hr>
+
+    </div><!-- tab end -->
+{% endblock %}
+
+{% block scripts %}
+<!-- Select2 js-->
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/select2.full.js') }}"></script>
+
+<!-- Propeller Select2 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+	});
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/pmd-select2.js') }}"></script>
+<script>
+	$(document).ready(function() {
+		var sPath=window.location.pathname;
+		var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+		$(".pmd-sidebar-nav").each(function(){
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").addClass("open");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('.dropdown-menu').css("display", "block");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('a.dropdown-toggle').addClass("active");
+			$(this).find("a[href='"+sPage+"']").addClass("active");
+		});
+	});
+</script>
+<script type="text/javascript">
+$(document).ready( function() {
+	$('.pmd-tabs').pmdTab();
+});
+</script>
+{% endblock %}

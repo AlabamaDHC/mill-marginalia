@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.recordID }}</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/siteStyles.css') }}">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-magnify/0.3.0/css/bootstrap-magnify.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/indiv_record_styles.css') }}">
+</head>
+<body>
+
+
+{% block body %}
+{#    Spines: {{ booksListCount }}#}
+        <ol class="breadcrumb">
+            <li><a href="http://{{ baseURL }}">Home</a></li>
+            {% if volCount > 1 %}
+                <li><a href="http://{{ baseURL }}/library">Library</a></li>
+                <li><a href="http://{{ baseURL }}/library/{{ page.book.spineFileName }}">{{ page.book.title }}</a></li>
+                <li class="active">Vol {{ page.book.volNum }}</li>
+            {% else %}
+                <li class="active"><a href="http://{{ baseURL }}/library">Library</a></li>
+                <li class="active">{{ page.book.title }}</li>
+            {% endif %}
+
+
+        </ol>
+
+        <div id="bookHeader">
+            <h4>{{ page.book.title }}{% if page.book.subTitle %}Ed {{ page.book.subTitle }}{% endif %}, {{ page.book.authorFirstName }} {{ page.book.authorLastName }}, {{ page.book.yearOfPub }}, {% if page.book.edition %}{{ page.book.edition }} Edition{% endif %}</h4>
+            <h6>
+            {% if page.book.onlineEditionURL %}
+                <a href="{{ page.book.onlineEditionURL }}">Online Edition</a><br>
+            {% endif %}
+
+            {% if page.book.periodTranslationURL %}
+                <a href="{{ page.book.periodTranslationURL }}">Period Translation</a><br>
+            {% endif %}
+            </h6>
+        </div>
+
+        <div class="section group">
+	        <div class="col span_1_of_4" style="padding-left: 15px;">
+
+                    <div id="page-nav-div">
+                    <ul id="page-nav" class="list">
+                        {% for pageNav in bookPagesList %}
+    {#                        <a href="http://{{ baseURL }}/record/{{ pageNav.recordID }}">#}
+                                <li class="list-group-item" {% if pageNav.recordID == page.recordID %} style="background-color: #C4DBE2;" {% endif %}>
+
+                                {% for margType in pageNav.marginaliaTypeList %}
+                                    {% if margType == "text (jsm's hand)" %} <span class="badge" style="background-color: coral;">Text</span>
+                                    {% elif margType == 'text' %} <span class="badge" style="background-color: coral;"> Text </span>
+                                    {% elif margType == 'squiggle' %} <span class="badge" style="background-color: cadetblue;"> squiggle </span>
+                                    {% elif margType == 'underlining' %} <span class="badge" style="background-color: darkred;"> underlining </span>
+                                    {% elif margType == 'strikethrough' %} <span class="badge" style="background-color: blue;"> strikethrough </span>
+                                    {% elif margType == 'score' %} <span class="badge" style="background-color: sienna;"> score </span>
+                                    {% elif margType == 'question mark' %} <span class="badge" style="background-color: teal;"> question mark </span>
+                                    {% elif margType == 'exclamation point' %} <span class="badge" style="background-color: yellowgreen;"> exclamation point </span>
+                                    {% elif margType == 'double exclamation point' %} <span class="badge" style="background-color: rebeccapurple;"> double exclamation point </span>
+                                    {% elif margType == 'dotted score' %} <span class="badge" style="background-color: darkslategrey;"> dotted score </span>
+                                    {% elif margType == 'bracket' %} <span class="badge" style="background-color: goldenrod;"> bracket </span>
+                                    {% elif margType == 'x mark' %} <span class="badge" style="background-color: paleturquoise;"> x mark </span>
+                                    {% elif margType == 'dash' %} <span class="badge" style="background-color: firebrick;"> dash </span>
+                                    {% elif margType == 'copyedit' %} <span class="badge" style="background-color: darkgreen;"> copyedit </span>
+                                    {% elif margType == 'slashthrough' %} <span class="badge" style="background-color: tomato;"> slashthrough </span>
+                                    {% elif margType == 'check mark' %} <span class="badge" style="background-color: olive;"> check mark </span>
+                                    {% else %} <span class="badge" style="background-color: grey;">{{ margType }}</span>
+                                    {% endif %}
+                                {% endfor %}
+
+                                <div class="name">
+                                {% if pageNav.pageNum %} {{ pageNav.pageNum }}{% else %} {{ pageNav.locationInBook }}{% endif %}
+                                </div>
+                                <div class="type hidden">{{ pageNav.pageFilterTags }}</div>
+
+                                </li>
+    {#                        </a>#}
+    {#                        <br>#}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="pageCol" class="col span_2_of_4">
+                <h5>{% if page.pageNum %}{{ page.pageNum }}
+                    {% else %}{{ page.locationInBook }}{% endif %}</h5>
+                <img id="pageImg" src="{{ page.pageImgURL }}" width="95%" data-toggle="magnify">
+{#                RecordID: {{ page.recordID }} <br>#}
+{#                BookID: {{ page.bookID }} <br>#}
+{#                pageNum: {{ page.pageNum }}#}
+
+{#                bookInfo: {{ page.book.title }}#}
+                <ul class="pager">
+                    {% if prevPageRecordID != '#' %} <li><a href="http://{{ baseURL }}/record/{{ prevPageRecordID }}">Previous</a></li> {% endif %}
+                    {% if nextPageRecordID != '#' %} <li><a href="http://{{ baseURL }}/record/{{ nextPageRecordID }}">Next</a></li> {% endif %}
+                </ul>
+	        </div>
+
+            <div class="col span_4_of_4">
+                {% for marg in page.marginaliaList %}
+{#                    {% if page.book.onlineEditionURL %}Line {{ marg.lineNum }}{% endif %}#}
+                    {% if marg.main == "text (jsm's hand)" %}
+                        <span class="badge" style="background-color: coral;">Text</span>
+                        Transcription: <blockquote>{{ marg.formattedTranscription|safe }} </blockquote>
+                    {% elif marg.main == "text" %}
+                        <span class="badge" style="background-color: coral;">Text</span>
+                        Transcription: <blockquote>{{ marg.formattedTranscription|safe }} </blockquote>
+                    {% elif marg.main == 'squiggle' %} <span class="badge" style="background-color: cadetblue;"> squiggle </span>
+                    {% elif marg.main == 'underlining' %} <span class="badge" style="background-color: darkred;"> underlining </span>
+                    {% elif marg.main == 'strikethrough' %} <span class="badge" style="background-color: blue;"> strikethrough </span>
+                    {% elif marg.main == 'score' %} <span class="badge" style="background-color: sienna;"> score </span>
+                    {% elif marg.main == 'question mark' %} <span class="badge" style="background-color: teal;"> question mark </span>
+                    {% elif marg.main == 'exclamation point' %} <span class="badge" style="background-color: yellowgreen;"> exclamation point </span>
+                    {% elif marg.main == 'double exclamation point' %} <span class="badge" style="background-color: rebeccapurple;"> double exclamation point </span>
+                    {% elif marg.main == 'dotted score' %} <span class="badge" style="background-color: darkslategrey;"> dotted score </span>
+                    {% elif marg.main == 'bracket' %} <span class="badge" style="background-color: goldenrod;"> bracket </span>
+                    {% elif marg.main == 'x mark' %} <span class="badge" style="background-color: paleturquoise;"> x mark </span>
+                    {% elif marg.main == 'dash' %} <span class="badge" style="background-color: firebrick;"> dash </span>
+                    {% elif marg.main == 'copyedit' %} <span class="badge" style="background-color: darkgreen;"> copyedit </span>
+                    {% elif marg.main == 'slashthrough' %} <span class="badge" style="background-color: tomato;"> slashthrough </span>
+                    {% elif marg.main == 'check mark' %} <span class="badge" style="background-color: olive;"> check mark </span>
+                    {% else %} <span class="badge" style="background-color: grey;">{{ marg.main }}</span>
+                    {% endif %}
+
+                    {% if marg.imgURL %} <img id="margCloseImg" src="{{ marg.imgURL }}" width="60%" data-toggle="magnify"> {% endif %}
+
+                    <br>
+                    <hr>
+                {% endfor %}
+	        </div>
+        </div>
+
+
+{% endblock %}
+
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>#}
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
+
+<script>
+var options = {
+			valueNames: ['name', 'type', 'difficulty'],
+			page: 3,
+			plugins: [
+			   ListPagination({})
+			]
+		};
+	    var userList = new List('col span_1_of_4', options);
+		var updateList = function () {
+			var name = new Array();
+			var type = new Array();
+			var difficulty = new Array();
+
+			$("input:checkbox[name=name]:checked").each(function () {
+				name.push($(this).val());
+			});
+
+			$("input:checkbox[name=type]:checked").each(function () {
+        if($(this).val().indexOf('|') > 0){
+           var arr = $(this).val().split('|');
+           var arrayLength = arr.length;
+           type = type.concat(arr);
+           console.log('Multiple values:' + arr);
+        }else{
+           type.push($(this).val());
+           console.log('Single values:' + arr);
+        }
+			});
+
+			$("input:checkbox[name=difficulty]:checked").each(function () {
+				difficulty.push($(this).val());
+			});
+
+			var values_type = type.length > 0 ? type : null;
+			var values_name = name.length > 0 ? name : null;
+			var values_difficulty = difficulty.length > 0 ? difficulty : null;
+
+			userList.filter(function (item) {
+        var typeTest;
+        var nameTest;
+        var difficultyTest;
+
+        if(item.values().type.indexOf('|') > 0){
+          var typeArr = item.values().type.split('|');
+          for(var i = 0; i < typeArr.length; i++){
+             if(_(values_type).contains(typeArr[i])){
+                typeTest = true;
+             }
+          }
+        }
+
+				return (_(values_type).contains(item.values().type) || !values_type || typeTest)
+						&& (_(values_name).contains(item.values().name) || !values_name)
+						&& (_(values_difficulty).contains(item.values().difficulty) || !values_difficulty)
+			});
+		}
+
+		userList.on("updated", function () {
+			$('.sort').each(function () {
+				if ($(this).hasClass("asc")) {
+					$(this).find(".fa").addClass("fa-sort-alpha-asc").removeClass("fa-sort-alpha-desc").show();
+				} else if ($(this).hasClass("desc")) {
+					$(this).find(".fa").addClass("fa-sort-alpha-desc").removeClass("fa-sort-alpha-asc").show();
+				} else {
+					$(this).find(".fa").hide();
+				}
+			});
+		});
+
+		var all_type = [];
+		var all_name = [];
+		var all_difficulty = [];
+
+		updateList();
+
+		_(userList.items).each(function (item) {
+      if(item.values().type.indexOf('|') > 0){
+        var arr = item.values().type.split('|');
+        all_type = all_type.concat(arr);
+      }else{
+        all_type.push(item.values().type)
+      }
+
+			all_name.push(item.values().name)
+			all_difficulty.push(item.values().difficulty)
+		});
+
+		_(all_type).uniq().each(function (item) {
+			$(".typeContainer").append('<label><input type="checkbox" name="type" value="' + item + '">' + item + '</label>')
+		});
+
+		_(all_name).uniq().each(function (item) {
+			$(".nameContainer").append('<label><input type="checkbox" name="name" value="' + item + '">' + item + '</label>')
+		});
+
+		_(all_difficulty).uniq().each(function (item) {
+			$(".difficultyContainer").append('<label><input type="checkbox" name="difficulty" value="' + item + '">' + item + '</label>')
+		});
+
+		$(document).off("change", "input:checkbox[name=type]");
+		$(document).on("change", "input:checkbox[name=type]", updateList);
+		$(document).off("change", "input:checkbox[name=name]");
+		$(document).on("change", "input:checkbox[name=name]", updateList);
+		$(document).off("change", "input:checkbox[name=difficulty]");
+		$(document).on("change", "input:checkbox[name=difficulty]", updateList);
+
+
+    </script>
+
+</body>
+</html>

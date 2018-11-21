@@ -1,0 +1,74 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+    .header { margin-top: -5px; margin-bottom: 0px;}
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Citation & Institutional Permission</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>All written material on <i>Mill Marginalia Online</i>—including editorial commentary, transcriptions, encoding
+            strategies, and metadata schema—is available for free and unlimited use and reproduction to all visitors
+            (Creative Commons license Attribution 4.0 International).  A more limited permission is attached to the page
+            image photos, which may be freely used for pedagogical purposes, but which may not be reproduced for publication
+            in any form without written permission (Creative commons license Attribution-NonCommercial-NoDerivatives 4.0
+            International).  Should you quote from or otherwise employ material from this site, please document your borrowings
+            by original author (if provided) and title, site name, the project’s editors, your date of access, the URL,
+            and the volume and page number (in the case of an unnumbered page, please note the location, i.e. “back flyleaf”).
+            Please consult the following examples of appropriate citation format:</p>
+
+        <h4>Marginal Mark:</h4>
+        <blockquote>
+            “Non-verbal Marginalia in Alexis de Tocqueville’s <i>De la Démocratie en Amérique</i>.”<br>
+            <i>Mill Marginalia Online</i>.  Ed. Albert D. Pionke and Emma Annette Wilson.  14 July 2016.<br>
+            &lt;http://millmarginalia.org&gt;.  4.113.
+        </blockquote>
+
+        <h4>Marginal Annotation:</h4>
+        <blockquote>
+            Mill, John Stuart.  “Verbal Marginalia in Thomas Carlyle’s Latter-Day Pamphlets.” <br>
+            <i>Mill Marginalia Online</i>.  Ed. Albert D. Pionke and Emma Annette Wilson.  14 July 2016. <br>
+            &lt;http://millmarginalia.org&gt;.  20.
+        </blockquote>
+
+        <h4>Critical Introduction:</h4>
+        <blockquote>
+            Pionke, Albert D.  “Critical Introduction to Alexis de Tocqueville’s De la Démocratie en Amérique.” <br>
+            <i>Mill Marginalia Online</i>.  Ed. Albert D. Pionke and Emma Annette Wilson.  14 July 2016.  <br>
+            &lt;http://millmarginalia.org&gt;.
+        </blockquote>
+
+
+        <h4>Metadata Schema:</h4>
+        <blockquote>
+            Metadata Schema.  <i>Mill Marginalia Online</i>.  Ed. Albert D. Pionke and Emma Annette Wilson. <br>
+            14 July 2016.  &lt;http://millmarginalia.org&gt;.
+        </blockquote>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

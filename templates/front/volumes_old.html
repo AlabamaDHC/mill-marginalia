@@ -1,0 +1,338 @@
+{% set active_page = 'volumes' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .sort-chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+    .sort-chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .sort-chip.selected a {
+        color: #fff;
+    }
+
+    .sort-chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .sort-chip.selected {
+        border: 1px solid #26a59a;
+    }
+
+    .metadata-link {
+        text-align: right;
+        float: right;
+    }
+
+    .header {
+        margin-bottom: 0px;
+    }
+
+    .subsubheader {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-size: 1.5rem;
+    }
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Volumes</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    {% if page_subheader %}<h2 class="subheader center">{{ page_subheader }}</h2>{% endif %}
+
+    {% if sort %}
+    <div class="chips">
+        <a href="{{ url_for(request.endpoint) }}?sort=title"><div id="sort-by-title" class="chip sort-chip {% if sort == 'title' %}selected{% endif %}" aria-label="View Volumes page with titles sort alphabetically by title">Alphabetically by Title</div></a>
+        <a href="{{ url_for(request.endpoint) }}?sort=author"><div id="sort-by-author" class="chip sort-chip {% if sort == 'author' %}selected{% endif %}" aria-label="View Volumes page with titles sort alphabetically by author">Alphabetically by Author</div></a>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        {% if books_json %}
+            {% for j in books_json %}
+                {{ j }}
+                <div class="col s12 z-depth-3">
+                    <div class="card horizontal">
+                        <div class="card-stacked">
+                            <div class="card-content z-depth-3" style="padding-top: 0px;">
+                                <h3 class="header">{{ book.title }}{% if j.subtitle %} ({{ j.subtitle }}){% endif %}</h3>
+                                <h4 class="subheader subsubheader light">{% if j.year_of_pub %}{{ j.year_of_pub }}{% endif %}{% if j.edition %}. {{ j.edition }} Ed.{% endif %}</h4>
+                                <h4 class="subheader subsubheader light">{{ j.author.last_name }}{% if j.author.first_name %}, {{ j.author.first_name }}{% endif %}</h4>
+                                <ul class="collapsible">
+                                {% if j.volumes|length > 1 %}
+
+                                    {% for vol in j.volumes %}
+                                        {{ vol }}
+                                        <li style="margin-left: 0px; margin-right: 0px;">
+                                            <div class="collapsible-header">
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                    <div class="col s12 m5 l5">
+                                                        <h5>{{ vol.volume_label }} </h5>
+                                                    </div>
+
+                                                    <div class="col s10 m6 l6">
+                                                        <div class="chip">
+                                                            <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                            <div class="chip-text"><span>{{ vol.page_count }} Page(s)</span></div>
+                                                        </div>
+                                                        <div class="chip">
+                                                            <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                            <div class="chip-text"><span>{{ vol.marginalia_count }} Marginalia</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            <a href="{{url_for('show_book', book_slug=vol.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right"><i aria-hidden="true" class="material-icons">arrow_forward</i></a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    {% endfor %}
+                                    </ul>
+                                    <a class="metadata-link" href="#">Download Metadata</a>
+
+                                {% else %}
+                                    <li style="margin-left: 0px; margin-right: 0px;">
+                                        <div class="collapsible-header">
+                                            <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                <div class="col s10 m11 l11">
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                        <div class="chip-text">{{ j.page_count }} Page(s)</div>
+                                                    </div>
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                        <div class="chip-text"><span>{{ j.marginalia_count }} Marginalia</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s2 m1 l1 right align-right">
+                                                    <div style="margin-left: auto;">
+                                                        <a href="{{url_for('show_book', book_slug=j.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right"><i aria-hidden="true" class="material-icons">arrow_forward</i></a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                {% endif %}
+                                </ul>
+                                <a class="metadata-link" href="#">Download Metadata</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% else %}
+            {% for book in books %}
+                {% if not book.number_of_volumes or (book.number_of_volumes and book.volume_number|int == 1) and book.public == true  %}
+                    <div class="col s12 z-depth-3">
+                    <div class="card horizontal">
+
+                        <div class="card-stacked">
+                            <div class="card-content z-depth-3" style="padding-top: 0px;">
+
+                                <h3 class="header">{{ book.title }}{% if book.subtitle %} ({{ book.subtitle }}){% endif %}</h3>
+                                <h4 class="subheader subsubheader light" style="">{% if book.year_of_pub %}{{ book.year_of_pub }}{% endif %}{% if book.edition %}. {{ book.edition }} Ed.{% endif %}</h4>
+                                <h4 class="subheader light">{{ book.author.last_name }}{% if book.author.first_name %}, {{ book.author.first_name }}{% endif %}</h4>
+
+                                {% if book.number_of_volumes|int > 1 %}
+                                    {% set slug_list = [] %}
+                                    <ul class="collapsible">
+                                    {% for book2 in books %}
+                                        {% if book.title == book2.title and book.author == book2.author and book.edition == book2.edition and book.year_of_pub == book2.year_of_pub%}
+                                            {{ slug_list.append( book2.slug )|default("", True) }}
+
+                                            <li style="margin-left: 0px; margin-right: 0px;">
+
+                                                <div class="collapsible-header">
+
+                                                    <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                        <div class="col s12 m5 l5">
+                                                            {% if book2.part_of_book %}
+                                                                <h5>{{ book2.part_of_book }} </h5>
+                                                            {% else %}
+                                                                <h5>Volume {{ book2.volume_number }} </h5>
+                                                            {% endif %}
+                                                        </div>
+
+                                                        <div class="col s10 m6 l6">
+                                                            <div class="chip">
+                                                                <div class="chip-icon">
+                                                                    <i aria-hidden="true" class="material-icons">description</i>
+                                                                </div>
+                                                                <div class="chip-text">
+                                                                    <span>{{ book2.page_count }} Page(s)</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="chip">
+                                                                <div class="chip-icon">
+                                                                    <i aria-hidden="true" class="material-icons">create</i>
+                                                                </div>
+                                                                <div class="chip-text">
+                                                                    <span>{{ book2.marginalia_count }} Marginalia</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col s2 m1 l1 right align-right">
+                                                            <div style="margin-left: auto;">
+                                                                <a href="{{url_for('show_book', book_slug=book2.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right" aria-label="View {{ book.title }} page">
+                                                                    <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                    </ul>
+                                    <a class="metadata-link" href="/metadata/{{ slug_list|join('+') }}" aria-label="View Metadata page for {{ book.title }}">Download Metadata</a>
+                                {% else %}
+                                    <ul class="collapsible">
+                                        <li style="margin-left: 0px; margin-right: 0px;">
+                                            <div class="collapsible-header">
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                    <div class="col s10 m11 l11">
+                                                        <div class="chip">
+                                                            <div class="chip-icon">
+                                                                <i aria-hidden="true" class="material-icons">description</i>
+                                                            </div>
+                                                            <div class="chip-text">
+                                                                {{ book.page_count }} Page(s)
+                                                            </div>
+                                                        </div>
+                                                        <div class="chip">
+                                                            <div class="chip-icon">
+                                                                <i aria-hidden="true" class="material-icons">create</i>
+                                                            </div>
+                                                            <div class="chip-text">
+                                                                <span>{{ book.marginalia_count }} Marginalia</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            <a href="{{url_for('show_book', book_slug=book.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right" aria-label="View {{ book.title }} page">
+                                                                <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <a class="metadata-link" href="/metadata/{{ book.slug }}" aria-label="View Metadata page for {{ book.title }}">Download Metadata</a>
+                                {% endif %}
+
+
+                            {% if book.critical_intro %}
+                                <a href="{{ url_for('show_critical_intro', slug=book.critical_intro) }}" class="btn-large" aria-label="View Critical Introduction page for {{ book.title }}">Critical Introduction</a>
+                            {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

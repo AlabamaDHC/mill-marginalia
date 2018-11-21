@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Login | Propeller - Admin Dashboard">
+<meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+<title>Login | Propeller - Admin Dashboard</title>
+<link rel="shortcut icon" type="image/x-icon" href="themes/images/favicon.ico">
+
+<!-- Google icon -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/assets/css/bootstrap.min.css') }}"/>
+
+    <!-- Propeller css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/assets/css/propeller.min.css') }}"/>
+
+    <!-- Propeller theme css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/assets/css/propeller-theme.css') }}"/>
+
+    <!-- Propeller admin theme css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/assets/css/propeller-admin.css') }}">
+
+
+
+
+    <style>
+        .logincard .alert { display: block; }
+{#        body {#}
+{#            width: 30%;#}
+{#            margin: 20% auto 20% auto;#}
+{#        }#}
+    </style>
+
+</head>
+
+<body class="body-custom">
+
+<div class="logincard">
+    {% include "security/_messages.html" %}
+  	<div class="pmd-card card-default pmd-z-depth">
+		<div class="login-card">
+            {% from "security/_macros.html" import render_field_with_errors, render_field %}
+            <h1 class="text-center">{{ _('Login') }}</h1>
+            <form id="validationForm" action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+                {{ login_user_form.hidden_tag() }}
+                {{ render_field(login_user_form.next) }}
+
+                <div class="pmd-card-body">
+
+                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                        <label for="email" class="control-label pmd-input-group-label">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="material-icons md-dark pmd-sm">perm_identity</i></div>
+                            <input id="email" type="text" class="form-control" name="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                        <label for="password" class="control-label pmd-input-group-label">Password</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="material-icons md-dark pmd-sm">lock_outline</i></div>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pmd-card-footer card-footer-no-border card-footer-p16 text-center">
+					<div class="form-group clearfix">
+						<div class="checkbox pull-left">
+							<label for="remember" class="pmd-checkbox checkbox-pmd-ripple-effect">
+								<input id="remember" for="remember" type="checkbox" checked="" value="">
+								<span class="pmd-checkbox">Remember me</span>
+							</label>
+						</div>
+					</div>
+
+                    <button id="submit" name="submit" value="submit" type="submit" class="btn pmd-ripple-effect btn-primary btn-block">Login</button>
+				</div>
+
+            </form>
+            {% include "security/_menu.html" %}
+
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="{{ url_for('static', filename='propeller/assets/js/jquery-1.12.2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='propeller/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='propeller/assets/js/propeller.min.js') }}"></script>
+
+</html>

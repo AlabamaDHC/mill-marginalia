@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Mill Marginalia - {% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+
+    <style>
+    .action{
+        text-align: center;
+
+    }
+    </style>
+</head>
+
+<body>
+        <div class="ui large breadcrumb">
+            <a class="section">Home</a>
+            <i class="right chevron icon divider"></i>
+            <a class="section">Library</a>
+        </div>
+
+
+        <div class="ui internally celled grid">
+
+            {% for book in books|sort(attribute='id')  %}
+
+                {%  if loop.first %}
+                    <div class="row">
+
+                        <div class="four wide column">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='spines/'+book.spine_image) }}" width="70%">
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ book.title }}</div>
+                                    <div class="meta">
+                                        {{ book.author_first_name }} {{ book.author_last_name }}
+                                        <br>
+                                        {{ book.subtitle }}
+                                    </div>
+                                    <div class="description">
+                                        {% if book.volume_number %}Vol {{ book.volume_number }} of {{ book.number_of_volumes }}{% endif %}
+                                        <div class="action">
+                                            <a href="{{url_for('show_book', book_slug=book.slug )}}"><div class="ui primary button text-centered">View<i class="right arrow icon"></i></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <span><i class="file text icon"></i>Pages {{ book.marginalia_count }}</span>
+                                    <span class="right floated"><i class="edit icon"></i>Marginalia {{ book.marginalia_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                {%  elif loop.last %}
+                    <div class="four wide column">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='spines/'+book.spine_image) }}" width="70%">
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ book.title }}</div>
+                                    <div class="meta">
+                                        {{ book.author_first_name }} {{ book.author_last_name }}
+                                        <br>
+                                        {{ book.subtitle }}
+                                    </div>
+                                    <div class="description">
+                                        {% if book.volume_number %}Vol {{ book.volume_number }} of {{ book.number_of_volumes }}{% endif %}
+                                        <div class="action">
+                                            <a href="{{url_for('show_book', book_slug=book.slug )}}"><div class="ui primary button text-centered">View<i class="right arrow icon"></i></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <span><i class="file text icon"></i>Pages {{ book.marginalia_count }}</span>
+                                    <span class="right floated"><i class="edit icon"></i>Marginalia {{ book.marginalia_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                {%  elif loop.index % 4 == 0 %}
+
+                    <div class="four wide column">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='spines/'+book.spine_image) }}" width="70%">
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ book.title }}</div>
+                                    <div class="meta">
+                                        {{ book.author_first_name }} {{ book.author_last_name }}
+                                        <br>
+                                        {{ book.subtitle }}
+                                    </div>
+                                    <div class="description">
+                                        {% if book.volume_number %}Vol {{ book.volume_number }} of {{ book.number_of_volumes }}{% endif %}
+                                        <div class="action">
+                                            <a href="{{url_for('show_book', book_slug=book.slug )}}"><div class="ui primary button text-centered">View<i class="right arrow icon"></i></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <span><i class="file text icon"></i>Pages {{ book.marginalia_count }}</span>
+                                    <span class="right floated"><i class="edit icon"></i>Marginalia {{ book.marginalia_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                {% else %}
+                    <div class="four wide column">
+                            <div class="ui card">
+                                <div class="image">
+                                    <img src="{{ url_for('static', filename='spines/'+book.spine_image) }}" width="70%">
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ book.title }}</div>
+                                    <div class="meta">
+                                        {{ book.author_first_name }} {{ book.author_last_name }}
+                                        <br>
+                                        {{ book.subtitle }}
+                                    </div>
+                                    <div class="description">
+                                        {% if book.volume_number %}Vol {{ book.volume_number }} of {{ book.number_of_volumes }}{% endif %}
+                                        <div class="action">
+                                            <a href="{{url_for('show_book', book_slug=book.slug )}}"><div class="ui primary button text-centered">View<i class="right arrow icon"></i></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <span><i class="file text icon"></i>Pages {{ book.marginalia_count }}</span>
+                                    <span class="right floated"><i class="edit icon"></i>Marginalia {{ book.marginalia_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </body>

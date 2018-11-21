@@ -1,0 +1,184 @@
+{% set active_page = 'volumes' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .card-image {
+        width: 260px;
+
+    }
+
+    .card-image img {
+        height: 500px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .header {
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+    .subheader {
+        margin-top: 0px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+
+
+    .chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .chip.selected a {
+        color: #fff;
+    }
+
+    .chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .chip.selected {
+        border: 1px solid #26a59a;
+    }
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Volumes</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+
+    <div class="chips">
+{#        <span>Order</span>#}
+{#        <a href="{{ url_for(request.endpoint) }}?sort=title"><div id="sort-by-title" class="chip {% if sort == 'title' %}selected{% endif %}">Alphabetically by Title</div></a>#}
+{#        <a href="{{ url_for(request.endpoint) }}?sort=author"><div id="sort-by-author" class="chip {% if sort == 'author' %}selected{% endif %}">Alphabetically by Author</div></a>#}
+    </div>
+
+    <div class="section">
+        {% for book in books %}
+            <div class="col s12 z-depth-3">
+                    <div class="card horizontal">
+                        <div class="card-stacked">
+                            <div class="card-content z-depth-3" style="padding-top: 0px;">
+                                <h3 class="header">{{ book.title }} {%- if book.subtitle -%} ({{ book.subtitle }}){% endif %}</h3>
+                                <h4 class="subheader light">{{ book.author.first_name }} {{ book.author.last_name }}</h4>
+                                <ul class="collapsible">
+                                        <li style="margin-left: 0px; margin-right: 0px;">
+                                            <div class="collapsible-header">
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                    <div class="col s10 m11 l11">
+                                                        <div class="chip">
+                                                            <div class="chip-icon">
+                                                                <i class="material-icons">description</i>
+                                                            </div>
+                                                            <div class="chip-text">
+                                                                {{ book.page_count }} Page(s)
+                                                            </div>
+                                                        </div>
+                                                        <div class="chip">
+                                                            <div class="chip-icon">
+                                                                <i class="material-icons">create</i>
+                                                            </div>
+                                                            <div class="chip-text">
+                                                                <span>{{ book.marginalia_count }} Marginalia</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            <a href="{{url_for('show_book', book_slug=book.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right">
+                                                                <i class="material-icons">arrow_forward</i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

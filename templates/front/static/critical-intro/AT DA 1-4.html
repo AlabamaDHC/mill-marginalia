@@ -1,0 +1,449 @@
+{% set active_page = 'authors' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important;}
+
+    .para-with-blockquote {
+        margin-bottom: 0px;
+    }
+
+    p {
+        text-indent: 2rem;
+    }
+
+    blockquote {
+        margin: 2px 1.5rem 2px;
+        padding-left: 0.5rem;
+    }
+
+    .works-cited-header, .works-cited, .footnotes-header, .footnotes {
+        text-indent: 0;
+    }
+
+        .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+    .chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .chip.selected a {
+        color: #fff;
+    }
+
+    .chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .chip.selected {
+        border: 1px solid #26a59a;
+    }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Critical Introduction</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <h4>Alexis de Tocqueville’s <i>De la Démocratie en Amérique</i></h4>
+        <h5>Albert D. Pionke, University of Alabama</h5>
+        <p>Trenchant but not superabundant, Mill’s marginal marks and annotations within his copy of Alexis de
+            Tocqueville’s <i>De la Démocratie en Amérique</i> are best understood in the context of Mill’s growing intellectual
+            and political independence in the 1830s. The period from 1836 to 1840, when Mill was the de facto editor of
+            and frequent contributor to the <i>London and Westminster Review</i>, came at a crucial point in his personal and
+            professional development. During these years, Mill came to grips with the death of his father, the growth
+            of his relationship with Harriet Taylor, and the beginnings of his correspondence with Alexis de Tocqueville,
+            all of which contributed to the reappraisal of Utilitarianism—as a system of ethics and guide to politics—that
+            motivates his later books.</p>
+
+        <p>In the critical introduction that follows, I shall reconstruct the most salient portion of this key early
+            period in Mill’s history, focusing especially on Mill’s evolving attitudes towards democracy, expressed in
+            Mill’s first and second reviews of Tocqueville’s work. Mill recalls this period in his <i>Autobiography</i>, an
+            account which I supplement by also referencing his increasingly friendly correspondence with the French
+            thinker. With this narrative in place, I then turn to the marginalia, which provides a somewhat different
+            and more skeptical record of Mill’s initial thoughts while reading and reflecting upon Tocqueville</p>
+
+        <p>The later complexities of Mill’s thoughts on democracy, for instance, can be traced to this early period of
+            work as an editor and reviewer. Mill himself says as much in his <i>Autobiography</i>, where he reveals that it
+            was in the 1830s that he “ceased to consider representative democracy as an absolute principle,” even as,
+            at the level of “practical political creed,” he continued “as much as ever a radical and democrat, for
+            Europe, and especially for England” (CW 1.177). He more specifically credits his “reading, or rather study”
+            of Tocqueville’s <i>Democracy in America</i> with “shifting of my political ideal from pure democracy, as commonly
+            understood by its partisans, to the modified form of it, which is set forth in my <i>Considerations on Representative Government</i>”
+            (CW 1.199). Mill closes the subject by recommending that readers interested in “the consequent modifications
+            in my practical political creed” compare “my first review of <i>Democracy in America</i>, written and published
+            in 1835, with the one in 1840” (CW 1.201). It is not too much to claim, by the way, that these two reviews,
+            the first in the <i>London and Westminster Review</i> and the second in the <i>Edinburgh Review</i>, not only
+            introduced Tocqueville to British readers but also reconfigured and established the vocabulary for public
+            debates of the next thirty years over the character of England’s emerging democracy (images of the pages of
+            these reviews with Mill’s editorial corrections can be found elsewhere on this site, in
+            <a href="/library/multivol/JSM-DA+JSM-B+JSM-W+JSM-M+JSM-HF+JSM-CQ+JSM-CL+JSM-LPE+JSM-G+JSM-D+JSM-HG+JSM-FR+JSM-NQ+JSM-MP+JSM-EW+JSM-MSR+JSM-PE+JSM-MIAI"><i>JSM Bound Volume</i></a>).</p>
+
+        <p>Both in 1835 and in 1840, in his persona as public reviewer, Mill is overwhelmingly laudatory, describing
+            Tocqueville as “a philosopher, whose impartiality as between aristocracy and democracy is unparalleled in
+            our time” and <i>Democracy in America</i> as “the beginning of a new era in the scientific study of politics”
+            (CW 18.50, 18.156). However, in the context of the intellectual trajectory mapped out in the <i>Autobiography</i>,
+            what is most interesting about the reviews is the evolving character of their disagreements with their common
+            object of analysis. In 1835, Mill demurs from one of Tocqueville’s premises and two of his conclusions.
+            First, he objects to the apology for aristocracy offered in part one of <i>Democracy in America</i>, arguing that
+            “what was good in the influences of aristocracy, is compatible, if we really wish to find it so, with a
+            well-regulated democracy” (CW 18.54). Second, on the basis of this point of difference, Mill later questions
+            Tocqueville’s conclusion that democracies will always elect leaders inferior to those imposed by aristocracies;
+            ordinarily, Mill concedes, this may be true, but “in national emergencies, which call out men of first-rate
+            talents, such men always step into their proper place” (CW 18.76). Separately, he also doubts Tocqueville’s
+            warnings about democracy’s tendency towards a widespread “tyranny of the majority”: “when we put inequalities
+            of property out of the question,” Mill writes, “it is not easy to see what sort of minority it can be, over
+            which the majority can have any interest in tyrannizing” (CW 18.80). As a “practical . . . radical and
+            democrat,” Mill cannot bear to see aristocracies given too much credit, nor to attribute to the broader
+            demos any tendency to resent those made exceptional by qualities other than wealth.</p>
+
+        <p>By 1840, Mill’s opinions move closer to those of Tocqueville, with whom he now publicly disagrees on only one
+            point. Accepting the empirically-grounded analysis of the pernicious effects of democracy in the United
+            States—including the dearth of superior leadership and the tyranny of the majority over public and private
+            opinions—advanced in part two of <i>Democracy in America</i>, Mill nevertheless finds that Tocqueville has “confounded
+            the effects of Democracy with the effects of Civilization. He has bound up in one abstract idea the whole of
+            the tendencies of modern commercial society” (CW 18.191). Citing the example of Great Britain, a nation in
+            which, “with the single difference of our remaining respect for aristocracy, the America people, both in
+            their good qualities and in their defects, resemble . . . an exaggeration of our own middle class,” Mill
+            posits that it is the commercial class’s single-minded pursuit of wealth that leads to the worst aspects of
+            democratic society (CW 18.193). In addition to endorsing Tocqueville’s call for participation in local
+            politics and voluntary associations, Mill also declares that “in a commercial country” what is needed to
+            counterbalance the overvaluation of wealth and its social consequences is a combination of “an agricultural
+            class, a leisured class, and a learned class” (CW 18.198). From a radical democrat defending the demos, Mill
+            has shifted to a more conservative position of eliding the direct character of the broad public altogether
+            and concentrating instead on how what we might call a new professional/intellectual aristocracy can safeguard
+            a middle-class minority from the middle-class majority’s pursuit of filthy lucre.</p>
+
+        <p>Mill thought these shifting points of disagreement substantial enough that he sought to downplay them in his
+            letters to Tocqueville, whom he was cultivating as a potential contributor to the <i>London and Westminster</i>
+            Review in 1835 and with whom he had an established friendship by 1840. Thus, in September 1835, Mill describes
+            his “nearly finished” review as only “a shade or two more favorable to democracy than your book, although in
+            the main I agree, so far as I am competent to judge, in the unfavorable part of your remarks, but without
+            carrying them quite so far” (CW 12.272). Two months later, in November, Mill sent an advanced copy of the
+            completed first review to Tocqueville, along with a letter, this time in French, that minimizes his critique
+            to “one small part only of your conclusions” (CW 12.284).<a href="#footnote-1"><b><sup>1</sup></b></a> The
+            two men also corresponded in 1840, when, in May, still working on his second review, Mill politely obfuscates,
+            “it will require much thought & study to appreciate your ideas so completely as to be qualified to say what
+            portion of them I shall at last feel to be demonstrated & what, if any, may seem to require further confirmation”
+            (CW 13.434). With its numerous ampersands, the apparent questioning by Mill of his own qualifications, and
+            the rhetorical diminution from “feel” to “seem,” this letter is a study in deferred judgment. In December of
+            that year, with the review published, Mill’s relief at the grace with which Tocqueville had received his critique
+            about the conflation of democracy and commerce is discernible in his repetitive word choice: “You may imagine
+            how much pleasure it gave me to find that you were pleased with my review of your Second Part” (CW 13.457).
+            Measuring the work that he put into this second review, Mill goes on to admit, “I know how much thought [the
+            second part of <i>Democracy in America</i>] calls for from the reader when I remember how long it was before
+            I could make up my mind about it” (CW 13.458).</p>
+
+        <p>In the case of the 1835 essay, these letters are as close as we can get to Mill’s original thoughts and feelings
+            as a reviewer.<a href="#footnote-2"><b><sup>2</sup></b></a> Happily, the same need not be said about the 1840
+            review of part two of <i>Democracy in America</i>. Mill’s personal copy of <i>De la Démocratie en Amérique</i>,
+            held in Somerville’s College’s John Stuart Mill Library, contains both verbal and nonverbal marks that reveal
+            degrees of skepticism about Tocqueville’s claims well beyond those in the published review, articulated with
+            an unvarnished bluntness that likely would have made his new friend a bit disconcerted if only he had known.</p>
+
+        <p>Two initial annotations, one from each volume of part two, may help to show why Mill describes himself as
+            still in the midst of “thought & study” in his May 1840 letter. The first appears in the inner margin of
+            vol. 4, p. 113 alongside a passage in which, speaking as a historical sociologist, Tocqueville attempts to
+            characterize the broad differences between democratic and aristocratic centuries. The former are affected
+            more by what he calls “general facts,” whereas the latter take their lead more from “special influences.”
+            Conceptually a little imprecise, this distinction emerges from the aristocratic premise and conclusion about
+            leadership to which Mill objected in his first review. Remove the “special influence” exerted by superior
+            aristocratic leaders, and what is left to affect society but the “general facts” of democratic life?
+            Certainly not, for example, ex-editors of the <i>London and Westminster Review</i>, which fact, perhaps, contributed
+            to Mill’s marginal appraisal: “This is all my eye –.”  Mill evinces similarly naked incredulity on vol. 3,
+            p. 170, when Tocqueville defends democratic societies for their superior authenticity. Although individual
+            manners in the average democracy may be a bit basic, people at least behave like themselves without feeling
+            the need to emulate their betters, he claims. To this generalization, marked with an emphatic double score,
+            Mill’s one-word response is “No –.”</p>
+
+        <p>Mill’s marginal judgments also extend to greater lengths and levels of substance than these examples. For
+            instance, on p. 293 of vol. 3, Tocqueville opines about the unique dangers of materialism in democratic
+            societies. After asserting that it is the responsibility of democratic statesmen and intellectuals to
+            continuously remind their self-improvement-obsessed countrymen of the greater rewards of heaven, he labels
+            as “enemies of the people” all those who profess disbelief in the immortality of the soul. A confirmed
+            atheist who nevertheless thought of himself as a Radical advocate for the demos, Mill might well feel himself
+            painted with an unfairly broad brush here. His response, however, is not defensive dismissal, but rather
+            logical objection. After registering his confusion with a question mark, he wonders, “Why of this [?] / only
+            – if of th[?] / people, of all – [?] / not of all, of no[?].”  Although a subsequently over-eager page-edge
+            trimmer has unfortunately deprived us of the totality of Mill’s remarks—hence the bracketed question marks—we
+            can, without unwarranted speculation, infer that Mill doubts the logical sufficiency of a deductive argument
+            whose first principle, that materialists are the enemies of the people, is applicable only in certain
+            circumstances.</p>
+
+        <p>Later in volume three, on p. 323, Mill even questions the basic truth value of another of Tocqueville’s assertions,
+            this one about what we might call vocational determinism. In a paragraph that anticipates by over a decade
+            Ruskin’s critique of the dehumanizing effects of industrialized labor in “The Nature of the Gothic” and by
+            nearly forty years Morris’s ethical distinction between “Useful Work and Useless Toil,” Tocqueville writes of
+            the degrading effects of a life “making heads for pins.”  Such a worker, he says, “no longer belongs to himself”
+            but to his “vocation,” which acts as an insuperable barrier to his pursuit of the “thousand different paths to
+            fortune” that democratic “laws and manners” have made available to him. Mill’s response is a categorical
+            rejection—“All this, mu[?] / be taken wi[?] / great reserv[?] / It is not tr[?] / as here state[?]”—discernible
+            enough despite the missing outer margin. What we cannot know is whether Mill’s doubts here are rooted in his
+            empiricism, his radicalism, or some combination of the two. What is clear is that this particular “great
+            reservation” never made it into the 1840 review essay, although it may be one reason why Mill’s third published
+            paragraph begins with the rather odd assertion that, “The importance of M. de Tocqueville’s speculations is not
+            to be estimated by the opinions which he has adopted, be these true or false” (CW 18.156).</p>
+
+        <p class="para-with-blockquote">In addition to his marginal marks and rather cramped annotations, presumably made
+            simultaneous to the initial act of reading, Mill occasionally writes more summative reflections at the ends
+            of chapters or sections. For instance, at the end of vol. 4, chap. 14, “Some Reflections on American Manners,”
+            Mill appends a lengthy note registering his empirical objection to the Frenchman’s ignorance of English culture:
+            <blockquote>
+                American manners are greatly influenced by English men
+                and English literature  – and to one who knows England
+                middle class England well, there is little in American manners
+                new or revolting. How is it possible for one confessedly
+                ignorant of England to say what is, and what is not,
+                really American, in their manners – on what
+                induction rests any proposition beginning with
+                "Les nations democratique"?
+            </blockquote>
+            Here we can see the argumentative basis for Mill’s published critique that Tocqueville has confused the
+            effects of commercialization with the consequences of democratization. Moreover, in this marginal comment lies
+            the germ of Mill’s subsequent comparison of “the American people” and Britain’s “own middle class”; although,
+            for his published remarks, Mill removed all mention of Tocqueville’s “confessed ignorance” and did not question
+            his friend’s powers of induction.
+        </p>
+
+        <p class="para-with-blockquote">Mill saw clear similarities between Americans and Britons, not only in the present,
+            but also projected into the future. On the back flyleaf of vol. 4 of <i>Democracy in America</i> is a neatly penciled
+            annotation that imagines an even closer convergence of manner between English speakers on both sides of the
+            Atlantic. Almost certainly written after reviewing his own marginal first reactions to Tocqueville’s text,
+            the note begins with a page reference tied to an earlier nonverbal mark on p. 128. In what would come as no
+            surprise to nineteenth-century British readers, Tocqueville characterizes Americans as thin-skinned and quick
+            to take offense in response to criticism. Mill originally marked this passage only with a marginal double
+            score. When he returned to it later, Mill displayed a caustic humor that may surprise those accustomed to
+            the measured reasonableness of his mature publications:
+            <blockquote>
+                This feeling has nothing to do with
+                democracy – Wait, until the Americans
+                by their great deeds, in arms, arts, science
+                and literature, have taken a place among
+                the great nations of the earth, and they
+                will no longer be quarrelsome, and doubtful
+                of their position – They will then be as proud
+                haughty and self satisfied as the English –
+                But not before –
+            </blockquote>
+            It’s hard to tell whether the “insatiably vain” Americans or the “haughty and self-satisfied” British middle
+            classes come off worse in this annotation.
+        </p>
+
+        <p>That these examples of Mill’s reactions during and after his “study” of Tocqueville remain largely unknown is
+            not just a consequence of their presence in a special collection kept behind locked doors in Oxford, but also
+            a function of Mill’s practices of reading. Judging from the verbal and nonverbal marks in his copy of
+            <i>Democracy in America</i>, Mill read a book, pencil in hand, making marks and cramped annotations and along the
+            way. Although the intent of the former are sometimes hard to gauge, the latter seem almost entirely motivated
+            by local disagreement with the text under review. Once he had finished this preliminary markup, Mill appears
+            to have gone through the book again, writing more expansive responses in a cleaner hand and establishing the
+            argumentative foundation, although not the actual phrasing, for what would become his published review. Like
+            those of his contemporaries, Mill’s reviews would frequently include lengthy quotations from the original text;
+            interestingly, in the case of his 1840 review of <i>Democracy in America</i>, none of the excerpted passages is one
+            that Mill had himself marked while reading. Mill the published reviewer thus muffles Mill the private reader,
+            allowing for Mill the retrospective autobiographer to trace a path of intellectual development far straighter
+            than lived experience might suggest.</p>
+
+        <br>
+        <p class="footnotes-header"><b>Footnotes</b></p>
+        <p id="footnote-1" class="footnotes">
+            <b><sup>1</sup></b>
+            As Iris Mueller notes, “It is interesting to contrast the mild tone with which Mill expressed his differences
+            in the letter to de Tocqueville with the far more definite expression of public pronouncement” (135n5).</p>
+
+        <p id="footnote-2" class="footnotes">
+            <b><sup>2</sup></b>
+            Selections from this initial assessment of part one of <i>Democracy in America</i> were republished by Mill, first
+            within his 1840 response to part two and then as roughly one half of an appendix to the later edition of this
+            latter review that he included in <i>Dissertations and Discussions</i>, which first appeared in 1859. Although these
+            later decisions concerning excerpts from the 1835 review may reveal subsequent steps in Mill’s evolving attitude
+            towards democracy, they cannot take us back to 1835, when that evolution of Mill’s opinions was still in its
+            nascent phase.</p>
+
+        <br>
+        <p class="works-cited-header"><b>Works Cited</b></p>
+        <p class="works-cited"><i>The Collected Works of John Stuart Mill</i>. Ed. John Robson, et. al. 33 vols. Toronto: University of Toronto Press, 1963-1991.</p>
+        <p class="works-cited">Mueller, Iris Wessel. <i>John Stuart Mill and French Thought</i>. Urbana: University of Illinois Press, 1956.</p>
+
+        <br>
+    </div>
+
+    <div id="app" class="section">
+        <template v-for="item in books">
+            <div class="col s12 z-depth-3">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content z-depth-3" style="padding-top: 0px;">
+                            <h3 v-if="item.subtitle" class="header">[[ item.title ]] ([[ item.subtitle ]])</h3>
+                            <h3 v-else class="header">[[ item.title ]]</h3>
+
+                            <h4 v-if="item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]]. [[ item.edition ]] Ed.</h4>
+                            <h4 v-else-if="item.year_of_pub && !item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]].</h4>
+                            <h4 v-else-if="!item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.edition ]] Ed.</h4>
+
+                            <h4 v-if="item.author.last_name && item.author.first_name != ''" class="subheader light">[[item.author.last_name]], [[ item.author.first_name ]]</h4>
+                            <h4 v-else class="subheader light">[[item.author.last_name]]</h4>
+
+                            <ul class="collapsible">
+                                <template v-for="vol in item.volumes">
+                                    <li style="margin-left: 0px; margin-right: 0px;" v-if="vol && vol != '' && vol != ' '">
+
+                                        <div v-if="item.volumes.length > 1" class="collapsible-header">
+                                            <div v-if="vol && vol != ''" class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                <div class="col s12 m5 l5">
+                                                    <h5 v-if="vol.part_of_book">[[ vol.part_of_book ]]</h5>
+                                                    <h5 v-else>Volume [[ vol.volume_number ]]</h5>
+                                                </div>
+
+                                                <div class="col s10 m6 l6">
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                        <div class="chip-text"><span>[[ vol.page_count ]] Page(s)</span></div>
+                                                    </div>
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                        <div class="chip-text"><span>[[ vol.marginalia_count ]] Marginalia</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s2 m1 l1 right align-right">
+                                                    <div style="margin-left: auto;">
+                                                        <a v-bind:href="'/library/'+vol.slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                            <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div v-else class="collapsible-header">
+                                            <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                <div class="col s10 m11 l11">
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                        <div class="chip-text">[[ item.volumes[0].page_count ]] Page(s)</div>
+                                                    </div>
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                        <div class="chip-text"><span>[[ item.volumes[0].marginalia_count ]] Marginalia</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s2 m1 l1 right align-right">
+                                                    <div style="margin-left: auto;">
+                                                        <a v-bind:href="'/library/'+item.volumes[0].slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                            <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <a v-bind:href="'/metadata/'+item.slug_set" class="metadata-link" >Download Metadata</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        books: {},
+        sort: '{{ sort }}'
+    },
+    created: function () {
+            axios.get('{{request.url_root}}api/volumes{{args}}')
+                .then(function (response) {
+                    app.books = response.data.data.sort(function(a,b){
+                        return a.title.localeCompare(b.title);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    delimiters: ['[[',']]']
+})
+</script>
+</body>
+</html>

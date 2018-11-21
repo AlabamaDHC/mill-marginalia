@@ -1,0 +1,53 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Institutional Collaboration</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p><i>Mill Marginalia Online</i> is an institutional collaboration between Somerville College, Oxford and the University
+            of Alabama.  In support of its mission to sustain the University of Oxford’s research and teaching mandates,
+            as well as to promote the College’s historic special collections, Somerville issued a public call, in the
+            November 2014 issue of <i>Somerville Magazine</i>, “to foster research into the annotations and to preserve” the
+            John Stuart Mill Collection.  After a close correspondence with Dr. Anne Manuel, the Somerville Librarian and
+            Archivist, Professor Albert Pionke successfully obtained competitively awarded internal funding from the College
+            of Arts and Sciences at the University of Alabama for “The Reading Mill,” a project whose deliverables included
+            digital page images of the marginalia found in Mill’s personal copy of Alexis de Tocqueville’s <i>Democracy in
+                America</i> and two dozen other volumes.  The technical and project management staff of UA Libraries’ Alabama
+            Digital Humanities Center, led by Professor Emma Wilson, translated these images and their metadata into a
+            form suitable for inclusion in a database and companion website to allow for faceted searching of the marks
+            and annotations.  On the strength of this initial collaboration and in light of the scholarly promise of this
+            initial sampling of verbal and nonverbal marginalia, Manuel at Somerville College and Pionke at the University
+            of Alabama have obtained additional funding for the project, from the Gladys Krieble Delmas Foundation and
+            Britain’s National Manuscripts Conservation Trust, and UA’s Office of the Vice President for Research and
+            Economic Development and College of Arts and Sciences, respectively, and they, along with Wilson, have publicized
+            some of the results obtained thus far through academic conferences, public relations events, and intellectual
+            networks on both sides of the Atlantic.</p>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

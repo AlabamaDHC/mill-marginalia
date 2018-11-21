@@ -1,0 +1,104 @@
+{% set active_page = 'search' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+{#    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />#}
+    <title>Mill Marginalia Online - {{ active_page|capitalize }}</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117907892-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-117907892-1');
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/base-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+</head>
+
+<body>
+    <style>
+        * {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        {#button {#}
+        {#    margin: 1.67em 0;#}
+        {#}#}
+
+    </style>
+
+{#    <div class="pure-g">#}
+{#        <div class="pure-u-7-8">#}
+{#            <h1>Metadata for: {{ metadata[0].book.title }}</h1>#}
+{#        </div>#}
+{#        <div class="pure-u-1-8">#}
+{#            <button class="pure-button pure-button-primary" value="select table" onclick="selectElementContents( document.getElementById('metadata') );">Copy Data to Clipboard</button>#}
+{#        </div>#}
+{#    </div>#}
+
+    <table id="metadata" class="pure-table pure-table-horizontal">
+        <thead>
+            <tr>
+                <th>Row</th>
+                <th>Author Last Name</th>
+                <th>Author First Name</th>
+                <th>Book Title</th>
+                <th>Book Subtitle (if any)</th>
+                <th>Editor/Translator (if any)</th>
+                <th>Number of Volumes (if more than 1)</th>
+                <th>Edition</th>
+                <th>Place of Publication</th>
+                <th>Publisher</th>
+                <th>Year of Publication</th>
+                <th>Volume Number (if multivolume work)</th>
+                <th>Location of Marginalia in the Book</th>
+                <th>Part of Book (if parts separately paginated)</th>
+                <th>File name</th>
+                <th>Close-up or referenced page file (if any)</th>
+                <th>Page Number of Marginalia (if any)</th>
+                <th>Location of Marginalia on the Page</th>
+                <th>Line Number of Marginalia (if any)</th>
+                <th>Writing Implement Used to Record Marginalia</th>
+                <th>Type of Marginalia</th>
+                <th>Subtype of Marginalia (if text)</th>
+                <th>Language (if text and if not in English)</th>
+                <th>Transcription of Marginalia (if text or copyedit)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in metadata %}
+                <tr>
+                    <th> {{ loop.index }} </th>
+                    <th> {{ item.book.author.last_name }} </th>
+                    <th> {{ item.book.author.first_name }} </th>
+                    <th> {{ item.book.title }} </th>
+                    <th> {{ item.book.subtitle }} </th>
+                    <th> {{ item.book.editor_translator }} </th>
+                    <th> {{ item.book.number_of_volumes }} </th>
+                    <th> {{ item.book.edition }} </th>
+                    <th> {{ item.book.place_of_pub }} </th>
+                    <th> {{ item.book.publisher }} </th>
+                    <th> {{ item.book.year_of_pub }} </th>
+                    <th> {{ item.book.place_of_pub }} </th>
+                    <th> {{ item.page.location_in_book }} </th>
+                    <th> {{ item.book.part_of_book }} </th>
+                    <th> <a href="/static/assets/pages/{{ item.page.page_image }}.jpg">{{ item.page.page_image }} </a></th>
+                    <th> <a href="/static/assets/pages/{{ item.close_image }}.jpg"> {{ item.close_image }} </a> </th>
+                    <th> {{ item.page.page_num }} </th>
+                    <th> {{ item.page.location_on_page }} </th>
+                    <th> {{ item.line_number }} </th>
+                    <th> {{ item.writing_implement }} </th>
+                    <th> {{ item.type }} </th>
+                    <th> {{ item.subtype }} </th>
+                    <th> {{ item.language }} </th>
+                    <th> {{ item.transcription }} </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

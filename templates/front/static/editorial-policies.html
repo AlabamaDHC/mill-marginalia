@@ -1,0 +1,95 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Editorial Policies</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <h4>Display</h4>
+        <p>Books containing one or more marks or annotations are arranged alphabetically by author and title, with a complete
+            list of all digitized books to date available in the Library via the “<a href="{{ url_for('show_authors') }}">Authors</a>”
+            and “<a href="{{ url_for('show_volumes') }}">Volumes</a>” links on the Home page.  Multi-faceted searching of
+            the marginalia is also provided.  Thus, marks and annotations can be filtered by type, allowing one, for example,
+            to view all pages containing marginal scores or interlinear
+            text.  A complete list of types of marginalia classified on this site is available on the
+            <a href="{{ url_for('show_marginalia_examples') }}">Distinct Marginalia Types</a> page.  Annotations can also be searched
+            by word, permitting one, for instance,
+            to locate and compare all of the passages about which Mill expresses his skepticism with a sarcastic “oh, oh.”
+            Both the marginalia type filter and the word search function are available in the Library, where they enable
+            searching across the collection, and on the page dedicated to each individual book, allowing for more localized
+            queries.</p>
+
+        <p>Each page containing one or more marks or annotations displays in the image window, with a tally of pages and
+            types of marginalia on the left and a transcription pane located in the right sidebar.  Each mark or annotation
+            is recorded in the metadata scheme by location on the page (outer margin, top third, etc.), line number (on
+            pages within the text, counting down from the top and excluding page headers, titles, ornamental paragraph
+            breaks and the like), and writing implement (pen, pencil, etc.).  In pages with multiple examples of marginalia,
+            the marks/annotations are listed in order from top to bottom and left to right; in cases where a mark and an
+            annotation share the same relative position, the mark is listed before the annotation in the transcription pane.</p>
+
+        <p>Users interested in locating a given page image within the broader context of the full text of the original
+            work are invited to consult comparable digital editions.  Each page of <i>Mill Marginalia Online</i> includes a link
+            at the top right to an already-available digitization of the same edition of the book from which the featured
+            page image was taken.  A further link to a period-appropriate translation—preferably one known to have been
+            consulted by Mill—is also provided for books originally printed in a language other than English.</p>
+
+        <p>Additionally, a set of preset image settings is accessible in a toolbar at the base of the page image. Images
+            can also be downloaded from the site for further manipulation by visitors using their own preferred software.</p>
+
+        <p>Finally, books featuring a critical introduction (all written especially for this site) will include a link at
+            the top of the page to the accompanying essay. All critical introductions have been subject to blind peer review
+            by at least two members of the advisory board, as well as additional review by the site’s director and co-PI.
+            Should you wish to submit an essay for consideration as a critical introduction, please contact the Project
+            Director, who will coordinate the review process.</p>
+
+        <h4>Transcription</h4>
+        <p>Annotations are transcribed insofar as they are decipherable, with line breaks in the original text indicated
+            by forward slashes. Visible words and individual letters deemed undecipherable are represented by asterisks,
+            and parts of words and suspected whole words cut away when the edges of individual pages were trimmed are
+            signified by bracketed question marks.  Close-up images of annotations deemed substantial (typically more than
+            two easily-read words) appear in a separate box below the transcription pane.</p>
+
+        <h4>Attribution</h4>
+        <p>Between 1905 and 1969, the books in the John Stuart Mill Library were available to generations of Somerville
+            undergraduates, some of whom were not shy about expressing their own opinions in the margins of Mill’s books.
+            When recorded in ball point pen, not invented until fifteen years after Mill’s death, their marks are easy to
+            distinguish.  When recorded in pencil or wax crayon, they are much more difficult to differentiate from those
+            made by Mill. This is especially true of books in which there are no annotations, and thus no opportunity to
+            compare the handwriting and line thickness to known exemplars.</p>
+
+        <p>Complicating the process of attribution is the fact that many of the books in Somerville’s collection were inherited
+            by John Stuart Mill from his father.  James Mill was a copious annotator of his own books, some of which were
+            further marked by his son.  Thus, there are hundreds of books in which there may be two sets of historically
+            significant marks of a variety of types.  In the 1980s, University of Toronto Professor and noted James Mill
+            expert Robert Fenn made a broad, but not quite exhaustive, survey of the elder Mill’s annotations in the Somerville
+            collection.  In light of Professor Fenn’s authoritative experience deciphering and cataloguing James Mill’s
+            handwriting, his extensive unpublished notes on the books of the John Stuart Mill Library provided an invaluable
+            guide to resolving this aspect of the problem of attribution.</p>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

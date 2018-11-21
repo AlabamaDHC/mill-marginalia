@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{#    load page or view specific styles and scripts here    #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/libraryViewStyles.css') }}">
+
+
+
+    <ol class="breadcrumb">
+        <li><a href="http://{{ baseURL }}">Home</a></li>
+        <li class="active">Library</li>
+    </ol>
+
+    {% for item in books %}
+
+
+{#        <div class=".col-md-4">#}
+{#            {{ item.recordID }}#}
+{#            Title: {{ item.title }} {{ item.subTitle }}#}
+{#            Author: {{ item.authorFirstName }} {{ item.authorLastName }}#}
+{#            <img src="{{ item.spineImgURL }}" width="30%">#}
+{#        </div>#}
+
+        <div class="col-md-4">
+            <div class="section group">
+
+                <div class="col span_1_of_4">
+                    <div id="bookHeader">
+                        {% if item.bookCount == 1  %}
+                            <a href="http://{{ baseURL }}/filter/{{ item.books[0].firstPageRecordID }}">
+                        {% else %}
+                            <a href="http://{{ baseURL }}/library/{{ item.spineFileName }}">
+                        {% endif %}
+                        <h4 id="bookTitle">{{ item.books[0].title }}{% if item.books[0].subTitle %}Ed {{ item.books[0].subTitle }}{% endif %}</h4>
+                        <h4 id="bookAuthor">{{ item.books[0].authorFirstName }} {{ item.books[0].authorLastName }}</h4>
+                        </a>
+                        <h6 id="bookPub">
+                            {% if item.books[0].yearOfPub %}{{ item.books[0].yearOfPub }},{% endif %}
+                            {% if item.books[0].edition %}{{ item.books[0].edition }} Edition{% endif %}
+                            {% if item.bookCount > 1 %}, Vols 1-{{ item.bookCount }}{% endif %}
+                        </h6>
+                    </div>
+                </div>
+
+                <div id="spineCol" class="col span_2_of_4">
+                    {#                {% for marg in item.marginaliaTypeList %}#}
+                    {#                    <span class="badge">{{ marg }}</span>#}
+                    {#                {% endfor %}#}
+                </div>
+
+                {% if item.bookCount == 1  %}
+                    <a href="http://{{ baseURL }}/filter/{{ item.books[0].firstPageRecordID }}"><img id="spineImg" src="{{ item.books[0].spineImgURL }}"></a>
+                {% else %}
+                    <a href="http://{{ baseURL }}/library/{{ item.spineFileName }}"><img id="spineImg" src="{{ item.books[0].spineImgURL }}"></a>
+                {% endif %}
+
+                {#            <div class="col span_3_of_4">#}
+                {#                {{ item.recordID }}#}
+                {#                numOfVols: {{ item.bookCount }} <br>#}
+                {#	        </div>#}
+                {##}
+                {#            <div class="col span_4_of_4"></div>#}
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

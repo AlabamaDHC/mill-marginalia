@@ -1,0 +1,46 @@
+<header>
+<style>#logo-container { color: #039be5; }</style>
+<nav role="navigation" class="nav-extended primary-color-background">
+    <div class="container">
+        <div class="nav-wrapper">
+            <a id="logo-container" href="{{ url_for('show_home') }}" class="brand-logo"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Mill Marginalia logo image" alt="Home link"></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url_for('show_home') }}" class="secondary-color {% if active_page == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('show_shelf') }}" class="secondary-color {% if active_page == 'library' %}active{% endif %}">Library</a></li>
+                <li><a href="{{ url_for('show_volumes') }}" class="secondary-color {% if active_page == 'volumes' %}active{% endif %}">Volumes</a></li>
+                <li><a href="{{ url_for('show_authors') }}" class="secondary-color {% if active_page == 'authors' %}active{% endif %}">Authors</a></li>
+                <li><a href="{{ url_for('basic_search') }}" class="secondary-color {% if active_page == 'search' %}active{% endif %}">Search</a></li>
+                <li><a href="{{ url_for('show_about') }}" class="secondary-color {% if active_page == 'about' %}active{% endif %}">About</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="{{ url_for('show_home') }}" class="secondary-color {% if active_page == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('show_shelf') }}" class="secondary-color {% if active_page == 'library' %}active{% endif %}">Library</a></li>
+                <li><a href="{{ url_for('show_volumes') }}" class="secondary-color {% if active_page == 'volumes' %}active{% endif %}">Volumes</a></li>
+                <li><a href="{{ url_for('show_authors') }}" class="secondary-color {% if active_page == 'authors' %}active{% endif %}">Authors</a></li>
+                <li><a href="{{ url_for('basic_search') }}" class="secondary-color {% if active_page == 'search' %}active{% endif %}">Search</a></li>
+                <li><a href="{{ url_for('show_about') }}" class="secondary-color {% if active_page == 'about' %}active{% endif %}">About</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse right"><i class="material-icons">menu</i></a>
+        </div>
+
+        {% if breadcrumbs %}
+            <div class="nav-content">
+                <div class="col s12">
+                    <a class="breadcrumb" href="{{ url_for('show_home') }}">Home</a>
+{#                    <a class="breadcrumb" href="{{ url_for('show_shelf') }}">Library</a>#}
+                    <a class="breadcrumb" href="{{ url_for('show_volumes') }}">Volumes</a>
+{#                    <a class="breadcrumb" href="{{ url_for('show_authors') }}">Authors</a>#}
+                    {% for b in breadcrumbs %}
+                        {% if loop.last %}
+                            <a class="breadcrumb active">{{ b }}</a>
+                        {% else %}
+                            <a class="breadcrumb ">{{ b }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</nav>
+</header>

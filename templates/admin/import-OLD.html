@@ -1,0 +1,812 @@
+{% extends "admin/admin-template.html" %}
+{% set active_page = 'import' %}
+
+{% block head %}
+<!-- Select2 css-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2.min.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2-bootstrap.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/pmd-select2.css') }}"/>
+{% endblock %}
+
+<style>
+
+    .section-subtitle {
+
+
+    }
+</style>
+
+{% block content %}
+    <div class="container-fluid full-width-container">
+
+        <section class="row" class="section-title">
+            <div class="col-md-9">
+                <h1 class="section-title">
+                    <span>Import</span>
+                </h1>
+                <ol class="breadcrumb text-left">
+                    <li><a href="#">Dashboard</a></li>
+                    <li class="active">Import</li>
+                </ol>
+            </div>
+        </section>
+
+        {% if get_flashed_messages() %}
+            <section class="row" class="section-messages">
+                <div class="col-md-12">
+                    {% for category, message in get_flashed_messages(with_categories=True) %}
+                        <div role="alert" class="alert alert-dismissible {{ category }}">
+                            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+                            <b>{{ message | safe}}</b>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+
+        <section class="row" class="section-form" novalidate>
+            <form id="validationForm" action="{{ url_for('admin_import') }}" method="post">
+
+                <div class="col-md-9">
+
+                    <div class="component-box">
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-tabs pmd-tabs-bg">
+                                <div class="pmd-tab-active-bar" style="width: 104px; left: 0px;"></div>
+                                <ul class="nav nav-tabs" role="tablist" style="width: 339.062px;">
+                                    <li role="presentation" class="active"><a href="#fromspreadsheet" aria-controls="fromspreadsheet" role="tab" data-toggle="true" aria-expanded="false">From Spreadsheet</a></li>
+                                    <li role="presentation" class=""><a href="#books" aria-controls="books" role="tab" data-toggle="tab" aria-expanded="false">Books</a></li>
+{#                                    <li role="presentation" class=""><a href="#marginalia" aria-controls="marginalia" role="tab" data-toggle="tab" aria-expanded="false">Marginalia</a></li>#}
+                                </ul>
+                            </div>
+
+                            <div class="pmd-card-body">
+                                <div class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane active" id="fromspreadsheet">
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label class="control-label">Paste here</label>
+                                                    <textarea name="import_from_spreadsheet" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 450px;"></textarea><span class="pmd-textfield-focused"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="books2">
+{#                                        <div class="group-fields clearfix row">#}
+{#                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">#}
+{#                                                <div class="panel-group pmd-accordion">#}
+{##}
+{#                                                    <div class="panel">#}
+{#                                                        <div class="panel-heading" role="tab" id="headingTwo">#}
+{#                                                            <h4 class="panel-title">#}
+{#                                                                <a data-toggle="collapse" data-parent="#accordion3" href="#collapse1" aria-expanded="false" aria-controls="collapse1" data-expandable="false" class="collapsed">#}
+{#                                                                    <i class="material-icons pmd-sm pmd-accordion-icon-left">info_outline</i>#}
+{#                                                                    Import Guide#}
+{#                                                                    <i class="material-icons md-dark pmd-sm pmd-accordion-arrow">keyboard_arrow_down</i>#}
+{#                                                                </a>#}
+{#                                                            </h4>#}
+{#                                                        </div>#}
+{#                                                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">#}
+{#                                                            <div class="panel-body">#}
+{#                                                                <ul class="list-group pmd-card-list pmd-list">#}
+{#                                                                    <li class="list-group-item">#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>A</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Slug</h3>#}
+{#                                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>B</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Author Last Name</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>C</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Author First Name</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>D</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Title</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>E</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Subtitle</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>F</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Editor/Translator</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>G</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Number of Volumes</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>H</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Volume Number</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>I</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Publisher</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>J</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Year of Publication</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>K</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Place of Publication</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>L</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Full-text edition</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column <b>M</b></h3>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Period Translation</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{##}
+{#                                                    <div class="panel">#}
+{#                                                        <div class="panel-heading" role="tab" id="headingTwo">#}
+{#                                                            <h4 class="panel-title">#}
+{#                                                                <a data-toggle="collapse" data-parent="#accordion3" href="#collapse2" aria-expanded="false" aria-controls="collapse2" data-expandable="false" class="collapsed">#}
+{#                                                                    <i class="material-icons pmd-sm pmd-accordion-icon-left">info_outline</i>#}
+{#                                                                    Import Mapping#}
+{#                                                                    <i class="material-icons md-dark pmd-sm pmd-accordion-arrow">keyboard_arrow_down</i>#}
+{#                                                                </a>#}
+{#                                                            </h4>#}
+{#                                                        </div>#}
+{#                                                        <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false">#}
+{#                                                            <div class="panel-body">#}
+{#                                                                <ul class="list-group pmd-card-list pmd-list">#}
+{#                                                                    <li class="list-group-item">#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="human_slug_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.human_slug_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.human_slug_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.human_slug_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.human_slug_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.human_slug_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.human_slug_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.human_slug_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.human_slug_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.human_slug_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.human_slug_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.human_slug_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.human_slug_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.human_slug_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.human_slug_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.human_slug_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Slug</h3>#}
+{#                                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="title_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.title_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.title_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.title_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.title_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.title_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.title_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.title_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.title_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.title_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.title_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.title_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.title_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.title_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.title_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.title_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Title</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="subtitle_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.subtitle_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.subtitle_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.subtitle_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.subtitle_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.subtitle_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.subtitle_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.subtitle_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.subtitle_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.subtitle_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.subtitle_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.subtitle_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.subtitle_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.subtitle_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.subtitle_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.subtitle_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Subtitle</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="author_first_name_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.author_first_name_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.author_first_name_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.author_first_name_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.author_first_name_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.author_first_name_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.author_first_name_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.author_first_name_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.author_first_name_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.author_first_name_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.author_first_name_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.author_first_name_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.author_first_name_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.author_first_name_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.author_first_name_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.author_first_name_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Author First Name</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="author_last_name_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.author_last_name_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.author_last_name_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.author_last_name_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.author_last_name_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.author_last_name_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.author_last_name_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.author_last_name_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.author_last_name_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.author_last_name_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.author_last_name_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.author_last_name_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.author_last_name_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.author_last_name_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.author_last_name_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.author_last_name_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Author Last Name</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="editor_translator_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.editor_translator_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.editor_translator_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.editor_translator_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.editor_translator_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.editor_translator_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.editor_translator_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.editor_translator_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.editor_translator_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.editor_translator_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.editor_translator_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.editor_translator_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.editor_translator_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.editor_translator_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.editor_translator_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.editor_translator_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Editor/Translator</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="edition_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.edition_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.edition_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.edition_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.edition_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.edition_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.edition_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.edition_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.edition_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.edition_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.edition_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.edition_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.edition_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.edition_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.edition_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.edition_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Edition</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="number_of_volumes_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.number_of_volumes_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.number_of_volumes_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.number_of_volumes_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.number_of_volumes_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.number_of_volumes_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.number_of_volumes_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.number_of_volumes_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.number_of_volumes_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.number_of_volumes_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.number_of_volumes_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.number_of_volumes_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.number_of_volumes_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.number_of_volumes_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.number_of_volumes_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.number_of_volumes_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Number of Volumes</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="volume_number_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.volume_number_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.volume_number_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.volume_number_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.volume_number_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.volume_number_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.volume_number_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.volume_number_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.volume_number_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.volume_number_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.volume_number_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.volume_number_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.volume_number_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.volume_number_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.volume_number_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.volume_number_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Volume Number</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="publisher_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.publisher_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.publisher_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.publisher_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.publisher_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.publisher_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.publisher_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.publisher_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.publisher_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.publisher_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.publisher_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.publisher_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.publisher_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.publisher_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.publisher_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.publisher_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">publisher_map_col</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="place_of_pub_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.place_of_pub_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.place_of_pub_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.place_of_pub_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.place_of_pub_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.place_of_pub_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.place_of_pub_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.place_of_pub_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.place_of_pub_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.place_of_pub_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.place_of_pub_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.place_of_pub_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.place_of_pub_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.place_of_pub_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.place_of_pub_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.place_of_pub_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Place of Publication</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="year_of_pub_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.year_of_pub_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.year_of_pub_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.year_of_pub_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.year_of_pub_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.year_of_pub_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.year_of_pub_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.year_of_pub_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.year_of_pub_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.year_of_pub_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.year_of_pub_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.year_of_pub_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.year_of_pub_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.year_of_pub_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.year_of_pub_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.year_of_pub_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">year_of_pub_map_col</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="full_text_edition_link_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.full_text_edition_link_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.full_text_edition_link_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.full_text_edition_link_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.full_text_edition_link_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.full_text_edition_link_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.full_text_edition_link_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.full_text_edition_link_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.full_text_edition_link_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.full_text_edition_link_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.full_text_edition_link_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.full_text_edition_link_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.full_text_edition_link_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.full_text_edition_link_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.full_text_edition_link_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.full_text_edition_link_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Full Text Edition Link</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="period_translation_link_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.period_translation_link_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.period_translation_link_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.period_translation_link_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.period_translation_link_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.period_translation_link_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.period_translation_link_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.period_translation_link_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.period_translation_link_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.period_translation_link_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.period_translation_link_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.period_translation_link_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.period_translation_link_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.period_translation_link_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.period_translation_link_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.period_translation_link_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Period Translation Link</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                        <hr>#}
+{##}
+{##}
+{#                                                                        <div class="row" style="text-align: center;">#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Column</h3>#}
+{#                                                                                <select name="spine_image_map_col" class="form-control">#}
+{#                                                                                    <option value="0" {% if book_map.spine_image_map_col==0 %}selected{% endif %}>A</option>#}
+{#                                                                                    <option value="1" {% if book_map.spine_image_map_col==1 %}selected{% endif %}>B</option>#}
+{#                                                                                    <option value="2" {% if book_map.spine_image_map_col==2 %}selected{% endif %}>C</option>#}
+{#                                                                                    <option value="3" {% if book_map.spine_image_map_col==3 %}selected{% endif %}>D</option>#}
+{#                                                                                    <option value="4" {% if book_map.spine_image_map_col==4 %}selected{% endif %}>E</option>#}
+{#                                                                                    <option value="5" {% if book_map.spine_image_map_col==5 %}selected{% endif %}>F</option>#}
+{#                                                                                    <option value="6" {% if book_map.spine_image_map_col==6 %}selected{% endif %}>G</option>#}
+{#                                                                                    <option value="7" {% if book_map.spine_image_map_col==7 %}selected{% endif %}>H</option>#}
+{#                                                                                    <option value="8" {% if book_map.spine_image_map_col==8 %}selected{% endif %}>I</option>#}
+{#                                                                                    <option value="9" {% if book_map.spine_image_map_col==9 %}selected{% endif %}>J</option>#}
+{#                                                                                    <option value="10" {% if book_map.spine_image_map_col==10 %}selected{% endif %}>K</option>#}
+{#                                                                                    <option value="11" {% if book_map.spine_image_map_col==11 %}selected{% endif %}>L</option>#}
+{#                                                                                    <option value="12" {% if book_map.spine_image_map_col==12 %}selected{% endif %}>M</option>#}
+{#                                                                                    <option value="13" {% if book_map.spine_image_map_col==13 %}selected{% endif %}>N</option>#}
+{#                                                                                    <option value="14" {% if book_map.spine_image_map_col==14 %}selected{% endif %}>O</option>#}
+{#                                                                                </select>#}
+{#                                                                            </div>#}
+{#                                                                            <div class="col-md-6">#}
+{#                                                                                <h3 class="list-group-item-heading">Spine Image Name</h3>#}
+                                                                                {#                                                                <span class="list-group-item-text">Secondary text</span>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{##}
+{##}
+{##}
+{#                                                                    </li>#}
+{#                                                                </ul>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{##}
+{#                                                </div>#}
+{##}
+{#                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">#}
+{#                                                    <label class="control-label">Paste here</label>#}
+{#                                                    <textarea name="import_books" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 450px;"></textarea><span class="pmd-textfield-focused"></span>#}
+{#                                                </div>#}
+{##}
+{#                                            </div>#}
+{#                                        </div>#}
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="books">
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label class="control-label">Paste here</label>
+                                                    <textarea name="import_books" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 450px;"></textarea><span class="pmd-textfield-focused"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="component-box">
+                        <!--Default tab example -->
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-card-body">
+
+                                <ul class="list-group pmd-card-list pmd-list-icon">
+                                    <li class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
+                                        <i class="material-icons media-left pmd-sm">book</i>
+                                        <span class="media-body">Single-line item with icon</span>
+                                    </li>
+                                    <li class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
+                                        <i class="material-icons media-left media-middle">notifications</i>
+                                        <div class="media-body">Single-line item with icon</div>
+                                    </li>
+                                </ul>
+
+                                <div class="group-fields clearfix row" style="text-align: right">
+                                    <div class="col-md-12">
+                                        <div class="checkbox pmd-default-theme" style="text-align: left;">
+                                            <label class="pmd-checkbox pmd-checkbox-ripple-effect">
+                                                <input type="checkbox" value="" checked=""><span class="pmd-checkbox-label">&nbsp;</span>
+                                                <span>Public</span> </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="group-fields clearfix" style="text-align: right">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <button type="submit" class="btn btn-primary pmd-ripple-effect">Run Import</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> <!--Default tab example end-->
+
+                    </div>
+                </div>
+                <hr>
+
+            </form>
+        </section>
+
+
+
+        <hr>
+
+    </div><!-- tab end -->
+{% endblock %}
+
+{% block scripts %}
+<!-- Select2 js-->
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/select2.full.js') }}"></script>
+
+<!-- Propeller Select2 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		<!-- Simple Selectbox -->
+		$(".select-simple").select2({
+			theme: "bootstrap",
+			minimumResultsForSearch: Infinity,
+		});
+		<!-- Selectbox with search -->
+		$(".select-with-search").select2({
+			theme: "bootstrap"
+		});
+		<!-- Select Multiple Tags -->
+		$(".select-tags").select2({
+			tags: false,
+			theme: "bootstrap",
+		});
+		<!-- Select & Add Multiple Tags -->
+		$(".select-add-tags").select2({
+			tags: true,
+			theme: "bootstrap",
+		});
+	});
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/pmd-select2.js') }}"></script>
+<script>
+	$(document).ready(function() {
+		var sPath=window.location.pathname;
+		var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+		$(".pmd-sidebar-nav").each(function(){
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").addClass("open");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('.dropdown-menu').css("display", "block");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('a.dropdown-toggle').addClass("active");
+			$(this).find("a[href='"+sPage+"']").addClass("active");
+		});
+	});
+</script>
+<script type="text/javascript">
+$(document).ready( function() {
+	$('.pmd-tabs').pmdTab();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base-new.html" %}
+
+{% block body %}
+
+    {#    load page or view specific styles and scripts here    #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bookViewStyles.css') }}">
+
+    <ol class="breadcrumb">
+        <li><a href="http://{{ baseURL }}">Home</a></li>
+        <li><a href="http://{{ baseURL }}/library">Library</a></li>
+        <li class="active">{{ volumesList[0].title }}</li>
+    </ol>
+
+    {% for item in volumesList %}
+
+        <div class="section group">
+	        <div class="col span_1_of_4">
+                <a href="http://{{ baseURL }}/filter/{{ item.firstPageRecordID }}"><h4>Vol {{ item.volNum }}</h4></a>
+	        </div>
+
+            <div id="spineCol" class="col span_2_of_4">
+                <div id="bookHeader">
+                    <h4>{{ item.title }}{% if item.subTitle %}Ed {{ item.subTitle }}{% endif %}, {{ item.authorFirstName }} {{ item.authorLastName }},
+                        {% if item.bookCount %}Vols {{ item.bookCount }}, {% endif %}
+                        {{ item.yearOfPub }}, {% if item.edition %}{{ item.edition }} Edition{% endif %}</h4>
+                    <h6>
+                    {% if item.onlineEditionURL %}
+                        <a href="{{ item.onlineEditionURL }}">Online Edition</a><br>
+                    {% endif %}
+
+                    {% if item.periodTranslationURL %}
+                        <a href="{{ item.periodTranslationURL }}">Period Translation</a><br>
+                    {% endif %}
+                    </h6>
+                </div>
+	        </div>
+
+            <div class="col span_3_of_4">
+                recordID: {{ item.recordID }} <br>
+                numOfVols: {{ item.bookCount }} <br>
+	        </div>
+
+{#            <div class="col span_4_of_4"></div>#}
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}

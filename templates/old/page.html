@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        body {
+            background-color: rgb(247, 247, 247);
+
+        }
+
+        nav {
+            background-color: #39383a;
+        }
+
+        #page-img, .marg-close-img {width: 100%}
+
+        .marg-close-img {
+            margin-top: 7px;
+        }
+
+
+        .card-panel {
+            box-sizing: content-box;
+            width: fit-content;
+
+        }
+
+        ol {
+            list-style-type: none;
+        }
+
+        .card-panel {
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+            margin: .5rem 0 1rem 0;
+        }
+
+        .collection, .pagination {
+            padding-left: 0;
+        }
+
+        span.badge {
+            font-weight: 300;
+            font-size: 0.8rem;
+            color: #fff;
+            background-color: #26a69a;
+            border-radius: 3px;
+            margin-left: 0px;
+            margin-bottom: 5px;
+            margin-right: 3px;
+            float: unset;
+            padding-bottom: 4px;
+            padding-top: 4px;
+        }
+
+        span.badge:first-of-type { margin-left: 6px; }
+
+        .badge.text { background-color: coral; }
+        .badge.text-jsms-hand { background-color: coral; }
+        .badge.squiggle { background-color: cadetblue; }
+        .badge.underlining { background-color: darkred; }
+        .badge.strikethrough { background-color: blue; }
+        .badge.score { background-color: sienna; }
+        .badge.question-mark { background-color: teal; }
+        .badge.exclamation-point{ background-color: yellowgreen; }
+        .badge.double-exclamation-point { background-color: rebeccapurple; }
+        .badge.dotted-score { background-color: darkslategrey; }
+        .badge.bracket { background-color: goldenrod; }
+        .badge.x-mark { background-color: paleturquoise; }
+        .badge.dash { background-color: firebrick; }
+        .badge.copyedit { background-color: darkgreen; }
+        .badge.slashthrough { background-color: tomato;  }
+        .badge.check-mark { background-color: olive; }
+
+        #page-img-floating-btn {
+            position: relative;
+            left: 475px;
+            float: left;
+        }
+
+        img.no-effect {
+            -webkit-filter: none;
+            filter: none;
+        }
+
+        img.grey-scale {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        img.high-contrast {
+            -webkit-filter: contrast(200%);
+            filter: contrast(200%);
+        }
+
+        img.hue-rotate {
+            -webkit-filter: hue-rotate(90deg);
+            filter: hue-rotate(90deg);
+        }
+
+        img.invert {
+            -webkit-filter: invert(100%);
+            filter: invert(100%);
+        }
+
+        img.saturate {
+            -webkit-filter: saturate(8);
+            filter: saturate(8);
+        }
+
+        img.sepia {
+            -webkit-filter: sepia(100%);
+            filter: sepia(100%);
+        }
+
+        #book-header-container {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        #book-header {
+            min-width: 97%;
+
+        }
+
+        label {
+            font-size: 1.2rem;
+        }
+
+        .modal-overlay{
+            opacity: 0 !important;
+        }
+
+        #modal-color-effect.transparent {
+            opacity: 0.7 !important;
+            background-color: #fafafa !important;
+        }
+
+        .page-footer {
+            background-color: #39383a;
+        }
+
+        #page-nav-list-container, #marg-list-container {
+            padding: 0 0;
+            width: 99%;
+        }
+        #page-nav-list, #marg-list {
+            width: 99%;
+            margin: 0 0;
+            border: none;
+        }
+
+        .collapsible-body {
+            padding: 0.5rem 1rem 0 1rem;
+        }
+
+        .search-opt-label, .filter-opt-label {
+            margin-bottom: 7px;
+            line-height: 23px !important;
+        }
+
+        #marg-list-container {
+            width: initial;
+        }
+
+        nav.nav-extended {
+            padding: 1rem 2rem 1rem 2rem;
+        }
+
+        #filter-clear {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav class="nav-extended">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo"><img id="headerLogo" alt="Brand" src="{{ url_for('static', filename='img/mill-logo-draft-2-inverted.png') }}" width="130px"></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Home</a></li>
+                <li><a href="badges.html">Blog</a></li>
+                <li><a href="collapsible.html">Library</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="sass.html">Home</a></li>
+                <li><a href="badges.html">Blog</a></li>
+                <li><a href="collapsible.html">Library</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-content">
+            <div class="col s12">
+                <a class="breadcrumb" href="{{ url_for('show_home') }}">Home</a>
+                {% if book.number_of_volumes|int > 1 %}
+                    <a class="breadcrumb" href="{{ url_for('show_library') }}">Library</a>
+                    <a class="breadcrumb" href="{{ url_for('show_book', book_slug=book.slug) }}">{{ book.title }}</a>
+                    <a class="breadcrumb active">Vol {{ book.volume_number }}</a>
+                {% else %}
+                    <a class="breadcrumb active" href="{{ url_for('show_library') }}">Library</a>
+                    <a class="breadcrumb active">{{ book.title }}</a>
+                {% endif %}
+
+            </div>
+        </div>
+</nav>
+
+<ul id="book-header-container" class="collapsible" data-collapsible="expandable">
+    <li>
+        <div class="collapsible-header">
+            <div id="book-header" class="col 10"><i class="material-icons">book</i>{{ book.title }}{% if book.subtitle %}Ed {{ book.subtitle }}{% endif %}, {{ book.author_first_name }} {{ book.author_last_name }}, {{ book.year_of_pub }}, {% if book.edition %}{{ book.edition }} Edition{% endif %}</div>
+
+            <div class="col 2">
+                <div class="right-align right"><i class="material-icons">arrow_drop_down</i></div>
+            </div>
+        </div>
+        <div class="collapsible-body">
+            {%- if book.full_text_edition_link -%}
+                <a href="{{ book.full_text_edition_link }}">Online Edition</a><br>
+            {% endif %}
+
+            {%- if book.period_translation_link -%}
+                <a href="{{ book.period_translation_link }}">Period Translation</a><br>
+            {% endif %}
+        </div>
+    </li>
+</ul>
+
+<div class="row">
+
+    <div class="col s12 m3 l3">
+
+        <div id="pageNavContainer">
+
+            <ul id="filter-container" class="collapsible" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header active"><i class="material-icons">search</i>Search</div>
+                    <div class="collapsible-body">
+                        <input class="search" placeholder="Search term" />
+                        <label>Options</label><br>
+                        <input type="checkbox" id="search-opt-1" checked="checked" />
+                        <label class="search-opt-label" for="search-opt-1">Marginalia Types</label><br>
+                        <input type="checkbox" class="search-opt-label" id="search-opt-2" checked="checked" />
+                        <label class="search-opt-label" for="search-opt-2">Marginalia Transcriptions</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header active"><i class="material-icons">filter_list</i>Filter</div>
+                    <div class="collapsible-body">
+                        <label>Marginalia Types</label><br>
+                        <select id="filter-multi-select" multiple>
+                            <option class="filled-in" value="0" disabled selected>Select types to show</option>
+                            {% for margType in book.marginalia_type_set %}
+                                <option id="filter-multi-select-opt-{{ loop.index }}" value="{{ margType }}">{{ margType }}</option>
+                            {% endfor %}
+                        </select>
+                        <a id="filter-clear" class="waves-effect waves-light btn">Clear</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div id="page-nav-list-container" class="card-panel">
+                <ol id="page-nav-list" class="list collection">
+                    {% for pageNav in book.pages %}
+{#                        href="{{ url_for('show_book_page', book_slug=book.slug, page_id=pageNav.id) }}"#}
+                        <a class="collection-item{% if pageNav.id == page.id %} {% set activeIndex = loop.index0 %}active{% endif %}" data-page-image="{{ pageNav.page_image }}">
+                            <li class="list-item">
+                                {%- if pageNav.page_num -%} {{ pageNav.page_num }}{% else %} {{ pageNav.location_in_book }}{% endif %}
+                                {%- for margType in pageNav.marginalia_type_set -%}
+                                    <span class="badge {{ margType|replace("'", "")|replace("(", "")|replace(")", "")|replace(" ", "-")|lower }} tooltipped" data-position="top" data-delay="50" data-tooltip="{{ pageNav.marginalia_transcription }}">{{ margType }}</span>
+                                {% endfor %}
+                                <div class="marginalia hide">={{ pageNav.marginalia_type_set }}</div>
+{#                                <div class="transcription tooltipped" data-position="top" data-delay="50" data-tooltip="{{ pageNav.marginalia_transcription }}"></div>#}
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <ol class="pagination">
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="#!">1</a></li>
+                <li class="waves-effect"><a href="#!">2</a></li>
+                <li class="waves-effect"><a href="#!">3</a></li>
+                <li class="waves-effect"><a href="#!">4</a></li>
+                <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="col s12 m6 l6">
+
+        <div class="row">
+            <div class="card-panel">
+                <img id="page-img" class="materialboxed" src="{{ url_for('static', filename='assets/web/optimized/pages/'+page.page_image+'.jpg') }}">
+
+                <div id="page-img-floating-btn" class="fixed-action-btn horizontal">
+                    <a class="btn-floating btn-large">
+                        <i class="large material-icons">settings</i>
+                    </a>
+                    <ul>
+                        <li><a class="btn-floating grey tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Image Effects" href="#modal-color-effect" onclick="$('#modal-color-effect').removeClass('transparent');"><i class="material-icons">image</i></a></li>
+                        <li><a class="btn-floating yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Zoom In" onclick="$( '#page-img' ).click();"><i class="material-icons">zoom_in</i></a></li>
+                        <li><a class="btn-floating green tooltipped" data-position="bottom" data-delay="50" data-tooltip="Download Original Image" href="{{ url_for('static', filename='assets/'+page.page_image+'.jpg') }}" download="{{page.page_image+'.jpg'}}"><i class="material-icons">file_download</i></a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s4">
+                <div><a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">chevron_left</i></a></div>
+            </div>
+
+            <div class="col s4">
+                <a class="btn-floating btn-large waves-effect waves-light disabled">{% if page.page_num %} {{ page.page_num }}{% else %} {{ page.location_in_book }}{% endif %}</a>
+            </div>
+
+            <div class="col s4">
+                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">chevron_right</i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m3 l3">
+        <div class="row" style="margin-bottom: 0;">
+            <div id="marg-list-container" class="card-panel">
+                <ol id="marg-list" class="list collection">
+                    {% for marg in page.marginalia %}
+                        <li class="collection-item">
+                            <span class="badge {{ marg.type|replace("'", "")|replace("(", "")|replace(")", "")|replace(" ", "-")|lower }}">{{ marg.type }}</span>
+                            {% if marg.close_image %} <img class="materialboxed marg-close-img" src="{{ url_for('static', filename='assets/web/optimized/'+marg.close_image+'.jpg') }}"> {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-color-effect" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Color Effects</h4>
+            <div class="row">
+                {% set coloreffects=['No Effect', 'Grey Scale', 'High Contrast', 'Hue Rotate', 'Invert', 'Saturate', 'Sepia'] %}
+                {% for effect in coloreffects %}
+                    <div class="col">
+                        <input class="with-gap" name="color-effects-group" type="radio" id="color-effects-{{ loop.index0 }}" onclick="$('#page-img').attr('class','materialboxed {{ effect|replace(" ","-")|lower }}'); $('.marg-close-img').attr('class','materialboxed marg-close-img {{ effect|replace(" ","-")|lower }}');"/><label for="color-effects-{{ loop.index0 }}">{{ effect }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="btn-floating yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Zoom In" onclick="$('#modal-color-effect').toggleClass('transparent'); $( '#page-img' ).click();"><i class="material-icons">zoom_in</i></button>
+        </div>
+        <div class="modal-footer">
+            <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</button>
+        </div>
+    </div>
+
+</div>
+
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul id="staggered-test">
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
+        $('select').material_select();
+        $('.modal').modal();
+
+        Materialize.showStaggeredList('#staggered-test');
+
+        var pageNavList = new List('pageNavContainer', {
+            valueNames: ['badge', 'marginalia',  { attr: 'data-tooltip', name: 'transcription' }],
+            page: 13,
+            pagination: true,
+        });
+
+        $('.select-dropdown').on('close', function() {
+            var selected = $("#filter-multi-select").val();
+            if (selected.length == 0) {
+                pageNavList.filter();
+                return;
+            }
+            pageNavList.filter(function(item) {
+                for (var i = 0; i < selected.length; i++) {
+                    if (item.values().marginalia.includes(selected[i])) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        });
+
+
+{#        $('.select-dropdown').on('close', function() {#}
+{#            console.log( $(this) );#}
+{#            console.log( $("#filter-multi-select").val() );#}
+{#            var selected = $("#filter-multi-select").val();#}
+{##}
+{#            pageNavList.filter(function(item) {#}
+{#                var a = item;#}
+{#                var v = item.values();#}
+{#                var t = item.values().badge;#}
+{#                var test =  item.values().some(isBiggerThan10);#}
+{##}
+{#                for (var i = 0; i < selected.length; i++) {#}
+{#                    var c = item.values().badge.includes(selected[i]);#}
+{#                    if (item.values().badge.includes(selected[i])) {#}
+{#                        return true;#}
+{#                    } else {#}
+{#                        return false;#}
+{#                    }#}
+{#                }#}
+{#            });#}
+{#        });#}
+
+
+        $("#filter-multi-select1").on('change', function() {
+            console.log( $(this) );
+            console.log( $("#filter-multi-select").val() );
+            var selected = $("#filter-multi-select").val();
+            pageNavList.filter(function(item) {
+                var t = item.values().badge;
+                for (var i = 0; i < selected.length; i++) {
+                    var c = item.values().badge.includes(selected[i]);
+                    if (item.values().badge.includes(selected[i])) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+{#                if (item.values().badge.includes(['score', 'text'])) {#}
+{#                    return true;#}
+{#                } else {#}
+{#                    return false;#}
+{#                }#}
+            });
+        });
+
+
+        $('#filter-clear').click(function () {
+            $('#filter-multi-select').val('0', true);
+            $('#filter-multi-select').material_select();
+        });
+
+    });
+</script>
+
+</body>
+</html>

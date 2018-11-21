@@ -1,0 +1,54 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">How to Use this Site</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>More extensive information about the features of this site is available in the “Technical Approach” and
+            “Editorial Policies” sections of the static content. Those who wish to get right to the marginalia are
+            advised to begin on the Home page, which provides five ways into the images: “Explore Library” offers a
+            browsable view of the spines of books whose marginalia has been added to the site, with the order of spines
+            determined randomly with each view; “Search Library” allows you to filter all marginalia in the database by
+            (sub)type, author, volume, or any combination of these categories; “Volumes” will take you to an alphabetized
+            list of all books whose marginalia has been added to the site ; “Distinct Marginalia Types” will take you a
+            list of all types and subtypes of marginalia discovered and categorized within the Mill collection, each
+            with a reference photo; “Authors” will take you to an alphabetized list of all authors whose books have been
+            digitized so far –that subset of the collection written by your chosen author appears in alphabetical order
+            by volume title. However you arrive at a book, you will notice that a list of all of its marginalia, identified
+            by type and subtype, appears at left, that an image of the title page of the book appears in the middle of
+            your browser window, and that a transcription pane appears at the right. Use the “Search Transcriptions” and
+            “Filter by Type” (above at left) to narrow down the marginalia even further or select a page from the list
+            at left. Tools for manipulating the image can be accessed via the gear at the bottom right corner of the page
+            image. Those who wish to perform more sophisticated adjustments to the image are invited to import it into
+            their favorite image software. A link to an online full text edition of the book is located above the transcription
+            pane (above at right), and a critical introduction, if available, can be accessed via a link above the page
+            image. Happy viewing.</p>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

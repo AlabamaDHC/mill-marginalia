@@ -1,0 +1,98 @@
+{% extends "admin/admin-template.html" %}
+{% set active_page = 'import' %}
+
+{% block head %}
+    <style>
+    #content {
+        margin-top: 10px;
+    }
+
+    .btn-primary.active {
+        background-color: #204d74;
+        border-color: #122b40;
+    }
+
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content" class="container-fluid full-width-container">
+
+        <section class="row" class="section-form">
+
+            <form id="validationForm" action="#" method="post">
+
+                <div class="col-md-9">
+
+                    <div class="pmd-card pmd-card-default pmd-z-depth pmd-card-custom-form">
+                        <div class="pmd-card-title">
+                            <h2 class="pmd-card-title-text">Failed Imports</h2>
+                            <a href="{{ url_for('admin_run_error_checks') }}?sheet={{ active }}&errorsonly=true" class="right"><button class="btn btn-primary pmd-ripple-effect right" type="button">Recheck Sheet (Errors Only)</button></a>
+                            <a href="{{ url_for('admin_run_error_checks') }}?sheet={{ active }}" class="right"><button class="btn btn-primary pmd-ripple-effect right" type="button">Recheck Whole Sheet</button></a>
+                            <a href="{{ url_for('admin_run_import') }}?sheet={{ active }}" class="right"><button class="btn btn-primary pmd-ripple-effect right" type="button">Run Sheet Imports</button></a>
+                            <a href="{{ url_for('admin_run_import') }}?sheet={{ active }}&errorsonly=true" class="right"><button class="btn btn-primary pmd-ripple-effect right" type="button">Run Sheet Error Imports</button></a>
+                        </div>
+                        <div class="pmd-card-actions">
+                            {% for s in imported_sheets %}
+                             <a href="{{ url_for(request.endpoint) }}?sheet={{ s['name']|lower }}">
+                                <button class="btn btn-primary pmd-ripple-effect {% if s['name']|lower == active %}active{% endif %}" type="button">
+                                    {{ s['name'] }}
+                                    <span class="badge">{{ s['count'] }}</span>
+                                </button>
+                             </a>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                    <div class="panel-group pmd-accordion" id="accordion" role="tablist" aria-multiselectable="true" >
+
+                        {% for item in failed %}
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading{{ loop.index0 }}">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index0 }}" aria-expanded="false" aria-controls="collapse{{ loop.index0 }}"  data-expandable="false">
+                                            ({{ item.sheet_name }}) ROW {{ item.row }}: {{ item.error_text }}
+                                            <i class="material-icons md-dark pmd-sm pmd-accordion-arrow">keyboard_arrow_down</i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse{{ loop.index0 }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                                    <div class="panel-body">
+                                        {% set fields = ['sheet_name', 'author_last_name', 'author_first_name',
+                                       'title', 'subtitle', 'editor_translator', 'number_of_volumes', 'edition',
+                                       'place_of_pub', 'publisher', 'year_of_pub', 'volume_number', 'location_in_book',
+                                       'part_of_book', 'page_image', 'close_image', 'page_num', 'location_on_page',
+                                        'writing_implement', 'line_number', 'type', 'subtype', 'language', 'transcription'] %}
+
+                                        {% for f in fields %}
+                                            <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                <label for="{{ f }}" class="control-label">{{ f }}</label>
+                                                <input type="text" id="{{ f }}" class="form-control" value="{{ item|attr(f) }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            </form>
+        </section>
+	</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+	$(document).ready(function() {
+    });
+
+</script>
+
+{% endblock %}

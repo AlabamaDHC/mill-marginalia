@@ -1,0 +1,347 @@
+{% set active_page = 'home' %}
+{% include 'front/head.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.8/themes/odometer-theme-minimal.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.8/odometer.min.js"></script>
+<style>
+    .icon-header {margin-bottom: 0px;}
+    .about-link { color: initial; }
+    .about-link:hover { color: #039be5; }
+
+    h4 {
+        font-size: 1.64rem;
+        line-height: 110%;
+        margin: .82rem 0 .656rem 0;
+    }
+
+    .cat-icon {
+        font-size: 3.56rem !important;
+        line-height: 110%;
+        margin: 1.78rem 0 0 0;
+    }
+
+    .btn-icon {
+        top: 1.75px;
+        position: relative;
+    }
+
+    .strong {
+        font-weight: 500;
+    }
+
+    .about-arrow-icon {
+        font-weight: 500;
+    }
+
+    .about-headers {
+        font-weight: 500;
+        margin: 0;
+        box-sizing: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .header {
+        background-color: rgba(0, 0, 0, 0.55);
+        -webkit-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        -moz-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+    }
+
+
+</style>
+<body>
+{#{% include 'front/alert.html' %}#}
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br>
+            <h1 class="header center secondary-color">Mill Marginalia Online</h1>
+            <div class="row center">
+                <a href="{{ url_for('show_shelf') }}" id="explore-button" class="btn-large waves-effect waves-light secondary-color-background primary-color">Explore Library</a>
+                <a href="{{ url_for('basic_search') }}" id="search-button" class="btn-large waves-effect waves-light secondary-color-background primary-color">Search Library</a>
+            </div>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container-flex secondary-color-background">
+    <div class="section container">
+
+        <div class="row">
+            <h3 class="center brand-color">Project Progress</h3>
+        </div>
+        <div class="row">
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <div class="center icon-header"><i aria-hidden="true" class="cat-icon material-icons">library_books</i></div>
+                    <h4 class="center icon-header"><div id="odometer1" class="odometer">000</div></h4>
+                    <h4 class="center icon-header">Volumes</h4>
+                    <div class="center">
+                        <a href="{{ url_for('show_volumes') }}" class="btn waves-effect waves-light secondary-color primary-color-background" aria-label="View Volumes page">View <i aria-hidden="true" class="btn-icon material-icons">arrow_forward</i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <div class="center icon-header"><i aria-hidden="true" class="cat-icon material-icons">create</i></div>
+                    <h4 class="center icon-header"><div id="odometer2" class="odometer">000</div></h4>
+                    <h4 class="center icon-header">Distinct Marginalia Types</h4>
+                    <div class="center">
+                        <a href="{{ url_for('show_marginalia_examples') }}" class="btn waves-effect waves-light secondary-color primary-color-background" aria-label="View Distinct Marginalia Types page" style="margin-top: 2px">View <i aria-hidden="true" class="btn-icon material-icons">arrow_forward</i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <div class="center icon-header"><i aria-hidden="true" class="cat-icon material-icons">supervisor_account</i></div>
+                    <h4 class="center icon-header"><div id="odometer3" class="odometer">000</div></h4>
+                    <h4 class="center icon-header">Authors</h4>
+                    <div class="center">
+                        <a href="{{ url_for('show_authors') }}" class="btn waves-effect waves-light secondary-color primary-color-background" aria-label="View Authors page">View <i aria-hidden="true" class="btn-icon material-icons">arrow_forward</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 center"><h3 class="center brand-color">About</h3>
+                <p class="left-align strong">Welcome to <i>Mill Marginalia Online</i>, a digital edition of all marks and annotations in the books of the
+                    John Stuart Mill Collection, held at Oxford University’s Somerville College.</p>
+
+{#                <p class="left-align light"><strong>The site is hosted by the University of Alabama Libraries, and has received#}
+{#                    financial and material support from the University of Alabama College of Arts and Sciences, Office of#}
+{#                    the Vice President for Research and Economic Development, and University Libraries, as well as Somerville#}
+{#                    College, Oxford.</strong></p>#}
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col s12 m4 l4">
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_how_to_use_this_site') }}" class="about-link" aria-label="View How to Use this Site page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">How to Use this Site</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_about_the_john_stuart_mill_library') }}" class="about-link" aria-label="View About the John Stuart Mill Library page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">About the John Stuart Mill Library</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_why_the_mills_and_their_marginalia') }}" class="about-link" aria-label="View Why the Mills & their Marginalia page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Why the Mills & their Marginalia</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_credits') }}" class="about-link" aria-label="View Credits page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Credits</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col s12 m4 l4">
+                <div class="about-card card">
+                    <a href="{{ url_for('show_editorial_policies') }}" class="about-link" aria-label="View Editorial Policies page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Editorial Policies</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_institutional_collaboration') }}" class="about-link" aria-label="View Institutional Collaboration page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Institutional Collaboration</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_citation_and_institutional_permission') }}" class="about-link" aria-label="View Citation and Institutional Permission page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Citation & Institutional Permission</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_advisory_board') }}" class="about-link" aria-label="View Advisory Board page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Advisory Board</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col s12 m4 l4">
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_marginalia_examples') }}" class="about-link" aria-label="View Marginalia Example page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Marginalia Example</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_critical_intro_page') }}" class="about-link" aria-label="View Critical Introductions page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Critical Introductions</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_technical_approach') }}" class="about-link" aria-label="View Technical Approach page">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Technical Approach</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+                <div class="about-card card">
+                    <a href="{{ url_for('show_blog') }}" class="about-link" aria-label="View Progress Blog">
+                        <div class="card-content">
+                            <div class="row" style="margin-bottom: 0px;">
+                                <div class="col s10 left">
+                                    <h4 class="about-headers">Progress Blog</h4>
+                                </div>
+                                <div class="col s1 right">
+                                    <i aria-hidden="true" class="about-arrow-icon material-icons right">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+setTimeout(function(){ odometer1.innerHTML = 328, 1000});
+setTimeout(function(){ odometer2.innerHTML = 61, 1000});
+setTimeout(function(){ odometer3.innerHTML = 109, 1000});
+
+{#setTimeout(function(){ odometer1.innerHTML = {{- book_count -}} }, 1000);#}
+{#setTimeout(function(){ odometer2.innerHTML = {{- marginalia_type_count -}} }, 1000);#}
+{#setTimeout(function(){ odometer3.innerHTML = {{- author_count -}} }, 1000);#}
+
+(function($){
+  $(function(){
+    $('.button-collapse').sideNav({
+        edge: 'right',
+    });
+    $('.parallax').parallax();
+    $('.collapsible').collapsible();
+
+  });
+})(jQuery);
+</script>
+</body>
+</html>

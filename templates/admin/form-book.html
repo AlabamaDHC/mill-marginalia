@@ -1,0 +1,450 @@
+{% extends "admin/admin-template.html" %}
+{% set active_page = 'books' %}
+
+{% block head %}
+<!-- Select2 css-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2.min.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/select2-bootstrap.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/select2/css/pmd-select2.css') }}"/>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='propeller/components/data-table/css/pmd-datatable.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid full-width-container">
+
+        <section class="row" class="section-title">
+            <div class="col-md-9">
+                <!-- Title -->
+                <h1 class="section-title">
+                    <span>{{ book.title }}</span>
+                </h1><!-- End Title -->
+
+                <!--breadcrum start-->
+                <ol class="breadcrumb text-left">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_books') }}">Books</a></li>
+                    <li class="active">{{ book.title }}</li>
+                </ol>
+                <!--breadcrum end-->
+
+            </div>
+
+        </section>
+
+        {% if get_flashed_messages() %}
+        <section class="row" class="section-messages">
+            <div class="col-md-12">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert {% if error %} alert-danger {% else %} alert-success {% endif %}" role="alert">
+                        <b>{{ message }}</b>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="row" class="section-form">
+            <form id="validationForm" action="{{ url_for('admin_book_form', book_id=book.id) }}" method="post">
+
+                <div class="col-md-9">
+                    <div class="component-box">
+                        <!--Default tab example -->
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-tabs pmd-tabs-bg">
+                                <div class="pmd-tab-active-bar" style="width: 104px; left: 0px;"></div>
+                                <ul class="nav nav-tabs" role="tablist" style="width: 339.062px;">
+                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true">General</a></li>
+                                    <li role="presentation" class=""><a href="#pages" aria-controls="pages" role="tab" data-toggle="tab" aria-expanded="false">Pages</a></li>
+                                    <li role="presentation" class=""><a href="#marginalia" aria-controls="pages" role="tab" data-toggle="tab" aria-expanded="false">Marginalia</a></li>
+                                    <li role="presentation" class=""><a href="#database" aria-controls="database" role="tab" data-toggle="tab" aria-expanded="false">Database</a></li>
+                                </ul>
+                            </div>
+                            <div class="pmd-card-body">
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="home">
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        Title
+                                                    </label>
+                                                    <input type="text" id="book-title" class="form-control" name="title" value="{{ book.title }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        Subtitle
+                                                    </label>
+                                                    <input type="text" id="book-subtitle" class="form-control" name="subtitle" value="{{ book.subtitle }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        author_first_name
+                                                    </label>
+                                                    <input type="text" id="book-auther-fname" class="form-control" name="author_first_name" value="{{ book.author_first_name }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        author_last_name
+                                                    </label>
+                                                    <input type="text" id="book-auther-lname" class="form-control" name="author_last_name" value="{{ book.author_last_name }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        editor_translator
+                                                    </label>
+                                                    <input type="text" id="editor-translator" class="form-control" name="editor_translator" value="{{ book.editor_translator }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="pages">
+                                        <!-- Responsive table -->
+                                        <section class="row component-section">
+
+                                            <!-- responsive table code and example -->
+                                            <div class="col-md-12">
+                                                <!-- responsive table example -->
+                                                <div class="pmd-card pmd-z-depth pmd-card-custom-view">
+                                                    <table id="pageDatatable" class="table pmd-table table-hover table-striped display responsive nowrap" cellspacing="0" width="100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Page</th>
+                                                            <th>location_in_book</th>
+                                                            <th>page_image</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for page in book.pages %}
+                                                            <tr>
+                                                                <td>{{ page.id }}</td>
+                                                                <td>{{ page.page_num }}</td>
+                                                                <td>{{ page.location_in_book }}</td>
+                                                                <td>{{ page.page_image }}</td>
+                                                                <td>
+                                                                    <a href="{{ url_for( 'admin_page_form', page_id=page.id )}}" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-default btn-sm">
+                                                                        <i class="material-icons md-dark pmd-sm">edit</i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- responsive table example end -->
+
+                                            </div> <!-- responsive table code and example end-->
+                                        </section> <!-- Responsive table end -->
+
+                                    </div>
+
+
+                                    <div role="tabpanel" class="tab-pane" id="marginalia">
+                                        <!-- Responsive table -->
+                                        <section class="row component-section">
+
+                                            <!-- responsive table code and example -->
+                                            <div class="col-md-12">
+                                                <!-- responsive table example -->
+                                                <div class="pmd-card pmd-z-depth pmd-card-custom-view">
+                                                    <table id="marginaliaDatatable" class="table pmd-table table-hover table-striped display responsive nowrap" cellspacing="0" width="100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Page</th>
+                                                            <th>location_on_page</th>
+                                                            <th>writing_implement</th>
+                                                            <th>transcription</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for marg in book.marginalia %}
+                                                            <tr>
+                                                                <td>{{ marg.id }}</td>
+                                                                <td>{{ marg.page.page_num }}</td>
+                                                                <td>{{ marg.location_in_page }}</td>
+                                                                <td>{{ marg.writing_implement }}</td>
+                                                                <td>{{ marg.transcription }}</td>
+                                                                <td>
+                                                                    <a href="" class="btn pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-default btn-sm">
+                                                                        <i class="material-icons md-dark pmd-sm">edit</i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- responsive table example end -->
+
+                                            </div> <!-- responsive table code and example end-->
+                                        </section> <!-- Responsive table end -->
+
+                                    </div>
+
+
+                                    <div role="tabpanel" class="tab-pane" id="database">
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        ID
+                                                    </label>
+                                                    <input type="text" id="book-title" class="form-control" name="title" value="{{ book.id }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="group-fields clearfix row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                                                    <label for="regular1" class="control-label">
+                                                        Slug
+                                                    </label>
+                                                    <input type="text" id="book-title" class="form-control" name="title" value="{{ book.slug }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!--Default tab example end-->
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="component-box">
+                        <!--Default tab example -->
+                        <div class="pmd-card pmd-z-depth">
+                            <div class="pmd-card-body">
+
+                                <ul class="list-group pmd-card-list pmd-list-icon">
+                                    <li class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
+                                        <i class="material-icons media-left pmd-sm">book</i>
+                                        <span class="media-body">Single-line item with icon</span>
+                                    </li>
+                                    <li class="list-group-item" style="padding-left: 0px; padding-right: 0px;">
+                                        <i class="material-icons media-left media-middle">notifications</i>
+                                        <div class="media-body">Single-line item with icon</div>
+                                    </li>
+                                </ul>
+
+                                <div class="group-fields clearfix row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group pmd-textfield {% if not book.notes %}pmd-textfield-floating-label{% endif %}">
+                                            <label class="control-label">Notes</label>
+                                            <textarea name="notes" class="form-control" style="margin: 0px -35.375px 0px 0px; width: 100%; height: 150px;">{% if book.notes %}{{ book.notes }}{% endif %}</textarea><span class="pmd-textfield-focused"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="group-fields clearfix row" style="text-align: right">
+                                    <div class="col-md-12">
+                                        <div class="checkbox pmd-default-theme" style="text-align: left;">
+                                            <label class="pmd-checkbox pmd-checkbox-ripple-effect">
+                                                <input type="checkbox" value="" checked=""><span class="pmd-checkbox-label">&nbsp;</span>
+                                                <span>Public</span> </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="group-fields clearfix" style="text-align: right">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <button type="submit" class="btn btn-primary pmd-ripple-effect">Save</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> <!--Default tab example end-->
+
+                    </div>
+                </div>
+                <hr>
+
+            </form>
+        </section>
+        <hr>
+    </div><!-- tab end -->
+{% endblock %}
+
+{% block scripts %}
+<!-- Select2 js-->
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/select2.full.js') }}"></script>
+
+<!-- Propeller Select2 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		<!-- Simple Selectbox -->
+		$(".select-simple").select2({
+			theme: "bootstrap",
+			minimumResultsForSearch: Infinity,
+		});
+		<!-- Selectbox with search -->
+		$(".select-with-search").select2({
+			theme: "bootstrap"
+		});
+		<!-- Select Multiple Tags -->
+		$(".select-tags").select2({
+			tags: false,
+			theme: "bootstrap",
+		});
+		<!-- Select & Add Multiple Tags -->
+		$(".select-add-tags").select2({
+			tags: true,
+			theme: "bootstrap",
+		});
+	});
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='propeller/components/select2/js/pmd-select2.js') }}"></script>
+<script>
+	$(document).ready(function() {
+		var sPath=window.location.pathname;
+		var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+		$(".pmd-sidebar-nav").each(function(){
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").addClass("open");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('.dropdown-menu').css("display", "block");
+			$(this).find("a[href='"+sPage+"']").parents(".dropdown").find('a.dropdown-toggle').addClass("active");
+			$(this).find("a[href='"+sPage+"']").addClass("active");
+		});
+	});
+</script>
+<script type="text/javascript">
+$(document).ready( function() {
+	$('.pmd-tabs').pmdTab();
+});
+</script>
+
+
+
+<!-- Datatable js -->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+<!-- Datatable Bootstrap -->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+<!-- Datatable responsive js-->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+
+<!-- Datatable select js-->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
+
+<!-- Responsive Data table js-->
+<script>
+//Propeller  Customised Javascript code
+$(document).ready(function() {
+	var pageDatatable = $('#pageDatatable').DataTable({
+		responsive: {
+			details: {
+				type: 'column',
+				target: 'tr'
+			}
+		},
+{#		columnDefs: [ {#}
+{#			className: 'control',#}
+{#			orderable: true,#}
+{#			targets:   1#}
+{#		} ],#}
+		order: [ 1, 'asc' ],
+		bFilter: true,
+		bLengthChange: true,
+		pagingType: "simple",
+		"paging": true,
+		"searching": true,
+		"language": {
+			"info": " _START_ - _END_ of _TOTAL_ ",
+			"sLengthMenu": "<span class='custom-select-title'>Rows per page:</span> <span class='custom-select'> _MENU_ </span>",
+			"sSearch": "",
+			"sSearchPlaceholder": "Search",
+			"paginate": {
+				"sNext": " ",
+				"sPrevious": " "
+			},
+		},
+		dom:
+			"<'pmd-card-title'<'data-table-responsive pull-left'><'search-paper pmd-textfield'f>>" +
+			"<'row'<'col-sm-12'tr>>" +
+			"<'pmd-card-footer' <'pmd-datatable-pagination' l i p>>",
+	});
+
+
+	var marginaliaDatatable = $('#marginaliaDatatable').DataTable({
+		responsive: {
+			details: {
+				type: 'column',
+				target: 'tr'
+			}
+		},
+{#		columnDefs: [ {#}
+{#			className: 'control',#}
+{#			orderable: true,#}
+{#			targets:   1#}
+{#		} ],#}
+		order: [ 1, 'asc' ],
+		bFilter: true,
+		bLengthChange: true,
+		pagingType: "simple",
+		"paging": true,
+		"searching": true,
+		"language": {
+			"info": " _START_ - _END_ of _TOTAL_ ",
+			"sLengthMenu": "<span class='custom-select-title'>Rows per page:</span> <span class='custom-select'> _MENU_ </span>",
+			"sSearch": "",
+			"sSearchPlaceholder": "Search",
+			"paginate": {
+				"sNext": " ",
+				"sPrevious": " "
+			},
+		},
+		dom:
+			"<'pmd-card-title'<'data-table-responsive pull-left'><'search-paper pmd-textfield'f>>" +
+			"<'row'<'col-sm-12'tr>>" +
+			"<'pmd-card-footer' <'pmd-datatable-pagination' l i p>>",
+	});
+
+	/// Select value
+	$('.custom-select-info').hide();
+
+	$(".data-table-responsive").html('<h2 class="pmd-card-title-text">Pages</h2>');
+{#	$(".custom-select-action").html('<button class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-primary" type="button"><i class="material-icons pmd-sm">delete</i></button><button class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect btn-primary" type="button"><i class="material-icons pmd-sm">more_vert</i></button>');#}
+
+} );
+</script>
+{% endblock %}

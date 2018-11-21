@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Pages</title>
+        <style>
+    /*  SECTIONS  */
+.section {
+	clear: both;
+	padding: 0px;
+	margin-bottom: 25px;
+  box-shadow:2px 2px 2px 2px rgba(0,0,0,0.24),2px 2px 2px 2px rgba(0,0,0,0.19) !important;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF FOUR  */
+.span_4_of_4 {
+	width: 20%;
+    margin-left: 15%;
+}
+.span_3_of_4 {
+	width: 0%;
+    margin-left: 0%;
+}
+.span_2_of_4 {
+	width: 22%;
+    margin-right: 1%;
+}
+.span_1_of_4 {
+	width: 17%;
+    margin-left: 1%;
+    margin-right: 15%;
+}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+	.col {  margin: 1% 0 1% 0%; }
+	.span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 100%; }
+}
+
+
+        img {
+
+            margin-left: 5%;
+        }
+
+
+    </style>
+</head>
+<body>
+{% block body %}
+
+
+    {% for page in pagesList %}
+        <div class="section group">
+	        <div class="col span_1_of_4">
+                RecordID: {{ page.recordID }} <br>
+                BookID: {{ page.bookID }} <br>
+                {{ page.book.title }} <br>
+                {{ page.book.subTitle }} <br>
+                Vol {{ page.book.volNum }} of {{ page.book.numOfVol }}<br>
+                pageNum: {{ page.pageNum }}
+
+
+	        </div>
+
+            <div class="col span_2_of_4">
+                <img src="{{ page.pageImgURL }}" width="100%">
+	        </div>
+
+            <div class="col span_3_of_4">
+
+	        </div>
+
+            <div class="col span_4_of_4">
+                {% for marg in page.marginaliaList %}
+                    top: {{ marg.top }} <br>
+                    main: {{ marg.main }} <br>
+                    type: {{ marg.type }} <br>
+                    subtype: {{ marg.subtype }} <br>
+                    Transcription: <small><br> {{ marg.formattedTranscription|safe }} <br> </small>
+{#                    <img src="{{ marg.imgRL }}" width="100%">#}
+                    <img src="data:image/jpg;base64,{{ marg.imageEncoded }}" width="100%">
+                    <br>
+                    <hr>
+                {% endfor %}
+	        </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+</body>
+</html>

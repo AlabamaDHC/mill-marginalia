@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-materials"></script>
+
+    <style>
+        body {
+            background-color: rgb(247, 247, 247);
+            overflow-x:hidden;
+
+        }
+
+        nav {
+            background-color: #39383a;
+        }
+
+        #page-img, .marg-close-img {width: 100%}
+
+        .marg-close-img {
+            margin-top: 7px;
+        }
+
+
+        .card-panel {
+            box-sizing: content-box;
+            width: fit-content;
+
+        }
+
+        ol {
+            list-style-type: none;
+        }
+
+        .card-panel {
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+            margin: .5rem 0 1rem 0;
+        }
+
+        .collection, .pagination {
+            padding-left: 0;
+        }
+
+        span.badge {
+            font-weight: 300;
+            font-size: 0.8rem;
+            color: #fff;
+            background-color: #26a69a;
+            border-radius: 3px;
+            margin-left: 0px;
+            margin-bottom: 5px;
+            margin-right: 3px;
+            float: unset;
+            padding-bottom: 4px;
+            padding-top: 4px;
+        }
+
+        span.badge:first-of-type { margin-left: 6px; }
+
+        .badge.text { background-color: coral; }
+        .badge.text-jsms-hand { background-color: coral; }
+        .badge.squiggle { background-color: cadetblue; }
+        .badge.underlining { background-color: darkred; }
+        .badge.strikethrough { background-color: blue; }
+        .badge.score { background-color: sienna; }
+        .badge.question-mark { background-color: teal; }
+        .badge.exclamation-point{ background-color: yellowgreen; }
+        .badge.double-exclamation-point { background-color: rebeccapurple; }
+        .badge.dotted-score { background-color: darkslategrey; }
+        .badge.bracket { background-color: goldenrod; }
+        .badge.x-mark { background-color: paleturquoise; }
+        .badge.dash { background-color: firebrick; }
+        .badge.copyedit { background-color: darkgreen; }
+        .badge.slashthrough { background-color: tomato;  }
+        .badge.check-mark { background-color: olive; }
+        .badge.empty{ display: none; }
+
+        #page-img-floating-btn {
+            position: relative;
+            left: 475px;
+            float: left;
+        }
+
+        img.no-effect {
+            -webkit-filter: none;
+            filter: none;
+        }
+
+        img.grey-scale {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        img.high-contrast {
+            -webkit-filter: contrast(200%);
+            filter: contrast(200%);
+        }
+
+        img.hue-rotate {
+            -webkit-filter: hue-rotate(90deg);
+            filter: hue-rotate(90deg);
+        }
+
+        img.invert {
+            -webkit-filter: invert(100%);
+            filter: invert(100%);
+        }
+
+        img.saturate {
+            -webkit-filter: saturate(8);
+            filter: saturate(8);
+        }
+
+        img.sepia {
+            -webkit-filter: sepia(100%);
+            filter: sepia(100%);
+        }
+
+        #book-header-container {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        #book-header {
+            min-width: 97%;
+
+        }
+
+        label {
+            font-size: 1.2rem;
+        }
+
+        .modal-overlay{
+            opacity: 0 !important;
+        }
+
+        #modal-color-effect.transparent {
+            opacity: 0.7 !important;
+            background-color: #fafafa !important;
+        }
+
+        .page-footer {
+            background-color: #39383a;
+        }
+
+        #page-nav-list-container, #marg-list-container {
+            padding: 0 0;
+            width: 99%;
+        }
+        #page-nav-list, #marg-list {
+            width: 100%;
+            margin: 0 0;
+            border: none;
+        }
+
+        .pagination li.active {
+            background-color: #26a69a;
+        }
+
+        .collapsible-body {
+            padding: 0.5rem 1rem 0 1rem;
+        }
+
+        .search-opt-label, .filter-opt-label {
+            margin-bottom: 7px;
+            line-height: 23px !important;
+        }
+
+        #marg-list-container {
+            width: initial;
+        }
+
+        nav.nav-extended {
+            padding: 1rem 2rem 1rem 2rem;
+        }
+
+        #filter-clear {
+            margin-bottom: 10px;
+        }
+
+
+        #circle-container{
+            width:25px;
+            height:25px;
+            padding-left: 60%;
+        }
+        .quarter{width:12.5px;height:12.5px}
+        .top-left{border-top-left-radius:12.5px;background:#09f;float:left}
+        .top-right{border-top-right-radius:12.5px;background:#ff7e51;float:right}
+        .bottom-left{border-bottom-left-radius:12.5px;background:#99cc34;float:left}
+        .bottom-right{border-bottom-right-radius:12.5px;background:#afeeee;float:right}
+        .bottom-right p{
+            margin-top: 0px;
+            margin-bottom: 0px;
+            color: black;
+            font-size: 1.2em;
+            position: relative;
+            top: -13px;
+            left: -5px;
+            font-weight: bold;
+            background-color: rgba(247, 247, 247, 0.4);
+
+        }
+        .card-panel {
+            padding: 15px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .collection .collection-item {
+            padding: 10px 15px;
+        }
+
+        .row {
+            margin-bottom: 0px;
+        }
+
+        #main-container {
+            padding-bottom: 20px;
+        }
+
+        #filter-container {
+            margin-top: 0px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="app" class="container-flex">
+    {% if book.number_of_volumes|int > 1 %}
+        {% set breadcrumbs = [book.title, 'Vol ' ~ book.volume_number] %}
+    {% else %}
+        {% set breadcrumbs = [book.title] %}
+    {% endif %}
+    {% include 'front/nav.html' %}
+
+    <div id="book-header-container">
+        <ul id="book-header-list" class="collapsible" data-collapsible="expandable">
+            <li>
+                <div class="collapsible-header">
+                    <div id="book-header" class="col 10">
+                        <h5>
+                            <i class="material-icons">book</i>{{ book.title }}{% if book.subtitle %}Ed {{ book.subtitle }}{% endif %}, {{ book.author_first_name }} {{ book.author_last_name }}, {{ book.year_of_pub }}, {% if book.edition %}{{ book.edition }} Edition{% endif %}
+                        </h5>
+                    </div>
+
+                    <div class="col 2">
+                        {%- if book.full_text_edition_link -%}
+                        <a href="{{ book.full_text_edition_link }}">Online Edition</a><br>
+                    {% endif %}
+                    {%- if book.period_translation_link -%}
+                        <a href="{{ book.period_translation_link }}">Period Translation</a><br>
+                    {% endif %}
+
+                        <div class="right-align right"><i class="material-icons">info_outline</i></div>
+                    </div>
+                </div>
+{#                <div class="collapsible-body"></div>#}
+            </li>
+        </ul>
+    </div>
+
+    <div id="main-container">
+        <div class="row">
+
+            <div class="col s12 m3 l3">
+                <div id="page-nav-container">
+
+                    {% set firstpage = book.pages[0].id %}
+
+                    <ul id="filter-container" class="collapsible" data-collapsible="expandable">
+{#                        <li>#}
+{#                            <div class="collapsible-header active"><i class="material-icons">search</i>Search</div>#}
+{#                            <div class="collapsible-body">#}
+{#                                <input class="search" placeholder="Search term" />#}
+{#                                <label>Options</label><br>#}
+{#                                <input type="checkbox" id="search-opt-1" checked="checked" />#}
+{#                                <label class="search-opt-label" for="search-opt-1">Marginalia Types</label><br>#}
+{#                                <input type="checkbox" class="search-opt-label" id="search-opt-2" checked="checked" />#}
+{#                                <label class="search-opt-label" for="search-opt-2">Marginalia Transcriptions</label>#}
+{#                            </div>#}
+{#                        </li>#}
+
+                        <li>
+                            <div class="collapsible-header active"><i class="material-icons">filter_list</i>Filter</div>
+                            <div class="collapsible-body">
+                                <label>Marginalia Types</label><br>
+                                <select id="filter-multi-select" multiple>
+                                    <option class="filled-in" value="0" disabled selected>Select types to show</option>
+                                    {% for margType in book.marginalia_type_set %}
+                                        <option id="filter-multi-select-opt-{{ loop.index }}" value="{{ margType }}">{{ margType }}</option>
+                                    {% endfor %}
+                                </select>
+                                <a id="filter-clear" class="waves-effect waves-light btn">Clear</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div id="page-nav-list-container" class="card-panel">
+                        <ol id="page-nav-list" class="list collection">
+                            {% for pageNav in book.pages %}
+                                <a id="page-nav-{{pageNav.id}}" class="collection-item" data-page-id="{{ pageNav.id }}" v-on:click.stop="changePage" v-bind:class="{active: isActive({{pageNav.id}})}" v-bind:data-index="{{ loop.index0 }}">
+                                    <li class="list-item">
+                                        {%- if pageNav.page_num -%} {{ pageNav.page_num }}{% else %} {{ pageNav.location_in_book }}{% endif %}
+                                        {%- for margType in pageNav.marginalia_type_set -%}
+                                            <span class="badge {{ margType|replace("'", "")|replace("(", "")|replace(")", "")|replace(" ", "-")|lower }}">{{ margType }}</span>
+                                        {% endfor %}
+                                        <div class="marginalia hide">={{ pageNav.marginalia_type_set }}</div>
+                                    </li>
+                                </a>
+                            {% endfor %}
+                        </ol>
+                    </div>
+
+                    <ul class="pagination">
+                        <li class="disabled"><a href="javascript:function Z(){Z=''}Z()"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="active"><a href="javascript:function Z(){Z=''}Z()">1</a></li>
+                        <li class="waves-effect"><a href="javascript:function Z(){Z=''}Z()">2</a></li>
+                        <li class="waves-effect"><a href="javascript:function Z(){Z=''}Z()"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col s12 m6 l6">
+                <div class="row">
+                    <div class="card-panel">
+                        <div class="row">
+                            <template>
+                                <v-material-box id="page-img" v-bind:src="current_page_img" v-bind:class="current_image_effect"></v-material-box>
+                            </template>
+                        </div>
+                        <div class="row">
+                            <div id="page-img-floating-btn" class="fixed-action-btn horizontal">
+                                <a class="btn-floating btn-large">
+                                    <i class="large material-icons">settings</i>
+                                </a>
+{#                                href="{{ url_for('static', filename='assets/web/original/pages/'+page.page_image+'.jpg') }}" download="{{page.page_image+'.jpg'}}"#}
+                                <ul>
+                                    <li><a class="btn-floating grey tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Image Effects" href="#modal-color-effect" onclick="$('#modal-color-effect').removeClass('transparent');"><i class="material-icons">image</i></a></li>
+                                    <li><a class="btn-floating yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Zoom In" onclick="$( '#page-img' ).click();"><i class="material-icons">zoom_in</i></a></li>
+                                    <li><a class="btn-floating green tooltipped" data-position="bottom" data-delay="50" data-tooltip="Download Original Image" v-bind:href="url_root+'static/assets/original/pages/'+current_page_img.split('/')[6]"><i class="material-icons">file_download</i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m3 l3">
+                <div class="row" style="margin-bottom: 0;">
+                    <div id="marg-list-container" class="card-panel">
+                        {% raw %}
+                        <ol id="marg-list" class="list collection" v-if="marginalia.length">
+                            <li v-for="(marg, index) in marginalia" class="collection-item" v-bind:data-index="index">
+                                <span class="badge" v-bind:class="typeClass(marg.type)">{{ marg.type }}</span>
+                                <blockquote v-if="marg.transcription" v-html="marg.transcription"></blockquote>
+                                <template>
+                                    <v-material-box class="marg-close-img" v-bind:src="marg.close_image" v-bind:class="current_image_effect"></v-material-box>
+                                </template>
+                            </li>
+                        </ol>
+                        {% endraw %}
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-color-effect" class="modal bottom-sheet">
+                <div class="modal-content">
+                    <h4>Color Effects</h4>
+                    <div class="row">
+                        {% set coloreffects=['No Effect', 'Grey Scale', 'High Contrast', 'Hue Rotate', 'Invert', 'Saturate', 'Sepia'] %}
+                        {% for effect in coloreffects %}
+                            <div class="col">
+                                <input class="with-gap" name="color-effects-group" type="radio" id="color-effects-{{ loop.index0 }}" v-on:click="colorEffects('{{ effect|replace(" ","-")|lower }}')"/>
+                                <label for="color-effects-{{ loop.index0 }}">{{ effect }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="btn-floating yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Zoom In" onclick="$('#modal-color-effect').toggleClass('transparent'); $( '#page-img' ).click();"><i class="material-icons">zoom_in</i></button>
+                </div>
+                <div class="modal-footer">
+                    <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% include 'front/footer.html' %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+
+        $('select').material_select();
+        $('.modal').modal();
+
+        Materialize.showStaggeredList('#staggered-test');
+
+        var pageNavList = new List('page-nav-container', {
+            valueNames: ['badge', 'marginalia',  { attr: 'data-tooltip', name: 'transcription' }],
+            page: 13,
+            pagination: true,
+        });
+
+        $( ".page:contains('{{ (page.id - firstpage) % 12 + 1 }}')" )[0].click();
+
+        $('.select-dropdown').on('close', function() {
+            console.log( $(this) );
+            var selected = $("#filter-multi-select").val();
+            if (selected.length == 0) {
+                pageNavList.filter();
+                return;
+            }
+            pageNavList.filter(function(item) {
+                for (var i = 0; i < selected.length; i++) {
+                    if (item.values().marginalia.includes(selected[i])) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        });
+
+        $("#filter-multi-select").on('change', function() {
+            console.log( $(this) );
+            console.log( $("#filter-multi-select").val() );
+            var selected = $("#filter-multi-select").val();
+            pageNavList.filter(function(item) {
+                var t = item.values().badge;
+                for (var i = 0; i < selected.length; i++) {
+                    var c = item.values().badge.includes(selected[i]);
+                    if (item.values().badge.includes(selected[i])) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+        });
+
+        $('#filter-clear').click(function () {
+            console.log("clear");
+            $('#filter-multi-select').val('0', true);
+            $('#filter-multi-select').material_select();
+{#            $('#filter-multi-select').val('0', true);#}
+{#            $('#filter-multi-select').material_select();#}
+{#            pageNavList.filter();#}
+        });
+    });
+</script>
+
+
+<script>
+    var _current_page_id = {{ page.id }};
+    var _current_book_id = {{ book.id }};
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            current_page_img: "{{ url_for('static', filename='assets/web/optimized/pages/'+page.page_image+'.jpg') }}",
+            current_page_id: "{{ page.id }}",
+            current_page_index: 0,
+            current_book_slug: "{{ book.slug }}",
+            current_image_effect: 'no-effect',
+            marginalia: [],
+            pages: {},
+            url_root: "{{request.url_root}}"
+        },
+        created: function () {
+            var page_id = _current_page_id;
+            var book_id = _current_book_id;
+
+            axios.get('{{request.url_root}}ajax/book/'+book_id)
+                .then(function (response) {
+                    app.pages = response.data;
+                    app.marginalia = app.pages[app.current_page_index].marginalia;
+                    console.log(app.pages);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        methods: {
+            colorEffects: function(selectedEffect){
+                app.current_image_effect=selectedEffect;
+            },
+            changePage: function(selectedEffect){
+                var index = event.currentTarget.getAttribute('data-index');
+                var page_id = event.currentTarget.getAttribute('data-page-id');
+
+                app.current_page_img = app.pages[index].page_image;
+                app.current_page_id = page_id;
+                app.marginalia = app.pages[index].marginalia;
+
+                history.pushState(null, '', app.url_root+'library/'+app.current_book_slug+'/'+page_id);
+                console.log(index);
+            },
+            isActive : function (page_id) {
+                if(app){ return page_id == app.current_page_id; }
+                else { return page_id == _current_page_id; }
+            },
+            typeClass: function(type){
+                return type.replace("'", "").replace("(", "").replace(")", "").replace(" ", "-").replace(" ", "-").toLowerCase();
+            }
+        }
+    })
+</script>
+</body>
+
+</html>

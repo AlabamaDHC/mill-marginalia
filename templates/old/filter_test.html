@@ -1,0 +1,234 @@
+{% extends "old/base.html" %}
+
+
+{% block body %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pageViewStyles.css') }}">
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/indiv_record_styles.css') }}">#}
+{#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >#}
+
+
+    <ol class="breadcrumb">
+        <li><a href="{{ url_for('show_home') }}">Home</a></li>
+        {% if book.number_of_volumes|int > 1 %}
+            <li><a href="{{ url_for('show_library') }}">Library</a></li>
+            <li><a href="{{ url_for('show_book', book_slug=book.slug) }}">{{ book.title }}</a></li>
+            <li class="active">Vol {{ book.volume_number }}</li>
+        {% else %}
+            <li class="active"><a href="{{ url_for('show_library') }}">Library</a></li>
+            <li class="active">{{ book.title }}</li>
+        {% endif %}
+    </ol>
+
+    <div id="bookHeader">
+        <h4>{{ book.title }}{% if book.subtitle %}Ed {{ book.subtitle }}{% endif %}, {{ book.author_first_name }} {{ book.author_last_name }}, {{ book.year_of_pub }}, {% if book.edition %}{{ book.edition }} Edition{% endif %}</h4>
+        <h6>
+        {% if book.full_text_edition_link %}
+            <a href="{{ book.full_text_edition_link }}">Online Edition</a><br>
+        {% endif %}
+
+        {% if book.period_translation_link %}
+            <a href="{{ book.period_translation_link }}">Period Translation</a><br>
+        {% endif %}
+        </h6>
+    </div>
+
+    <div class="section group">
+
+
+        <div class="col span_1_of_4">
+            <div id="search-results">
+
+                <button id="filterCollapseButton" type="button" class="btn btn-info" data-toggle="collapse" data-target="#filterCollapseContainer">Filter</button>
+                <div id="filterCollapseContainer" class="collapse">
+                    <div id="filterContainer" >
+                        <div class="search-filter">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="list-group-item-heading">
+                                        <h4>Filter Options</h4>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="nameContainer">
+                                        <h5 class="list-group-item-heading">Name</h5>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="typeContainer">
+                                        <h5 class="list-group-item-heading">Type</h5>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <label>Search</label>
+                                    <input class="search form-control" placeholder="Search" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pageNavContainer" >
+                    <ul id="pageNavList" class="list">
+                        {% for pageNav in book.pages %}
+                            <a class="pageNavLink" href="{{ url_for('show_book_page', book_slug=book.slug, page_id=pageNav.id) }}">
+                                <li class="list-group-item" {% if pageNav.id == page.id %} style="background-color: whitesmoke;" {% endif %}>
+                                    {% if pageNav.page_num %} {{ pageNav.page_num }}{% else %} {{ pageNav.location_in_book }}{% endif %}
+                                    {% for margType in pageNav.marginalia_type_set %}
+                                        {% if margType == "text (jsm's hand)" %} <span class="badge" style="background-color: coral;">Text</span>
+                                        {% elif margType == 'text' %} <span class="badge" style="background-color: coral;"> Text </span>
+                                        {% elif margType == 'squiggle' %} <span class="badge" style="background-color: cadetblue;"> squiggle </span>
+                                        {% elif margType == 'underlining' %} <span class="badge" style="background-color: darkred;"> underlining </span>
+                                        {% elif margType == 'strikethrough' %} <span class="badge" style="background-color: blue;"> strikethrough </span>
+                                        {% elif margType == 'score' %} <span class="badge" style="background-color: sienna;"> score </span>
+                                        {% elif margType == 'question mark' %} <span class="badge" style="background-color: teal;"> question mark </span>
+                                        {% elif margType == 'exclamation point' %} <span class="badge" style="background-color: yellowgreen;"> exclamation point </span>
+                                        {% elif margType == 'double exclamation point' %} <span class="badge" style="background-color: rebeccapurple;"> double exclamation point </span>
+                                        {% elif margType == 'dotted score' %} <span class="badge" style="background-color: darkslategrey;"> dotted score </span>
+                                        {% elif margType == 'bracket' %} <span class="badge" style="background-color: goldenrod;"> bracket </span>
+                                        {% elif margType == 'x mark' %} <span id="popover" rel="popover" data-trigger="hover" data-html="true" data-content="<img src='{{ url_for('static', filename='x_mark.jpg') }}' width='75px' height='75px'>" title="X Mark" class="badge" style="background-color: paleturquoise;"> x mark </span>
+                                        {% elif margType == 'dash' %} <span class="badge" style="background-color: firebrick;"> dash </span>
+                                        {% elif margType == 'copyedit' %} <span class="badge" style="background-color: darkgreen;"> copyedit </span>
+                                        {% elif margType == 'slashthrough' %} <span class="badge" style="background-color: tomato;"> slashthrough </span>
+                                        {% elif margType == 'check mark' %} <span class="badge" style="background-color: olive;"> check mark </span>
+                                        {% else %} <span class="badge" style="background-color: grey;">{{ margType }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if pageNav.margType != "" %}<div class="type hidden">{{ pageNav.margType }}</div>{% endif %}
+                                </li>
+                            </a>
+                            {#                        <br>#}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <ul id="pageNavPagination" class="pagination"></ul>
+            </div>
+        </div>
+
+
+
+        <div id="pageCol" class="col span_2_of_4">
+            <h5>{% if page.page_num %}{{ page.page_num }}
+                {% else %}{{ page.location_in_book }}{% endif %}</h5>
+            <img id="pageImg" src="{{ url_for('static', filename='assets/web/optimized/'+page.page_image+'.jpg') }}" width="95%" data-toggle="magnify">
+            <ul class="pager">
+                {% if prevPageRecordID != '#' %} <li><a class="pagerBtnLink" href="{{ url_for('show_home') }}">Previous</a></li> {% endif %}
+                {% if nextPageRecordID != '#' %} <li><a class="pagerBtnLink" href="{{ url_for('show_home') }}">Next</a></li> {% endif %}
+            </ul>
+        </div>
+
+        <div class="col span_3_of_4">
+            {% for marg in page.marginalia %}
+                {% if marg.type == "text (jsm's hand)" %}
+                    <span class="badge" style="background-color: coral;">Text</span>
+                    Transcription: <blockquote>{{ marg.transcription|safe }} </blockquote>
+                {% elif marg.type == "text" %}
+                    <span class="badge" style="background-color: coral;">Text</span>
+                    Transcription: <blockquote>{{ marg.transcription|safe }} </blockquote>
+                {% elif marg.type == 'squiggle' %} <span class="badge" style="background-color: cadetblue;"> squiggle </span>
+                {% elif marg.type == 'underlining' %} <span class="badge" style="background-color: darkred;"> underlining </span>
+                {% elif marg.type == 'strikethrough' %} <span class="badge" style="background-color: blue;"> strikethrough </span>
+                {% elif marg.type == 'score' %} <span class="badge" style="background-color: sienna;"> score </span>
+                {% elif marg.type == 'question mark' %} <span class="badge" style="background-color: teal;"> question mark </span>
+                {% elif marg.type == 'exclamation point' %} <span class="badge" style="background-color: yellowgreen;"> exclamation point </span>
+                {% elif marg.type == 'double exclamation point' %} <span class="badge" style="background-color: rebeccapurple;"> double exclamation point </span>
+                {% elif marg.type == 'dotted score' %} <span class="badge" style="background-color: darkslategrey;"> dotted score </span>
+                {% elif marg.type == 'bracket' %} <span class="badge" style="background-color: goldenrod;"> bracket </span>
+                {% elif marg.type == 'x mark' %} <span class="badge" style="background-color: paleturquoise;"> x mark </span>
+                {% elif marg.type == 'dash' %} <span class="badge" style="background-color: firebrick;"> dash </span>
+                {% elif marg.type == 'copyedit' %} <span class="badge" style="background-color: darkgreen;"> copyedit </span>
+                {% elif marg.type == 'slashthrough' %} <span class="badge" style="background-color: tomato;"> slashthrough </span>
+                {% elif marg.type == 'check mark' %} <span class="badge" style="background-color: olive;"> check mark </span>
+                {% else %} <span class="badge" style="background-color: grey;">{{ marg.type }}</span>
+                {% endif %}
+                {% if marg.close_image %} <img id="margCloseImg" src="{{ url_for('static', filename='assets/'+marg.close_image+'.jpg') }}" width="95%" data-toggle="magnify"> {% endif %}
+
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
+    <script src="{{ url_for('static', filename='js/pageNavFilter.js') }}"></script>
+
+    <script>
+        $('#popover').popover();
+    </script>
+
+    <script>
+    $('input[type=checkbox]').click(function() {
+        var params = "";
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){
+                if(params == ""){
+                    params += "?" + this.value + "=1";
+                }
+                else {
+                    params += "&" + this.value + "=1";
+                }
+            }
+        });
+        console.log (params);
+    });
+
+
+    $('.pageNavLink').click(function() {
+        var params = "";
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){
+                if(params == ""){
+                    params += "?" + this.value + "=1";
+                }
+                else {
+                    params += "&" + this.value + "=1";
+                }
+            }
+        });
+        console.log ("");
+        $(this).attr("href", this.href + params);
+    });
+
+    $('.pagerBtnLink').click(function() {
+        var params = "";
+        $('input[type=checkbox]').each(function () {
+            if(this.checked){
+                if(params == ""){
+                    params += "?" + this.value + "=1";
+                }
+                else {
+                    params += "&" + this.value + "=1";
+                }
+            }
+        });
+        console.log ("");
+        $(this).attr("href", this.href + params);
+    });
+
+    </script>
+
+
+    <script>
+
+     $(document).ready(function(){
+        var i = document.location.href.lastIndexOf('?');
+         if(i != -1) {
+             var paramValues = document.location.href.substr(i+1).replace(/type=/g,'').split('&');
+             $.each( paramValues, function( key, paramValue ) {
+                 var paramArray = paramValue.split('=');
+                 $('input[type=checkbox][value='+paramArray[0]+']').prop("checked", (paramArray[1] == '1') ? true : false);
+            });
+         }
+     });
+
+    $(window).load(function(){
+      updateList();
+    });
+
+    </script>
+
+{% endblock %}

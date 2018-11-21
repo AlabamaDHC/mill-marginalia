@@ -1,0 +1,269 @@
+{% set active_page = 'library' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+
+    h1.header {
+        font-size: 4.2rem;
+        line-height: 110%;
+    }
+
+    .header {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        font-weight: 500;
+        color: #f8f8f8;
+    }
+
+    .subheader {
+        margin-top: 0px;
+        color: #f8f8f8;
+    }
+
+    .btn-floating i{
+        color: #39383a;
+    }
+
+    .btn-floating:hover {
+        background-color: #e4e4e4;
+        color: #39383a;
+    }
+
+
+    .shelf-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+
+    .book-spine {
+        display: block;
+        height: 500px;
+        max-width: fit-content;
+
+
+    }
+
+    .spine-container{
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spine-container::before, .spine-container::after{
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: black;
+        position: absolute;
+        opacity: 0.45;
+        top: 0;
+        left: 0;
+        -moz-transform: translate3d(0, -100%, 0);
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+        -moz-transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .book-spine-text {
+        position: absolute;
+        text-align: center;
+        {#background: lightyellow;#}
+        background: #39383a;
+        z-index: 998;
+        width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        top: 50%;
+        -webkit-transform: translate3d(-100%, -50%, 0);
+        transform: translate3d(-100%, -50%, 0);
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        line-height: 45px;
+        font-size: 20px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        padding-bottom: 10px;
+    }
+
+    .slidedown:hover::before{
+        -moz-transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    .slidedown:hover .pic-caption{
+        opacity: 1;
+        -moz-transform: translate3d(0, -50%, 0);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+        -moz-transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        -moz-transition-delay: 0.5s;
+        -webkit-transition-delay: 0.5s;
+        transition-delay: 0.5s;
+    }
+
+    main {
+        background-color: #39383a1c;
+    }
+
+    .material-tooltip {
+        margin-top: 250px
+    }
+
+    span {
+        font-size: 1.2rem;
+    }
+
+    .header {
+        background-color: rgba(0, 0, 0, 0.55);
+        -webkit-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        -moz-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+    }
+
+    .spinner-layer {
+        border-color: #26a69a;
+    }
+
+    #loading-container {
+        margin-top: 1rem;
+    }
+
+
+    ul.paginate-links {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pagination li.active {
+        background-color: #26a69a;
+    }
+
+    .pagination li a {
+        font-size: 1.5rem;
+    }
+
+    .number {
+        justify-content: initial;
+        margin-right: initial;
+        min-width: initial;
+        padding: initial;
+        background-color: initial;
+    }
+    .center-align {
+        text-align: center;
+    }
+
+    #pagination-container {
+        width: fit-content;
+        margin: 0 auto;
+    }
+</style>
+
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Library</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+    <div id="app" class="container shelf-container" style="min-height: 1000px;">
+
+        <div id="loading-container" v-if="loading" class="col s12 m7 center-align">
+            <div v-if="loading" class="preloader-wrapper big active">
+                <div class="spinner-layer">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="!loading" class="columns is-gapless is-multiline is-mobile">
+            <paginate name="books" :list="books" :per="25">
+                <template v-for="item in paginated('books')">
+                    <a v-if="item.spine" v-bind:href="'/library/multivol/'+item.slug_set" v-bind:aria-label="[[ item.title ]]+' link'">
+                        <div class="column is-narrow spine-container common slidedown center tooltipped"
+                             data-position="top" data-delay="50" data-html="true" v-bind:data-tooltip="[[ item.title ]]+'<br><br>'+[[ item.author.first_name ]]+' '+[[ item.author.last_name ]]">
+                            <img class="book-spine" v-bind:src="'static/assets/spines/'+item.spine" v-bind:alt="[[ item.title ]]+' spine image'">
+                        </div>
+                    </a>
+                </template>
+            </paginate>
+            <div id="pagination-container" class="center-align">
+                <paginate-links for="books" :classes="{'ul': 'pagination', 'li': 'waves-effect'}" :show-step-links="true" :step-links="{ next: '>', prev: '<' }"/>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+    });
+})(jQuery);
+</script>
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        meta: {},
+        books: {},
+        paginate: ['books'],
+        sort: 'title',
+        loading: true,
+    },
+    created: function () {
+            axios.get('{{request.url_root}}api/volumes')
+                .then(function (response) {
+                    {#console.log(response.data);#}
+                    app.books = response.data.data;
+                    app.meta = response.data.meta;
+                    app.loading = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    delimiters: ['[[',']]']
+})
+</script>
+</body>
+</html>

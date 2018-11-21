@@ -1,0 +1,427 @@
+{% set active_page = 'search' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+{#    <script src="https://unpkg.com/vue/dist/vue.js"></script>#}
+{#    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>#}
+{#    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.0.0/dist/vue-multiselect.min.css">#}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    span.badge {
+            font-weight: 300;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #26a69a;
+            border-radius: 3px;
+            margin-left: 0px;
+            margin-bottom: 5px;
+            margin-right: 3px;
+            float: unset;
+            padding-bottom: 4px;
+            padding-top: 4px;
+        }
+
+    .badge.text { background-color: coral; }
+    .badge.text-jsms-hand { background-color: coral; }
+    .badge.squiggle { background-color: cadetblue; }
+    .badge.underlining { background-color: darkred; }
+    .badge.strikethrough { background-color: blue; }
+    .badge.score { background-color: sienna; }
+    .badge.question-mark { background-color: teal; }
+    .badge.exclamation-point{ background-color: yellowgreen; }
+    .badge.double-exclamation-point { background-color: rebeccapurple; }
+    .badge.dotted-score { background-color: darkslategrey; }
+    .badge.bracket { background-color: goldenrod; }
+    .badge.x-mark { background-color: paleturquoise; }
+    .badge.dash { background-color: firebrick; }
+    .badge.copyedit { background-color: darkgreen; }
+    .badge.slashthrough { background-color: tomato;  }
+    .badge.check-mark { background-color: olive; }
+    .badge.empty{ display: none; }
+
+    .row { margin-bottom: 0px;}
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .sort-chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+    .sort-chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .sort-chip.selected a {
+        color: #fff;
+    }
+
+    .sort-chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .sort-chip.selected {
+        border: 1px solid #26a59a;
+    }
+
+    .book-title {
+        font-size: 2rem;
+        line-height: 110%;
+        margin: .1rem 0 .1rem 0;
+    }
+
+    .book-subtitle {
+        font-size: 1.4rem;
+        line-height: 110%;
+        margin: .1rem 0 .1rem 0;
+    }
+
+    .author-name {
+        font-size: 2rem;
+        line-height: 110%;
+        margin: .1rem 0 .1rem 0;
+    }
+
+    .result-page-num {
+        font-size: 1.2rem;
+        line-height: 110%;
+        margin: .1rem 0 .1rem 0;
+    }
+
+    #results-section {
+        padding-top: 3rem;
+    }
+
+    #search-btn {
+        width: 55px;
+        height: 55px;
+        line-height: 55px;
+        margin-top: 0.5rem;
+        {#position: relative;#}
+        {#top: 10px;#}
+        {#left: 65px;#}
+    }
+
+    #search-btn i {
+        font-size: 2.1rem;
+        line-height: 55px;
+    }
+
+    #search-btn-col {
+        float: none;
+        width: 4.3333333333%;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .row .col.s5 {
+        width: 44.666667%;
+    }
+
+    .subheader {
+        font-size: 1.8rem;
+    }
+
+    .container .row {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Search</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div id="app" class="container">
+    {% raw %}<h3 v-if="results_count>0" class="subheader center">{{ results_count }} Results</h3>{% endraw %}
+
+    <div class="section">
+        <form method="post">
+{#            <a id="search-btn" v-on:click="submit" class="btn-floating waves-effect waves-light primary-color-background right">#}
+{#                <i class="material-icons">search</i>#}
+{#            </a>#}
+            <div class="row">
+                <div class="col s12">
+                    <template>
+                        <label class="typo__label">Select marginalia type(s)</label>
+                        <multiselect v-model="selected_filter_types" :options="filter_type_options" :multiple="true" select-label="" aria-label="Search marginalia type">
+                            <span slot="noResult">No marginalia type found.</span>
+                        </multiselect>
+                    </template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <template>
+                        <label class="typo__label">Select marginalia hand(s)</label>
+                        <multiselect v-model="selected_filter_hand" :options="filter_hand_options" :multiple="true" select-label="" aria-label="Search marginalia hand(s)">
+                            <span slot="noResult">No marginalia hand(s) found.</span>
+                        </multiselect>
+                    </template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <template>
+                        <label class="typo__label">Select author(s)</label>
+                        <multiselect v-model="selected_filter_authors" track-by="id" label="name" :options="filter_authors_options" :multiple="true" select-label="" aria-label="Search by author">
+                            <span slot="noResult">No authors found.</span>
+                        </multiselect>
+                    </template>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <template>
+                        <label class="typo__label">Select volume(s)</label>
+                        <multiselect v-model="selected_filter_books" track-by="id" label="title" :options="filter_books_options" :multiple="true" select-label="" aria-label="Search by volume title">
+                            <span slot="noResult">No volumes found.</span>
+                        </multiselect>
+                    </template>
+                </div>
+            </div>
+
+            <div class="row right" style="margin-top: 0.75rem">
+                <div class="col s12">
+                    <a class="waves-effect waves-light primary-color-background btn" v-on:click="submit" style="z-index: auto">
+                        <i class="material-icons left">search</i>Search
+                    </a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="results-section" class="section">
+        {% raw %}
+        <template>
+            <ul v-for="book in search_results" class="collection with-header" v-if="search_results">
+                <li class="collection-header">
+                    <div class="row">
+                        <div class="col s6">
+                            <h1 class="book-title">{{ book.title }}</h1>
+                            <h2 class="book-subtitle" v-if="!book.part_of_book && book.volume_number!='0'">Vol {{ book.volume_number }}</h2>
+                            <h2 class="book-subtitle" v-if="book.part_of_book && book.part_of_book!=''">{{ book.part_of_book }}</h2>
+                        </div>
+                        <div class="col s6" style="text-align: right;">
+                            <h2 class="author-name">{{ book.author.first_name }} {{ book.author.last_name }}</h2>
+                        </div>
+                    </div>
+                </li>
+                <li v-for="marg in book.results" class="collection-item">
+                    <div class="row">
+                        <div class="col s3" style="padding-left: 0px;">
+                            <span class="badge" v-bind:class="typeClass(marg.type)">{{ marg.type }}</span>
+                            <span v-if="marg.hand" class="badge">{{ marg.hand }}</span>
+                        </div>
+                        <div class="col s2">
+                            <h3 class="result-page-num">Page {{ marg.page.num }}</h3>
+                        </div>
+                        <div class="col s2">
+                            <h3 class="result-page-num">{{ marg.location_on_page }}</h3>
+                        </div>
+                        <div class="col s3">
+                            <h3 class="result-page-num">Line(s): {{ marg.line_number }}</h3>
+                        </div>
+                        <div class="col s1" style="float: none;">
+                            <a v-bind:href="'/library/'+book.slug+'/'+marg.page.id" class="btn-floating waves-effect waves-light primary-color-background right">
+                                <i class="material-icons">arrow_forward</i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </template>
+        {% endraw %}
+        <ul class="pagination center">
+            <li class="waves-effect"><a href="#!" v-on:click="offset -= 1"><i class="material-icons">chevron_left</i></a></li>
+            <li class="waves-effect"><a href="#!" v-on:click="offset += 1"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{#<script src="https://unpkg.com/vue-materials"></script>#}
+{#<script src="https://unpkg.com/vue-multiselect@2.0.0"></script>#}
+
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        components: {
+  	        Multiselect: window.VueMultiselect.default
+	    },
+        data: {
+            filter_type_options: {{ marginalia_type_set|safe }},
+            selected_filter_types: [],
+
+            filter_hand_options: {{ hand_list|safe }},
+            selected_filter_hand: [],
+
+            filter_authors_options: {{ authors_list|safe }},
+            selected_filter_authors: [],
+            mapped_selected_filter_authors: [],
+
+            filter_books_options: {{ books_list|safe }},
+            selected_filter_books: [],
+            mapped_selected_filter_books: [],
+
+            search_terms: "",
+            search_results: [],
+            results_count: 0,
+            offset: 0,
+            search_changed: false
+        },
+        methods : {
+            submit : function(){
+
+                axios.post('{{request.url_root}}search', {
+                    types: this.$data.selected_filter_types,
+                    hand: this.$data.selected_filter_hand,
+                    authors: this.$data.mapped_selected_filter_authors,
+                    books: this.$data.mapped_selected_filter_books,
+                    offset: 0
+                })
+                .then(function (response) {
+                    app.search_results = response.data['results'];
+                    app.results_count = response.data['results_count'];
+                    app.offset = response.data['offset'];
+
+                    {#console.log(response.data);#}
+                    {#console.log('results_count: '+response.data['results_count']);#}
+                    {#console.log('offset: '+response.data['offset']);#}
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            },
+            changePage: function(selectedEffect){
+                var index = event.currentTarget.getAttribute('data-index');
+                var page_id = event.currentTarget.getAttribute('data-page-id');
+
+                app.current_page_img = app.book[index].page_image;
+                app.current_page_id = page_id;
+                app.current_page_index = index;
+                app.marginalia = app.book[index].marginalia;
+
+                history.pushState(null, '', '{{request.url_root}}library/'+app.current_book_slug+'/'+page_id);
+            },
+            typeClass: function(type){
+                if(type) {
+                    return type.replace("'", "").replace("(", "").replace(")", "").replace(" ", "-").replace(" ", "-").toLowerCase();
+                }
+            },
+        },
+        watch: {
+            selected_filter_authors: function () {
+                app.mapped_selected_filter_authors = app.selected_filter_authors.map(function (i) {
+                    if (i && i.id){return i.id;}
+                });
+            },
+            selected_filter_books: function () {
+                app.mapped_selected_filter_books = app.selected_filter_books.map(function (i) {
+                    if (i && i.id){return i.id;}
+                });
+            },
+            selected_filter_types: function () {
+
+            },
+            search_changed: function () {
+
+            },
+            offset: function () {
+                axios.post('{{request.url_root}}search', {
+                    types: app.selected_filter_types,
+                    hand: app.selected_filter_hand,
+                    authors: app.mapped_selected_filter_authors,
+                    books: app.mapped_selected_filter_books,
+                    offset: app.offset
+                })
+                .then(function (response) {
+                    app.search_results = response.data['results'];
+                    app.results_count = response.data['results_count'];
+                    app.offset = response.data['offset'];
+
+                    {#console.log(response.data);#}
+                    {#console.log('results_count: '+response.data['results_count']);#}
+                    {#console.log('offset: '+response.data['offset']);#}
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

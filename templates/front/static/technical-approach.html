@@ -1,0 +1,62 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Technical Approach</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p><i>Mill Marginalia Online</i> aspires to digitize all pages within the John Stuart Mill Library containing any mark
+            or annotation while offering users a chance to view these individual pages within their larger textual contexts
+            by providing links to already-available full-text versions of the marked books.  The site employs a hybrid
+            of a SQL and noSQL database, one that capitalizes upon the former’s speed in filtering and querying and the
+            latter’s flexibility and ease of updating.  Thus, a simple differentiation between verbal and nonverbal forms
+            of marginalia is married to a Json field containing a readily expandable set of categories and subcategories
+            that both allows for more precise identification of the myriad types of marginalia found in the Mill Library,
+            and accommodates the discovery of new forms of marginalia as the data is collected.  This hybrid approach
+            permits such additions without requiring the consequent updating to the pre-existing dataset and large-scale
+            data migrations that would otherwise be necessary in an SQL-only database.</p>
+
+        <p>The project also employs a non-relational, relatively simple, and comparatively flat metadata schema that assigns
+            marginalia the role of primary artifact, rather than classifying it as the secondary attribute of the book in
+            which it appears.  This self-conscious reversal of the hierarchies that underlie both TEI and conventional
+            library cataloguing foregrounds the moment of human:book interaction and highlights that unique portion of
+            Somerville’s Mill Library, the verbal and nonverbal marginalia, which holds the most promise to generate new
+            knowledge.  The project schema, too, is easily updated as new forms of marginalia are discovered.</p>
+
+        <p>Together, the hybrid database and metadata schema allow for multi-faceted searching of all verbal and nonverbal
+            marks, which means that scholars interested in both Mills’ readerly judgments, writerly influences, and intellectual
+            networks can consult and compare not just their annotations, but their broader strategies of marking their books.
+            Even scholars without a singular investment in John Stuart or James Mill, but instead a diverse set of interests
+            in cognitive approaches to textual studies, histories of reading practices, and literary aesthetics should find
+            empirical evidence to support their research. Knowledge of the nineteenth century is literally inscribed in
+            the margins of the Mill Library, and <i>Mill Marginalia Online</i> seeks to make that knowledge as accessible and
+            broadly useful as possible.</p>
+        
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

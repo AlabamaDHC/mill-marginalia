@@ -1,0 +1,86 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+    h2 {
+        font-size: 1.75rem;
+        line-height: 100%;
+        margin: 2rem 0 0.5rem 0;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        line-height: 100%;
+        margin: 0.5rem 0 0.5rem 0;
+    }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Credits</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>Like all Digital Humanities projects, <i>Mill Marginalia Online</i> is a collaborative effort.  The following persons
+            contributed directly to the content and format of this site:</p>
+
+        <h2>Project Direction and Editorial Content:</h2>
+        <h3>Albert D. Pionke, Project Director</h3>
+        <h3>Emma Annette Wilson, Co-Principal Investigator</h3>
+
+        <h2>Website and Database Design:</h2>
+        <h3>Tyler Grace</h3>
+
+        <h2>Metadata Schema:</h2>
+        <h3>Mary Alexander</h3>
+
+        <h2 class="headering5">Photos:</h2>
+        <h3>Albert D. Pionke</h3>
+
+        <h2>Identification and Collation of Marginalia:</h2>
+        <h3>Hazel Tubman</h3>
+        <h3>Joanna Raisbeck</h3>
+        <h3>Bethany Slater</h3>
+
+
+        <h2>Transcriptions:</h2>
+        <h3>Carissa Schreiber</h3>
+        <h3>Lauren Davis</h3>
+        <h3>Julianna Waynick</h3>
+        <h3>Nadia DelMedico</h3>
+        <h3>Kaitlin Wright</h3>
+
+        <h2>Additional Research Assistance:</h2>
+        <h3>Carissa Schreiber</h3>
+        <h3>Holly Burdorff</h3>
+        <h3>Lauren Davis</h3>
+        <h3>Julianna Waynick</h3>
+        <h3>Nadia DelMedico</h3>
+        <h3>Kaitlin Wright</h3>
+
+        <h2>Institutional Collaboration:</h2>
+        <h3>Anne Manuel</h3>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

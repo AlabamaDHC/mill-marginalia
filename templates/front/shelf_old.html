@@ -1,0 +1,211 @@
+{% set active_page = 'library' %}
+{% include 'front/head.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+
+    h1.header {
+        font-size: 4.2rem;
+        line-height: 110%;
+    }
+
+    .header {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        font-weight: 500;
+        color: #f8f8f8;
+    }
+
+    .subheader {
+        margin-top: 0px;
+        color: #f8f8f8;
+    }
+
+    .btn-floating i{
+        color: #39383a;
+    }
+
+    .btn-floating:hover {
+        background-color: #e4e4e4;
+        color: #39383a;
+    }
+
+
+    .shelf-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+
+    .book-spine {
+        display: block;
+        height: 500px;
+        max-width: fit-content;
+
+
+    }
+
+    .spine-container{
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spine-container::before, .spine-container::after{
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: black;
+        position: absolute;
+        opacity: 0.45;
+        top: 0;
+        left: 0;
+        -moz-transform: translate3d(0, -100%, 0);
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+        -moz-transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .book-spine-text {
+        position: absolute;
+        text-align: center;
+        {#background: lightyellow;#}
+        background: #39383a;
+        z-index: 998;
+        width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+        top: 50%;
+        -webkit-transform: translate3d(-100%, -50%, 0);
+        transform: translate3d(-100%, -50%, 0);
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        line-height: 45px;
+        font-size: 20px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        padding-bottom: 10px;
+    }
+
+    .slidedown:hover::before{
+        -moz-transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    .slidedown:hover .pic-caption{
+        opacity: 1;
+        -moz-transform: translate3d(0, -50%, 0);
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
+        -moz-transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+        -moz-transition-delay: 0.5s;
+        -webkit-transition-delay: 0.5s;
+        transition-delay: 0.5s;
+    }
+
+    main {
+        background-color: #39383a1c;
+    }
+
+    .material-tooltip {
+        margin-top: 250px
+    }
+
+    span {
+        font-size: 1.2rem;
+    }
+
+    .header {
+        background-color: rgba(0, 0, 0, 0.55);
+        -webkit-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        -moz-box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+        box-shadow: 0px 0px 20px 20px rgba(0,0,0,0.55);
+    }
+
+
+</style>
+
+
+<style>
+    /* General Style */
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Library</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+    <div class="container shelf-container" style="min-height: 1000px;">
+
+
+        <div class="columns is-gapless is-multiline is-mobile">
+            {% for book in books %}
+
+                {% if not book.number_of_volumes or (book.number_of_volumes and book.volume_number|int == 1) and book.public == true %}
+                    {% if book.spine_image %}
+                        <a href="{{url_for('show_book_multi_vol', spine_slug=book.spine_image[:-4] )}}" aria-label="{{ book.title }} link">
+                        <div class="column is-narrow spine-container common slidedown center tooltipped"
+                             data-position="top" data-delay="50" data-html="true" data-tooltip="{{ book.title }}<br>{%- if book.subtitle -%}({{ book.subtitle }}){% endif %} <br>{{ book.author.first_name }} {{ book.author.last_name }}">
+
+                                <img class="book-spine" src="{{ url_for('static', filename='assets/spines/'+book.spine_image) }}" alt="{{ book.title }} Spine image">
+
+{#                            <div class="book-spine-text pic-caption">#}
+{#                                <h3 class="header">{{ book.title }} {%- if book.subtitle -%} ({{ book.subtitle }}){% endif %}</h3>#}
+{#                                <h4 class="subheader light">{{ book.author.first_name }} {{ book.author.last_name }}</h4>#}
+    {#                            <a href="{{url_for('show_book', book_slug=book.slug )}}" class="btn waves-effect waves-light secondary-color primary-color-background">View <i class="material-icons">arrow_forward</i></a>#}
+{##}
+{#                                {% if book.number_of_volumes|int > 1 %}#}
+{#                                    <a href="{{url_for('show_book_multi_vol', spine_slug=book.spine_image[:-4] )}}" class="btn-floating btn-large waves-effect waves-light secondary-color-background"><i class="material-icons">arrow_forward</i></a>#}
+{#                                {% else %}#}
+{#                                    <a href="{{url_for('show_book', book_slug=book.slug )}}" class="btn-floating btn-large waves-effect waves-light secondary-color-background"><i class="material-icons">arrow_forward</i></a>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+                        </div>
+                        </a>
+
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+{% set active_page = 'volumes' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        display: inline-flex;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .sort-chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+    .sort-chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .sort-chip.selected a {
+        color: #fff;
+    }
+
+    .sort-chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .sort-chip.selected {
+        border: 1px solid #26a59a;
+    }
+
+    .metadata-link {
+        text-align: right;
+        float: right;
+    }
+
+    .header {
+        margin-bottom: 0px;
+    }
+
+    .subsubheader {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        font-size: 1.5rem;
+    }
+
+    ul.paginate-links {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pagination li.active {
+        background-color: #26a69a;
+    }
+
+    .pagination li a {
+        font-size: 1.5rem;
+    }
+
+    .spinner-layer {
+        border-color: #26a69a;
+    }
+
+    #loading-container {
+        margin-top: 1rem;
+    }
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            {% if page_header %}
+                <h1 class="header center secondary-color">{{ page_header }}</h1>
+            {% else %}
+                <h1 class="header center secondary-color">Volumes</h1>
+            {% endif %}
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div id="app" class="container">
+    {% if page_subheader %}<h2 class="subheader center">{{ page_subheader }}</h2>{% endif %}
+
+    <div id="loading-container" v-if="loading" class="col s12 m7 center-align">
+        <div v-if="loading" class="preloader-wrapper big active">
+            <div class="spinner-layer">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="sort != 'none' && !loading" class="chips">
+        <a v-on:click="changeSort('title')" href="#"><div id="sort-by-title" class="chip sort-chip" v-bind:class="{ selected : sort == 'title' }" aria-label="View Volumes page with titles sort alphabetically by title">Alphabetically by Title</div></a>
+        <a v-on:click="changeSort('author')" href="#"><div id="sort-by-author" class="chip sort-chip" v-bind:class="{ selected : sort == 'author' }" aria-label="View Volumes page with titles sort alphabetically by author">Alphabetically by Author</div></a>
+    </div>
+
+    <div v-if="!loading" class="section">
+        <paginate name="books" :list="books" :per="25">
+                <template v-for="item in paginated('books')">
+                    <div class="col s12 z-depth-3">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content z-depth-3" style="padding-top: 0px;">
+                                    <h3 v-if="item.subtitle" class="header">[[ item.title ]] ([[ item.subtitle ]])</h3>
+                                    <h3 v-else class="header">[[ item.title ]]</h3>
+
+                                    <h4 v-if="item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]]. [[ item.edition ]] Ed.</h4>
+                                    <h4 v-else-if="item.year_of_pub && !item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]].</h4>
+                                    <h4 v-else-if="!item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.edition ]] Ed.</h4>
+
+                                    <h4 v-if="item.author.last_name && item.author.first_name != ''" class="subheader light">[[item.author.last_name]], [[ item.author.first_name ]]</h4>
+                                    <h4 v-else class="subheader light">[[item.author.last_name]]</h4>
+
+                                    <ul class="collapsible">
+                                        <template v-for="vol in item.volumes">
+                                            <li style="margin-left: 0px; margin-right: 0px;" v-if="vol && vol != '' && vol != ' '">
+
+                                                <div v-if="item.volumes.length > 1" class="collapsible-header">
+                                                    <div v-if="vol && vol != ''" class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                        <div class="col s12 m5 l5">
+                                                            <h5 v-if="vol.part_of_book">[[ vol.part_of_book ]]</h5>
+                                                            <h5 v-else>Volume [[ vol.volume_number ]]</h5>
+                                                        </div>
+
+                                                        <div class="col s10 m6 l6">
+                                                            <div class="chip">
+                                                                <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                                <div class="chip-text"><span>[[ vol.page_count ]] Page(s)</span></div>
+                                                            </div>
+                                                            <div class="chip">
+                                                                <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                                <div class="chip-text"><span>[[ vol.marginalia_count ]] Marginalia</span></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col s2 m1 l1 right align-right">
+                                                            <div style="margin-left: auto;">
+                                                                <a v-bind:href="'/library/'+vol.slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                                    <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div v-else class="collapsible-header">
+                                                    <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                        <div class="col s10 m11 l11">
+                                                            <div class="chip">
+                                                                <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                                <div class="chip-text">[[ item.volumes[0].page_count ]] Page(s)</div>
+                                                            </div>
+                                                            <div class="chip">
+                                                                <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                                <div class="chip-text"><span>[[ item.volumes[0].marginalia_count ]] Marginalia</span></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col s2 m1 l1 right align-right">
+                                                            <div style="margin-left: auto;">
+                                                                <a v-bind:href="'/library/'+item.volumes[0].slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                                   <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ul>
+
+                                    <a v-bind:href="'/metadata/'+item.slug_set" class="metadata-link" >Download Metadata</a>
+                                    <a v-if="item.critical_intro" v-bind:href="'/critical-intro/'+item.critical_intro" class="btn-large" aria-label="View Critical Introduction page for [[ item.title ]]">Critical Introduction</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </paginate>
+        <div class="center-align">
+            <paginate-links for="books" :classes="{'ul': 'pagination', 'li': 'waves-effect'}" :show-step-links="true" :step-links="{ next: '>', prev: '<' }"/>
+        </div>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        books: {},
+        paginate: ['books'],
+        sort: '{{ sort }}',
+        loading: true,
+    },
+    created: function () {
+            axios.get('{{request.url_root}}api/volumes{{args}}')
+                .then(function (response) {
+                    console.log(response.data);
+                    app.books = response.data.data.sort(function(a,b){
+                        return a.title.localeCompare(b.title);
+                    });
+                    app.loading = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    methods : {
+            changeSort : function(sort){
+                app.loading = true;
+                if(sort === 'author'){
+                    app.books = app.books.sort(function(a,b){
+                        return a.author.last_name.localeCompare(b.author.last_name);
+                    });
+                }
+                else {
+                    app.books = app.books.sort(function(a,b){
+                        return a.title.localeCompare(b.title);
+                    });
+                }
+                app.sort = sort;
+                app.loading = false;
+            }
+        },
+    delimiters: ['[[',']]']
+})
+</script>
+</body>
+</html>

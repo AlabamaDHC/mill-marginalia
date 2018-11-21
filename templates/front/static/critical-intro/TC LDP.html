@@ -1,0 +1,438 @@
+{% set active_page = 'authors' %}
+{% include 'front/head.html' %}
+{% include 'front/head-vue.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important;}
+
+    .para-with-blockquote {
+        margin-bottom: 0px;
+    }
+
+    p {
+        text-indent: 2rem;
+    }
+
+    blockquote {
+        margin: 2px 1.5rem 2px;
+        padding-left: 0.5rem;
+    }
+
+    .works-cited-header, .works-cited, .footnotes-header, .footnotes {
+        text-indent: 0;
+    }
+
+        .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    .collapsible-header {
+        cursor: initial;
+    }
+
+    .collapsible-header i {
+        padding-left: 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip {
+        display: -webkit-inline-box;
+        height: auto;
+        font-size: 16px;
+        border-radius: 25px;
+        line-height: 42px;
+    }
+
+    .chip i{
+        position: relative;
+        top: 7px;
+        margin-right: 14px;
+        padding-left: 11px;
+    }
+
+    .chip-icon {
+        border-radius: 25px;
+        background-color: #b5b4b4;
+        margin-left: -12px;
+    }
+
+    .chip-text {
+        margin-left: 5px;
+    }
+
+    .chips {
+        border-bottom: none;
+        margin-top: 20px;
+        margin-bottom: 0px;
+    }
+
+    .chip {
+        border: 1px solid #e4e4e4;
+        cursor:pointer;
+    }
+
+    .chip a {
+        color: rgba(0,0,0,0.6);
+    }
+
+    .chip.selected a {
+        color: #fff;
+    }
+
+    .chip:hover {
+        border: 1px solid #26a59a;
+    }
+
+    .chip.selected {
+        border: 1px solid #26a59a;
+    }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Critical Introduction</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <h4>Thomas Carlyle’s <i>Latter-Day Pamphlets</i></h4>
+        <h5>Albert D. Pionke, University of Alabama</h5>
+
+        <p>The owner of over 1000 miles of track laid during the 1840s railway boom, George Hudson, crowned the “Railway
+            King,” was remembered by his <i>Times</i> obituarist as “a man who united largeness of view with wonderful speculative
+            courage,” who “took away people’s breath at first, but . . . soon succeeded in persuading them that the larger
+            the project and bolder the scheme, the more likely it was to pay” (<i>ODNB</i>). A power broker in York—as local Tory
+            party treasurer, city alderman, county magistrate, and Lord Mayor, the last three times—Hudson was in 1845
+            elected as Member of Parliament for Sunderland. That same year, in an incident of <i>North-Country Lore and Legend</i>,
+            “a movement was set afloat for the purpose of honouring Mr. Hudson with a public testimonial, and something
+            like £25,000 was subscribed, with the view, it was understood, of erecting a statue” (“George Hudson” 394).</p>
+
+        <p>Unfortunately for Hudson, the discovery of his cooked corporate books caused the once-floated statue scheme to
+            sink with him into insolvency. He did, however, receive a public testimonial of sorts, although one motivated
+            less by memorialization than excoriation. I speak, of course, of the seventh of Thomas Carlyle’s famously
+            dyspeptic <i>Latter-Day Pamphlets</i>, <i>Hudson’s Statue</i>, originally published in July 1850 and subsequently reissued
+            with its companion castigations in a single volume later than same year.</p>
+
+        <p class="para-with-blockquote">This book, according to the exasperated reviewer from the <i>Eclectic Review</i>, aims
+            “to show, that democracy cannot rule, and the nearer we get to the democratic form of government the worse
+            it will be for us” (395). <i>Hudson’s Statue</i>, specifically, argues the unusually approving reviewer for
+            <i>The Examiner</i>, is dedicated to countering
+            <blockquote>
+                a false shame, to which Englishmen are peculiarly susceptible,—a cowardly fear of being thought enthusiastic
+                in the advocacy of great of generous principles, or the admiration of great men. This <i>nil admirari</i> has
+                spread widely through society; and its baneful tendency in encouraging the obtrusive despotism of the mere
+                money-maker, and the parasitical propensities of the worshippers of conventional rank, are exposed in the
+                latest publication of the series. (405)
+            </blockquote>
+            More typical is the critic for <i>The Athanaeum</i>, who agrees “with Mr. Carlyle that the question of statueship is
+            one of no mean importance,—but . . . cannot accept his version of either the facts or the morals of that question”
+            (704). (Steam again, in the figurative sense.)
+        </p>
+
+        <p>So far as we know, none of the published responses to <i>Hudson’s Statue</i>, or any of the other <i>Latter-Day Pamphlets</i>,
+            was written by John Stuart Mill. Not that Mill was shy about criticizing in print the increasingly vitriolic
+            writings of his former friend. In 1848, Mill had responded to Carlyle’s “Repeal of the Union” with his own
+            essay, “England and Ireland,” within which he assailed the “Ezekiel of England” over his support for Irish
+            colonial rule (CW 4.1096). Even more recently, in early 1850, Mill had, in “The Negro Question” in <i>Fraser’s Magazine</i>,
+            anonymously admonished the author of the “Occasional Discourse” for his sanctioning of slavery (CW 21.85-96).
+            Perhaps Mill had reached his critical quota, or maybe he saw no need to pile on to the in-print
+            lament over these latest Carlylean “effusions of disappointment and despair” (“Carlyle’s Works” 178).
+            <a href="#footnote-1"><b><sup>1</sup></b></a>
+        </p>
+
+        <p>That he read the book when it appeared in volume form is certain, since like the majority of the books held in
+            Somerville’s John Stuart Mill Collection, Carlyle’s <i>Latter-Day Pamphlets</i> contains nonverbal marks and verbal
+            annotations written in pencil in Mill’s distinctive handwriting. Unlike nearly all of the marginalia in this
+            collection, Mill’s annotations to <i>Hudson’s Statue</i> have been the subject of prior critical attention, in this
+            case a 1970 article from Edward Alexander in <i>English Language Notes</i>. At three-and-a-half pages, Alexander’s
+            short piece consists almost entirely of transcriptions, some displaying more confidence than I can muster in
+            the face of Mill’s cramped hand, all marshalled to counter others’ too-easy conflation of various Victorian
+            sages’ responses to democratic reform. </p>
+
+        <p>There is, however, more that might be said about the marginalia in <i>Latter Day Pamphlets</i> beyond merely that it
+            contributes to “the available evidence bearing on Mill’s reasons for parting with” Carlyle (Alexander 121).
+            Perhaps the first thing to notice about Mill’s copy of <i>Latter-Day Pamphlets</i> is that marginalia appears exclusively
+            in <i>Hudson’s Statue</i>. This essay, then, assumes a disproportionate importance in assessing Mill’s response to
+            Carlyle’s latest book-length publication. A portion of this response remains, unfortunately, unrecoverable
+            as a result of the physical condition of the book. Unintentionally (one hopes) creating material reminders of
+            the epistemological limits of this or any project in historical reconstruction, a subsequent over-eager bookbinder
+            has rather aggressively trimmed the pages, losing some of Mill’s handwritten paratexts literally on the cutting
+            room floor. </p>
+
+        <p>Despite this, it is possible to discern within <i>Hudson’s Statue</i> 53 individual examples of marginalia: 26 nonverbal
+            marks and 27 verbal annotations. Only three of the former are disconnected from hand-written text on the same
+            or an adjacent page, and although Mill often marks passages of which he approves in some way, it is difficult
+            to discern what, exactly, he meant when, on p. 43, he inserted a double score next to the divine invocation,
+            “O God, giver of Light, hater of Darkness, of Hypocrisy and Cowardice, how long, how long!”  This uncertainty
+            is compounded by the fact that the passage is itself attributed by Carlyle to the fictitious “Crabbe,” whom
+            the <i>Freethinker’s Magazine</i>, at least, felt confident immediately labeling “an assumed name, apparently to mystify
+            the reader” (92). Since Mill left no marks or annotations in Jesuitism, in which Crabbe’s American counterpart,
+            Gathercoal, appears, we cannot compare his reactions to their respective passages to determine whether this mark
+            indicates that Mill knew he was being fooled (I suspect he did) and, if so, whether he considered such fictional
+            speakers examples of “Darkness,” “Hypocrisy,” or “Cowardice.”</p>
+
+        <p>With similar exceptionality, only two of the 27 annotations are unambiguously positive. On p. 17, in the context
+            of wishing that “our British railways had gone on with deliberation; that these great works had made themselves
+            not in five years but in fifty and five,” Carlyle imagines Hudson appearing in the underworld before Rhadamanthus
+            to be judged. Rather than being granted £25,000 for a statue, Hudson, by Carlyle’s reckoning, would more justly
+            be “doomed . . . to ride in Express-trains, nowhither, for twenty-five aeons, or to hand in Heaven as a Locomotive
+            Constellation, and be a sign forever.”  Mill has judged this Carlylean alternative to the Elysian Fields “rather
+            funny.”<a href="#footnote-2"><b><sup>2</sup></b></a> Four pages later, in the midst of a lopsided comparison
+            between Bobus the sausage-maker and an unnamed Bishop, who, Carlyle asserts, “teaches practically the necessity
+            of ‘burning one’s own smoke,’” Mill has written a brief “good” in the inner margin.
+            <a href="#footnote-3"><b><sup>3</sup></b></a></p>
+
+        <p>The remaining 23 marks and 25 annotations work together to express Mill’s critical skepticism toward Carlyle’s
+            rhetorical and argumentative excesses. Curiously, two pages featuring both verbal and nonverbal forms of
+            marginalia remain unmentioned in Alexander’s otherwise punctilious article. On the bottom of p. 12 of
+            <i>Hudson’s Statue</i>, after a section break indicated by the insertion of a horizontal line between paragraphs,
+            Carlyle shifts into discussing “our first want . . . a new real Aristocracy of fact, instead of the extinct
+            imaginary one of title.”  Beside the second, interrogative clause of this extended sentence, which continues
+            on the top of p. 13 and which reads in full “if it is from Popular Suffrage that we are to look for such a
+            blessing, is not this extraordinary populace of British Statues, which now dominates our market-places, one
+            of the saddest omens that ever way?,” Mill has inserted a score. Beneath it, in the bottom margin of p. 12,
+            he has written “No. – the people neither choose know nor care anything about these statues. They are the gentlemen’s
+            doing.” At this moment of empirical skepticism about the implied second premise of Carlyle’s syllogism—that
+            “Popular Suffrage” has erected “this extraordinary populace of British Statues”—which, if it is false, makes
+            Carlyle’s conclusion about “the saddest omens” a non sequitur, Mill aligns himself with the reviewers for both
+            <i>The Athanaeum</i> and the <i>Eclectic Review</i>, both of whom question the logic of condemning an entire
+            nation on the basis of the actions of a few of its citizens.<a href="#footnote-4"><b><sup>4</sup></b></a></p>
+
+        <p>Page 31, also omitted from Alexander’s transcriptions, is an exceptionally crowded one, with four pairings of
+            verbal and nonverbal marginalia and an additional annotation unaccompanied by a mark. Beginning at the top
+            of the page, in the outer margin of a passage in which Carlyle asserts that, whatever a man’s ostensible
+            “[t]heologies, doxologies, orthodoxies, heterodoxies,” the “real ‘religion’ that is in him is his
+            <i>practical Hero-worship</i>,” Mill has paraphrased, “In plain words, a man’s cha[racter?] is shown in what
+            he admires. This is a[?] Carlyle.”  It is a bit infuriating not to know whether this annotation’s penultimate
+            word is “all” or “about” or something else; nevertheless, it is clear that Mill has recognized the warrant of
+            Carlyle’s argument. His next two marginal annotations similarly seek to recast Carlyle’s matter minus his manner,
+            clarifying the underlined “do their Hero-worship well” and “do it ill” to “i.e. admire the admirable” and
+            “i.e. admire the bad” respectively. The final two pairings of marks and annotations on this page evince greater
+            skepticism. First, the “whom” in Carlyle’s admonition “Know whom to honour and emulate and follow,” is underlined
+            and a presumably interrogative “that is what” written in the margin beside it. More capaciously, the final 12
+            lines of the page, essentially an amplification of the above “real religion” passage with vague consequences
+            attached, are marked with a score in the inner margin and a comparatively lengthy annotation in the bottom
+            margin: “all the world knows this – except the fools + they don’t count – all his mistake is in counting the
+            fools.”  Mill is judging both Carlyle and himself in this final comment: not only is Carlyle substituting the
+            actions of a comparatively wealthy few for the will of the “Popular Suffrage,” he is also confusing these
+            wealthy few “fools” with people whose opinions “count”; Mill presumes here his own ability to discriminate
+            between these two groups. The single upstroke visible at the neatly trimmed bottom edge of this page is the
+            only evidence that remains of any elaboration or qualification that Mill might have made to his summary judgment.</p>
+
+        <p>Two further pages feature marks with companion annotations that also refuse to count the opinions of fools.
+            Working backwards to p. 29, we find Carlyle haranguing another fictional character, the “most excellent
+            Fitzsmithytrough,” who seems to be an enthusiastic promoter of the railroad not unlike Hudson. Countering
+            Fitz’s materialist zeal for the speed of the new trains and the resulting decrease in the perceived distance
+            between cities like London, Aberdeen, Ostend, and Vienna, Carlyle asks, “Will you teach me the winged flight
+            through Immensity, up to the Throne dark with excess of bright?  You unfortunate, you grin as an ape would at
+            such a question.”  Mill has scored this passage in the inner margin, annotating in the outer margin, “Because
+            never ques[tions?] any but fools.”  We are left to assume that not merely Novalis, alluded to later in the
+            paragraph, but also others with his combination of artistic expression and intellectual discernment—including
+            Mill, presumably—could help Carlyle to catch the train to “God Freedom, Immortality” for which he waits in vain.</p>
+
+        <p>Three pages earlier yet, on p. 26, Carlyle laments that in a society over-determined by the democratic principle,
+            “the man that pretends to have what is angrily called a choice of his own . . . is felt as a kind of interloper
+            and dissocial person, who obstructs the harmony of affairs, and is out of keeping with the universal-suffrage
+            arrangement that has been entered upon.”  Mill has commented upon this passage in three ways, inserting “not”
+            before “universal-suffrage,” marking the whole with a marginal score, and then further annotating “True because
+            of his own knowledge not the on dit of fools like most of the tract.”  The initial insertion appears to reflect
+            Mill’s concern, dating back to his 1840 review of the second volume of Alexis de Tocqueville’s
+            <i>Democracy in America</i> at least, over securing the rights of the (intellectual) minority in a democracy;
+            in other words, making sure that those who “count” can be heard over the speech of “fools.”  According to Mill’s
+            annotation, Carlyle has a claim to be included among the privileged few, but only when voicing his own “knowledge”;
+            otherwise, he and “most of the tract” that is <i>Hudson’s Statue</i> presumably belong amongst the foolish
+            steam emanating from the “Railway King” and his would-be memorialists.<a href="#footnote-5"><b><sup>5</sup></b></a></p>
+
+        <p>Through these three marginal comments on fools, then, Mill implicitly conflates Carlyle with the unfortunate
+            intended audience of <i>Hudson’s Statue</i>. All are equally unwise in their reliance upon questionable assertions
+            of “fact” made by those who should not “count.”  Put another way, Carlyle has failed to meet the demand for
+            “Proof? Proof? Proof–” made by Mill on p. 21 of his personal copy, not to mention by the period’s many published
+            reviewers of <i>Latter-Day Pamphlets</i>.</p>
+
+        <br>
+        <p class="footnotes-header"><b>Footnotes</b></p>
+        <p id="footnote-1" class="footnotes">
+            <b><sup>1</sup></b>
+            This article, somewhat bizarrely dedicated to illustrating the degree to which Carlyle’s works conform to Roman
+            Catholic doctrine, briefly characterizes <i>Hudson’s Statue</i> as treating “with great power and in a spirit of the
+            deadliest sarcasm, of that sordid worship of money, with which England is overridden” (“Carlyle’s Works” 201).</p>
+
+        <p id="footnote-2" class="footnotes">
+            <b><sup>2</sup></b>
+            Mill’s approbation aligns him with the writer for the <i>North British Review</i> who cites this passage, among
+            others, as evidence for the praiseworthy “literary merits and peculiarities” of <i>Latter-Day Pamphlets</i> as a
+            whole (14).
+            </p>
+
+        <p id="footnote-3" class="footnotes">
+            <b><sup>3</sup></b>
+            The broader Bobus/Bishop contrast was acknowledged by the otherwise skeptical <i>Athanaeum</i> reviewer as “stated
+            and illustrated amusingly” (705).
+            </p>
+
+        <p id="footnote-4" class="footnotes">
+            <b><sup>4</sup></b>
+            According to the <i>Athanaeum</i> reviewer, “That the offense against taste exhibited at Hyde Park Corner should be
+            quoted as an argument against representation and constitutional government, is an instance of the peculiar
+            logic to which Mr. Carlyle has devoted himself—suggesting an illustration of his own favorite dogma that chaos
+            is come again” (705). The writer for the <i>Eclectic Review</i> similarly declares, “we cannot see the justice of
+            charging a whole nation with the folly which pertained only to a miserable few who applauded the railway king
+            to the echo, and were willing to cringe before him as his subjects—so long as they thought it possible to ride
+            side by side with him on the road to fortune” (406).
+            </p>
+
+        <p id="footnote-5" class="footnotes">
+            <b><sup>5</sup></b>
+            Alexander speculates that in this annotation Mill is “perhaps referring sympathetically to Carlyle’s early
+            struggles as an unpopular author” (122). However, Carlyle’s “knowledge” of himself as a “dissocial person”
+            obstructing “the harmony of affairs” surely also extends to the reception he expected, even courted in <i>Latter-Day
+            Pamphlets</i> itself, a possibility not lost on the writer for the <i>North British Review</i>: “Whatever unpopularity
+            has been or may yet be the consequence of these Pamphlets, the author has knowingly, resolutely, and deliberately
+            braved it” (8-9). Carlyle’s letters from January 1850 contain numerous references to <i>Latter-Day Pamphlets</i>
+            and the hostile reception that he anticipates for them (see esp. CLO 25:1-2, 10-11).</p>
+
+        <br>
+        <p class="works-cited-header"><b>Works Cited</b></p>
+        <p class="works-cited">“Carlyle’s Latter-Day Pamphlets.” <i>Eclectic Review</i> 28 (October 1850): 385-409.</p>
+        <p class="works-cited">“Carlyle’s Latter-Day Pamphlets.” <i>North British Review</i> 14.27 (Nov. 1850): 1-40.</p>
+        <p class="works-cited">“Carlyle’s Works.” <i>Dublin Review</i> 29.57 (September 1850): 169-206.</p>
+        <p class="works-cited"><i>The Carlyle Letters Online [CLO]</i>. Ed. Bret E. Kinser. Durham: Duke UP, 14 Sept. 2007. Web. 24 June 2016.</p>
+        <p class="works-cited">“George Hudson.” <i>Oxford Dictionary of National Biography</i>. Accessed 16 June 2016.</p>
+        <p class="works-cited">“George Hudson, the Railway King.” <i>The Monthly Chronicle of North-Country Lore and Legend</i> 1.9 (November 1887): 392-97.</p>
+        <p class="works-cited">Mill, John Stuart. <i>The Collected Works of John Stuart Mill</i>. Ed. John Robson, et. al. 33 vols. Toronto: University of Toronto Press, 1963-1991.</p>
+        <p class="works-cited">Rev. of <i>Latter-Day Pamphlets.—Hudson’s Statue</i>. <i>The Athanaeum</i> 1184 (6 July 1850): 704-05.</p>
+        <p class="works-cited">Rev. of <i>Latter-Day Pamphlets</i>. By Thomas Carlyle. <i>The Examiner</i> 2213 (29 June 1850): 404-06.</p>
+        <p class="works-cited">Rev. of <i>Latter-Day Pamphlets</i>. Nos. I. to VII. By Thomas Carlyle. <i>The Freethinker’s Magazine and Review of Theology, Politics, and Literature</i> 3 (1 August 1850): 91-93</p>
+
+    </div>
+
+    <div id="app" class="section">
+        <template v-for="item in books">
+            <div class="col s12 z-depth-3">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content z-depth-3" style="padding-top: 0px;">
+                            <h3 v-if="item.subtitle" class="header">[[ item.title ]] ([[ item.subtitle ]])</h3>
+                            <h3 v-else class="header">[[ item.title ]]</h3>
+
+                            <h4 v-if="item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]]. [[ item.edition ]] Ed.</h4>
+                            <h4 v-else-if="item.year_of_pub && !item.edition" class="subheader subsubheader light">[[ item.year_of_pub ]].</h4>
+                            <h4 v-else-if="!item.year_of_pub && item.edition" class="subheader subsubheader light">[[ item.edition ]] Ed.</h4>
+
+                            <h4 v-if="item.author.last_name && item.author.first_name != ''" class="subheader light">[[item.author.last_name]], [[ item.author.first_name ]]</h4>
+                            <h4 v-else class="subheader light">[[item.author.last_name]]</h4>
+
+                            <ul class="collapsible">
+                                <template v-for="vol in item.volumes">
+                                    <li style="margin-left: 0px; margin-right: 0px;" v-if="vol && vol != '' && vol != ' '">
+
+                                        <div v-if="item.volumes.length > 1" class="collapsible-header">
+                                            <div v-if="vol && vol != ''" class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                <div class="col s12 m5 l5">
+                                                    <h5 v-if="vol.part_of_book">[[ vol.part_of_book ]]</h5>
+                                                    <h5 v-else>Volume [[ vol.volume_number ]]</h5>
+                                                </div>
+
+                                                <div class="col s10 m6 l6">
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                        <div class="chip-text"><span>[[ vol.page_count ]] Page(s)</span></div>
+                                                    </div>
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                        <div class="chip-text"><span>[[ vol.marginalia_count ]] Marginalia</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s2 m1 l1 right align-right">
+                                                    <div style="margin-left: auto;">
+                                                        <a v-bind:href="'/library/'+vol.slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                            <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div v-else class="collapsible-header">
+                                            <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                <div class="col s10 m11 l11">
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">description</i></div>
+                                                        <div class="chip-text">[[ item.volumes[0].page_count ]] Page(s)</div>
+                                                    </div>
+                                                    <div class="chip">
+                                                        <div class="chip-icon"><i aria-hidden="true" class="material-icons">create</i></div>
+                                                        <div class="chip-text"><span>[[ item.volumes[0].marginalia_count ]] Marginalia</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col s2 m1 l1 right align-right">
+                                                    <div style="margin-left: auto;">
+                                                        <a v-bind:href="'/library/'+item.volumes[0].slug" class="btn-floating btn-large waves-effect waves-light primary-color-background right" v-bind:aria-label="'View '+item.title+' page'">
+                                                            <i aria-hidden="true" class="material-icons">arrow_forward</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <a v-bind:href="'/metadata/'+item.slug_set" class="metadata-link" >Download Metadata</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        books: {},
+        sort: '{{ sort }}'
+    },
+    created: function () {
+            axios.get('{{request.url_root}}api/volumes{{args}}')
+                .then(function (response) {
+                    app.books = response.data.data.sort(function(a,b){
+                        return a.title.localeCompare(b.title);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    delimiters: ['[[',']]']
+})
+</script>
+</body>
+</html>

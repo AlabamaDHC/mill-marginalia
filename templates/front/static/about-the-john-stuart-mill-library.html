@@ -1,0 +1,45 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Institutional Collaboration</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>Acting at the suggestion of Liberal politician and writer John Morley, and under power of attorney for her
+            aunt, Helen Taylor (John Stuart Mill’s step-daughter), Miss Mary Taylor donated the books from Mill’s house
+            in Blackheath, London without condition to Somerville College, Oxford, in 1905.  The roughly 2000 volumes
+            increased the college library’s collection by about a third and included many books inherited by Mill from
+            his father, James Mill, and some acquired after Mill’s death by Helen Taylor.  Following their acquisition,
+            duplicate copies and books deemed unsuitable for female students were sold; the rest were assigned Dewey
+            classification numbers and dispersed throughout the library on open shelves, from which some (including Mill’s
+            personal copy of <i>Utilitarianism</i>) went missing over the years.  In 1969, the remaining books, now numbering
+            just over 1000 titles in 1674 volumes and 45 unbound pamphlets, were reassembled into a Special Collection
+            which presently resides in a locked second-floor room of Somerville College Library.</p>
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

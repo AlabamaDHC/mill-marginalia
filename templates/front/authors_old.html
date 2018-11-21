@@ -1,0 +1,149 @@
+{% set active_page = 'authors' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container {
+	    min-height: 180px;
+    }
+    #parallax-img-1 {
+        transform: translate3d(-50%, 230px, 0px) !important;
+    }
+
+    .card .card-content {
+        padding: 16px;
+
+    }
+
+    .card-header {
+        margin-top: 0px;
+
+    }
+
+    .card-image {
+        width: 260px;
+
+    }
+
+    .card-image img {
+        height: auto;
+    }
+
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Authors</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        {% for author in authors %}
+
+
+            <div class="col s12 m7">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="{{ url_for('static', filename='assets/authors/'+author.image) }}" class="circle responsive-img" alt="{{ author.first_name }} {{ author.last_name }} Portrait">
+                        <div class="image-source">{{ author.image_caption }}</div>
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <h4 class="card-header">{{ author.last_name }}{% if author.first_name %}, {{ author.first_name }}{% endif %}</h4>
+
+
+                            {% for book in author.books %}
+
+                                {% if book.number_of_volumes and book.volume_number|int == 1  %}
+                                    <ul class="collapsible">
+                                        <li style="margin-left: 0px; margin-right: 0px;">
+
+                                            <div class="collapsible-header">
+
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                    <div class="col s12 m11 l11">
+                                                        <h5>{{ book.title }}</h5>
+                                                        <h6>{% if book.subtitle %}{{ book.subtitle }}{% endif %}
+                                                            {% if book.edition %}{{ book.edition }} Ed{% endif %}
+                                                            ({{ book.number_of_volumes }} Vols) </h6>
+{#                                                        <h7>if {{ book.slug }}</h7>#}
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            {% if book.public == true %}
+                                                                <a href="{{url_for('show_book_multi_vol', spine_slug=book.spine_image[:-4] )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right">
+                                                                    <i class="material-icons" style="width: 56px;">arrow_forward</i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+
+                                {% if book.number_of_volumes == '' and book.public == true %}
+                                    <ul class="collapsible">
+                                        <li style="margin-left: 0px; margin-right: 0px;">
+
+                                            <div class="collapsible-header">
+
+                                                <div class="row" style="width: 100%; margin-bottom: 0px;">
+
+                                                    <div class="col s12 m11 l11">
+                                                        <h5>{{ book.title }}</h5>
+                                                        <h6>{% if book.subtitle %}{{ book.subtitle }}. {% endif %}
+                                                            {% if book.edition %}{{ book.edition }} Ed. {% endif %}
+                                                            </h6>
+{#                                                        <h7>else {{ book.slug }}</h7>#}
+                                                    </div>
+
+                                                    <div class="col s2 m1 l1 right align-right">
+                                                        <div style="margin-left: auto;">
+                                                            {% if book.public == true %}
+                                                                <a href="{{url_for('show_book', book_slug=book.slug )}}" class="btn-floating btn-large waves-effect waves-light primary-color-background right">
+                                                                    <i class="material-icons" style="width: 56px;">arrow_forward</i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>

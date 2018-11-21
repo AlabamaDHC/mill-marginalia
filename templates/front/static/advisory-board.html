@@ -1,0 +1,61 @@
+{% set active_page = 'about' %}
+{% include 'front/head.html' %}
+<style>
+    .parallax-container { min-height: 180px; }
+    #parallax-img-1 { transform: translate3d(-50%, 230px, 0px) !important; }
+</style>
+<body>
+{% include 'front/nav.html' %}
+<main>
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <h1 class="header center secondary-color">Advisory Board</h1>
+        </div>
+    </div>
+    <div class="parallax"><img id="parallax-img-1" src="{{ url_for('static', filename='img/background1.png') }}" alt="Mill Library background image"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <p>Anna Gibson is Assistant Professor of English at Duquesne University and Principal Investigator for the Dickens
+            Working Notes Project.</p>
+
+        <p>Meredith Martin is Associate Professor of English at Princeton University, author of <i>The Rise and Fall of Meter,
+            Poetry and English National Culture, 1860-1930</i>, Principal Investigator for the Princeton Prosody Archive, and
+            Faculty Director of the Center for Digital Humanities at Princeton.</p>
+
+        <p>Georgios Varouxakis is Professor of the History of Political Thought at Queen Mary, University of London, author
+            of <i>Liberty Abroad: J. S. Mill on International Relations, Mill on Nationality,</i> and <i>Victorian Political Thought
+                on France and the French</i>, and Co-Director of the Centre for the Study of the History of Political Thought at
+            Queen Mary University of London.</p>
+
+        <p>Phyllis Weliver is Professor of English at Saint Louis University; author of <i>The Musical Crowd in English Fiction,
+            1840-1910: Class, Culture and Nation, Women Musicians in Victorian Fiction, 1860-1900: Representations of Music,
+            Science and Gender in the Leisured Home, and Mary Gladstone and the Victorian Salon: Music, Literature, Liberalism;</i>
+            and Principal Investigator for Sounding Tennyson.</p>
+
+        <p>Alex Zakaras is Associate Professor of Political Science at the University of Vermont, author of <i>Individuality
+            and Mass Democracy: Mill, Emerson, and the Burdens of Citizenship</i>, and co-editor of <i>J. S. Mill’s Political
+            Thought: A Bicentennial Retrospective</i>.</p>
+
+        <p>In addition to providing general advice about all things Mill- and DH-related, members of the advisory board
+            have performed beta-testing of our database and web search interface prototype, and serve as a peer review board of all
+            prospective content for our final website (including both general introductory materials and critical introductions
+            to the marginalia found in selected books).</p>
+
+    </div>
+</div>
+</main>
+{% include 'front/footer.html' %}
+<script>
+(function($){
+    $(function(){
+        $('.button-collapse').sideNav({ edge: 'right'});
+        $('.parallax').parallax();
+        $('.collapsible').collapsible();
+    });
+})(jQuery);
+</script>
+</body>
+</html>
