@@ -31,4 +31,4 @@ if __name__ == '__main__':
     # db.create_all()
     # user_datastore.create_user(email='thgrace@ua.edu', password='Soccer12!@')
 	# db.session.commit()
-    app.run(debug=True)
+    app.run(debug=False)
