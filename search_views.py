@@ -1,5 +1,7 @@
 from flask import request, jsonify, render_template, json
 from sqlalchemy import or_
+from sqlalchemy import and_
+from sqlalchemy import tuple_
 
 # from models import Marginalia, Book, Author
 from models.author import Author
@@ -72,13 +74,17 @@ def basic_search():
 
         if 'types' in data and len(data['types']) > 0:
             types = data['types']
+            types_list = []
 
-            subtypes = ['Editorial Correction','Capitalization Change', 'Layout Change','Punctuation',
-                        'Punctuation Change','Spelling Correction','Textual Revision','Word Addition',
-                        'Word Change','Word Excision','Authorial Inscription', 'Numbers', 'Textual Correction',
-                        'Editorial Inscription', 'Date', 'Equation', 'Numbers', 'Punctuation',
-                        'Record of Original Publication Information', 'Revision of Original']
-            results = results.filter(or_(Marginalia.type.in_(types), Marginalia.subtype.in_(types)))
+            for item in types:
+                item = str.strip(item)
+                if ':' in item:
+                    item_split = str.split(item, ':')
+                    types_list.append([item_split[0], item_split[1]])
+                else:
+                    types_list.append([item, ''])
+
+            results = results.filter(tuple_(Marginalia.type, Marginalia.subtype).in_(types_list))
 
         if 'authors' in data and len(data['authors']) > 0:
             authors = data['authors']
@@ -125,21 +131,21 @@ def basic_search():
         return jsonify(resp)
 
     if request.method == 'GET':
-        marginalia_type_set = ['asterisk', 'bracket', 'brackets', 'check mark', 'circle', 'copyedit', 'editorial correction',
-            'capitalization change', 'layout change', 'punctuation', 'punctuation change',
-            'spelling correction', 'textual revision', 'word addition', 'word change', 'word excision',
-            'corrugated score', 'cross reference', 'curly bracket', 'dash', 'ditto mark', 'doodle',
-            'dot', 'dotted score', 'double bracket', 'double exclamation point', 'double question mark',
-            'double score', 'double underline', 'downward arrow', 'exclamation point', 'idle mark',
-            'idle shading', 'inverted bracket', 'left chevron', 'loose bracket', 'musical note',
-            'plus sign', 'question mark', 'score', 'scratchthrough', 'slash', 'slashthrough', 'smudge',
-            'square', 'squiggle', 'strikethrough', 'tailed score', 'text', 'authorial inscription',
-            'numbers', 'textual correction', 'editorial inscription', "text", 'date',
-            'equation', 'numbers', 'punctuation', 'record of original publication information',
-            'revision of original', 'tilde', 'triangle', 'triple score', 'underlining', 'unfilled matrix',
-            'x mark', 'tallied score']
+        marginalia_type_set = ['*', 'ampersand', 'asterisk', 'box', 'bracket:close', 'bracket:curly', 'bracket:double', 
+        'bracket:inverted', 'bracket:loose', 'bracket:open', 'bracket:standard', 'check mark', 'chevron', 'circle', 
+        'dash', 'ditto mark', 'doodle', 'dot', 'dotted line', 'double dash', 'double exclamation point', 'double plus sign', 
+        'double question mark', 'double slash', 'double underline', 'downward arrow', 'excised x', 'exclamation point', 
+        'footnote mark', 'idle mark', 'idle mark:erasure mark', 'idle shading', 'ink blot', 'minus sign', 'musical note', 
+        'nonverbal', 'over-tracing', 'plus sign', 'question mark', 'quotation marks', 'score:bracketing', 'score:corrugated', 
+        'score:dotted', 'score:double', 'score:erasure mark', 'score:scratched', 'score:standard', 'score:tailed', 'score:tallied', 
+        'score:triple', 'scratchthrough', 'slash', 'slash and smudge', 'slashthrough', 'smudge', 'squiggle', 'strikethrough', 
+        'text', 'text:authorial inscription', 'text:copyedit', 'text:date', 'text:editorial correction', 'text:editorial inscription', 
+        'text:equation', 'text:numbers', 'text:punctuation', 'text:record of original publication information', 
+        'text:revision of original', 'tilde', 'trace transfer', 'triangle', 'triple exclamation point', 'underlining', 
+        'unfilled matrix', 'upturned dash', 'upward arrow', 'word map', 'X mark'
+        ]
 
-        authors = Author.query.all()
+        authors = Author.query.order_by(Author.last_name).all()
         authors_list = []
         for a in authors:
             authors_list.append({'name': a.first_name + ' ' + a.last_name, 'id': a.id})
