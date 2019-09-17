@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/0.10.0/viewer.min.css" />
 <style>
     .parallax-container {
-	    min-height: 180px;
+        min-height: 180px;
     }
     #parallax-img-1 {
         transform: translate3d(-50%, 230px, 0px) !important;
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col s12 m4 l4">
                 <ul class="collapsible popout" data-collapsible="accordion" id="list-1">
-                    {% for ex in examples[:14] %}
+                    {% for ex in examples[:16] %}
                         <li>
                             <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
                             <div class="collapsible-body">
@@ -87,7 +87,7 @@
 
             <div class="col s12 m4 l4">
                 <ul class="collapsible popout" data-collapsible="accordion">
-                    {% for ex in examples[14:28] %}
+                    {% for ex in examples[16:32] %}
                         <li>
                             <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
                             <div class="collapsible-body">
@@ -114,7 +114,7 @@
 
             <div class="col s12 m4 l4">
                 <ul class="collapsible popout" data-collapsible="accordion">
-                    {% for ex in examples[28:] %}
+                    {% for ex in examples[32:] %}
                         <li>
                             <div class="collapsible-header"><b>{{ ex.name }}</b> {% if ex.subtypes %}<span class="badge new" data-badge-caption="subtypes">{{ ex.subtypes|length }}</span>{% endif %}</div>
                             <div class="collapsible-body">
