@@ -194,20 +194,24 @@ def show_critical_intro(slug):
 @app.route('/marginalia-examples')
 def show_marginalia_examples():
     examples = []
+    examples.append(MarginaliaExamples(name='Ampersand', image='ampersand', subtypes=''))
     examples.append(MarginaliaExamples(name='Asterisk', image='asterisk', subtypes=''))
+    examples.append(MarginaliaExamples(name='Box', image='square', subtypes=''))
 
     examples.append(MarginaliaExamples(name='Bracket', image='bracket', subtypes=[
+        {'name': 'Close', 'image': 'bracket SUBTYPE - close'},
         {'name': 'Curly', 'image': 'curly bracket'},
         {'name': 'Double', 'image': 'double bracket'},
         {'name': 'Inverted', 'image': 'inverted bracket'},
         {'name': 'Loose', 'image': 'loose bracket'},
+        {'name': 'Open', 'image': 'bracket SUBTYPE - open'},
         {'name': 'Standard', 'image': 'bracket'},
 
     ]))
 
-    examples.append(MarginaliaExamples(name='Burn Mark', image='burn mark', subtypes='')) #no image?
-    examples.append(MarginaliaExamples(name='Box', image='square', subtypes=''))
+    #examples.append(MarginaliaExamples(name='Burn Mark', image='burn mark', subtypes='')) #removed 7/17/19 (no image and no occurrence found in database)
     examples.append(MarginaliaExamples(name='Check Mark', image='check mark', subtypes=''))
+    examples.append(MarginaliaExamples(name='Chevron', image='left chevron', subtypes=''))
     examples.append(MarginaliaExamples(name='Circle', image='circle', subtypes=''))
 
     examples.append(MarginaliaExamples(name='Cross Reference', image='cross reference', subtypes=''))
@@ -215,25 +219,31 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Ditto Mark', image='ditto mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Doodle', image='doodle', subtypes=''))
     examples.append(MarginaliaExamples(name='Dot', image='dot', subtypes=''))
+    examples.append(MarginaliaExamples(name='Double Dash', image='double dash', subtypes=''))
     examples.append(MarginaliaExamples(name='Double Exclamation Point', image='double exclamation point', subtypes=''))
+    examples.append(MarginaliaExamples(name='Double Plus Sign', image='double plus sign', subtypes=''))
     examples.append(MarginaliaExamples(name='Double Question Mark', image='double question mark', subtypes=''))
+    examples.append(MarginaliaExamples(name='Double Slash', image='double slash', subtypes=''))
     examples.append(MarginaliaExamples(name='Double Underline', image='double underline', subtypes=''))
     examples.append(MarginaliaExamples(name='Downward Arrow', image='downward arrow', subtypes=''))
+    examples.append(MarginaliaExamples(name='Excised X', image='excised x', subtypes=''))
     examples.append(MarginaliaExamples(name='Exclamation Point', image='exclamation point', subtypes=''))
 
-    examples.append(MarginaliaExamples(name='Excised X', image='excised x', subtypes=''))  # no image?
-
+    examples.append(MarginaliaExamples(name='Footnote Mark', image='footnote mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Idle Mark', image='idle mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Idle Shading', image='idle shading', subtypes=''))
-    examples.append(MarginaliaExamples(name='Chevron', image='left chevron', subtypes=''))
+    examples.append(MarginaliaExamples(name='Ink Blot', image='ink blot', subtypes=''))
     examples.append(MarginaliaExamples(name='Musical Note', image='musical note', subtypes=''))
+    examples.append(MarginaliaExamples(name='Over-Tracing', image='over-tracing', subtypes=''))
     examples.append(MarginaliaExamples(name='Plus Sign', image='plus sign', subtypes=''))
     examples.append(MarginaliaExamples(name='Question Mark', image='question mark', subtypes=''))
 
     examples.append(MarginaliaExamples(name='Score', image='score', subtypes=[
+        {'name': 'Bracketing', 'image': 'score SUBTYPE - bracketing'},
         {'name': 'Corrugated', 'image': 'corrugated score'},
         {'name': 'Dotted', 'image': 'dotted score'},
         {'name': 'Double', 'image': 'double score'},
+        {'name': 'Scratched', 'image': 'score SUBTYPE - scratched'},
         {'name': 'Standard', 'image': 'score'},
         {'name': 'Tailed', 'image': 'tailed score'},
         {'name': 'Tallied', 'image': 'tallied score'},
@@ -251,15 +261,16 @@ def show_marginalia_examples():
 
     examples.append(MarginaliaExamples(name='Text', image='text', subtypes=[
         {'name': 'Authorial Inscription', 'image': 'text SUBTYPE - authorial inscription'},
-        {'name': 'Copyedit', 'image': 'copyedit'},
+        {'name': 'Copyedit', 'image': 'text SUBTYPE - copyedit'},
         {'name': 'Date', 'image': "text SUBTYPE - date"},
+        {'name': 'Editorial Correction', 'image': 'text SUBTYPE - editorial correction'},
         {'name': 'Editorial Inscription', 'image': 'text SUBTYPE - editorial inscription'},
         {'name': 'Equation', 'image': "text SUBTYPE - equation"},
         {'name': 'Numbers', 'image': 'text SUBTYPE - numbers'},
         {'name': 'Record of Original Publication Information',
          'image': "text SUBTYPE - record of original publication information"},
         {'name': 'Revision of Original', 'image': "text SUBTYPE - revision of original"},
-        {'name': 'Notation of Error', 'image': 'text SUBTYPE - notation of error'},  #no image?
+        {'name': 'Notation of Error', 'image': 'text SUBTYPE - notation of error'},  #no image? 
         # {'name': 'Punctuation', 'image': "text SUBTYPE - punctuation"},
     ]))
 
@@ -268,12 +279,10 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Triangle', image='triangle', subtypes=''))
     examples.append(MarginaliaExamples(name='Underlining', image='underlining', subtypes=''))
     examples.append(MarginaliaExamples(name='Unfilled Matrix', image='unfilled matrix', subtypes=''))
+    examples.append(MarginaliaExamples(name='Upturned Dash', image='upturned dash', subtypes=''))
+    examples.append(MarginaliaExamples(name='Upward Arrow', image='upward arrow', subtypes=''))
+    examples.append(MarginaliaExamples(name='Word Map', image='word map', subtypes=''))
     examples.append(MarginaliaExamples(name='X Mark', image='X mark', subtypes=''))
-
-    examples.append(MarginaliaExamples(name='Ink Blot', image='ink blot', subtypes=''))  #no image?
-    examples.append(MarginaliaExamples(name='Footnote Mark', image='footnote mark', subtypes=''))  #no image?
-    examples.append(MarginaliaExamples(name='Ampersand', image='ampersand', subtypes=''))  #no image?
-    examples.append(MarginaliaExamples(name='Word Map', image='word map', subtypes=''))   #no image?
 
     return render_template('front/static/marginalia-examples.html', examples=examples)
 
