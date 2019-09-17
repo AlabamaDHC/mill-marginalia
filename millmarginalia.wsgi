@@ -27,4 +27,4 @@ sys.path.insert(0, '/srv/www/millmarginalia')
 
 from main import app as application
 from werkzeug.debug import DebuggedApplication
-application = DebuggedApplication(application, True)
+application = DebuggedApplication(application, False)
