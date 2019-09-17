@@ -33,7 +33,7 @@ class Book(db.Model):
 
     spine_image = db.Column(db.String(150))
 
-    full_text_edition_link = db.Column(db.String(300))
+    full_text_edition_link = db.Column(db.String(500))
     period_translation_link = db.Column(db.String(300))
 
     public = db.Column(db.Boolean, default=True)
