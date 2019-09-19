@@ -209,12 +209,9 @@ def show_marginalia_examples():
 
     ]))
 
-    #examples.append(MarginaliaExamples(name='Burn Mark', image='burn mark', subtypes='')) #removed 7/17/19 (no image and no occurrence found in database)
     examples.append(MarginaliaExamples(name='Check Mark', image='check mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Chevron', image='left chevron', subtypes=''))
     examples.append(MarginaliaExamples(name='Circle', image='circle', subtypes=''))
-
-    examples.append(MarginaliaExamples(name='Cross Reference', image='cross reference', subtypes=''))
     examples.append(MarginaliaExamples(name='Dash', image='dash', subtypes=''))
     examples.append(MarginaliaExamples(name='Ditto Mark', image='ditto mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Doodle', image='doodle', subtypes=''))
@@ -228,7 +225,6 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Downward Arrow', image='downward arrow', subtypes=''))
     examples.append(MarginaliaExamples(name='Excised X', image='excised x', subtypes=''))
     examples.append(MarginaliaExamples(name='Exclamation Point', image='exclamation point', subtypes=''))
-
     examples.append(MarginaliaExamples(name='Footnote Mark', image='footnote mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Idle Mark', image='idle mark', subtypes=''))
     examples.append(MarginaliaExamples(name='Idle Shading', image='idle shading', subtypes=''))
@@ -237,6 +233,7 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Over-Tracing', image='over-tracing', subtypes=''))
     examples.append(MarginaliaExamples(name='Plus Sign', image='plus sign', subtypes=''))
     examples.append(MarginaliaExamples(name='Question Mark', image='question mark', subtypes=''))
+    examples.append(MarginaliaExamples(name='Quotation Marks', image='', subtypes=''))
 
     examples.append(MarginaliaExamples(name='Score', image='score', subtypes=[
         {'name': 'Bracketing', 'image': 'score SUBTYPE - bracketing'},
@@ -250,12 +247,10 @@ def show_marginalia_examples():
         {'name': 'Triple', 'image': 'triple score'},
     ]))
 
-
     examples.append(MarginaliaExamples(name='Scratchthrough', image='scratchthrough', subtypes=''))
     examples.append(MarginaliaExamples(name='Slash', image='slash', subtypes=''))
     examples.append(MarginaliaExamples(name='Slashthrough', image='slashthrough', subtypes=''))
     examples.append(MarginaliaExamples(name='Smudge', image='smudge', subtypes=''))
-
     examples.append(MarginaliaExamples(name='Squiggle', image='squiggle', subtypes=''))
     examples.append(MarginaliaExamples(name='Strikethrough', image='strikethrough', subtypes=''))
 
@@ -270,7 +265,7 @@ def show_marginalia_examples():
         {'name': 'Record of Original Publication Information',
          'image': "text SUBTYPE - record of original publication information"},
         {'name': 'Revision of Original', 'image': "text SUBTYPE - revision of original"},
-        {'name': 'Notation of Error', 'image': 'text SUBTYPE - notation of error'},  #no image? 
+        {'name': 'Notation of Error', 'image': 'text SUBTYPE - notation of error'},  #no image?
         # {'name': 'Punctuation', 'image': "text SUBTYPE - punctuation"},
     ]))
 
