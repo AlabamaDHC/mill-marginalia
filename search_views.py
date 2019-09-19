@@ -131,18 +131,20 @@ def basic_search():
         return jsonify(resp)
 
     if request.method == 'GET':
-        marginalia_type_set = ['*', 'ampersand', 'asterisk', 'box', 'bracket:close', 'bracket:curly', 'bracket:double', 
-        'bracket:inverted', 'bracket:loose', 'bracket:open', 'bracket:standard', 'check mark', 'chevron', 'circle', 
-        'dash', 'ditto mark', 'doodle', 'dot', 'dotted line', 'double dash', 'double exclamation point', 'double plus sign', 
-        'double question mark', 'double slash', 'double underline', 'downward arrow', 'excised x', 'exclamation point', 
-        'footnote mark', 'idle mark', 'idle mark:erasure mark', 'idle shading', 'ink blot', 'minus sign', 'musical note', 
-        'nonverbal', 'over-tracing', 'plus sign', 'question mark', 'quotation marks', 'score:bracketing', 'score:corrugated', 
-        'score:dotted', 'score:double', 'score:erasure mark', 'score:scratched', 'score:standard', 'score:tailed', 'score:tallied', 
-        'score:triple', 'scratchthrough', 'slash', 'slash and smudge', 'slashthrough', 'smudge', 'squiggle', 'strikethrough', 
-        'text', 'text:authorial inscription', 'text:copyedit', 'text:date', 'text:editorial correction', 'text:editorial inscription', 
-        'text:equation', 'text:numbers', 'text:punctuation', 'text:record of original publication information', 
-        'text:revision of original', 'tilde', 'trace transfer', 'triangle', 'triple exclamation point', 'underlining', 
-        'unfilled matrix', 'upturned dash', 'upward arrow', 'word map', 'X mark'
+        marginalia_type_set = ['ampersand', 'asterisk', 'box', 'bracket:close', 'bracket:curly', 'bracket:double',
+                               'bracket:inverted', 'bracket:loose', 'bracket:open', 'bracket:standard', 'check mark',
+                               'chevron', 'circle', 'dash', 'ditto mark', 'doodle', 'dot', 'double dash',
+                               'double exclamation point', 'double plus sign', 'double question mark', 'double slash',
+                               'double underline', 'downward arrow', 'excised x', 'exclamation point', 'footnote mark',
+                               'idle mark', 'idle shading', 'ink blot', 'musical note', 'over-tracing', 'plus sign',
+                               'question mark', 'quotation marks', 'score:bracketing', 'score:corrugated',
+                               'score:dotted', 'score:double', 'score:scratched', 'score:standard', 'score:tailed',
+                               'score:tallied', 'score:triple', 'scratchthrough', 'slash', 'slashthrough', 'smudge',
+                               'squiggle', 'strikethrough', 'text', 'text:authorial inscription', 'text:copyedit',
+                               'text:date', 'text:editorial correction', 'text:editorial inscription', 'text:equation',
+                               'text:numbers', 'text:record of original publication information',
+                               'text:revision of original', 'tilde', 'trace transfer', 'triangle', 'underlining',
+                               'unfilled matrix', 'upturned dash', 'upward arrow', 'word map', 'X mark'
         ]
 
         authors = Author.query.order_by(Author.last_name).all()
