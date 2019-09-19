@@ -144,8 +144,7 @@ def basic_search():
                                'text:date', 'text:editorial correction', 'text:editorial inscription', 'text:equation',
                                'text:numbers', 'text:record of original publication information',
                                'text:revision of original', 'tilde', 'trace transfer', 'triangle', 'underlining',
-                               'unfilled matrix', 'upturned dash', 'upward arrow', 'word map', 'X mark'
-        ]
+                               'unfilled matrix', 'upturned dash', 'upward arrow', 'word map', 'X mark']
 
         authors = Author.query.order_by(Author.last_name).all()
         authors_list = []
