@@ -233,7 +233,7 @@ def show_marginalia_examples():
     examples.append(MarginaliaExamples(name='Over-Tracing', image='over-tracing', subtypes=''))
     examples.append(MarginaliaExamples(name='Plus Sign', image='plus sign', subtypes=''))
     examples.append(MarginaliaExamples(name='Question Mark', image='question mark', subtypes=''))
-    examples.append(MarginaliaExamples(name='Quotation Marks', image='', subtypes=''))
+    examples.append(MarginaliaExamples(name='Quotation Marks', image='quotation marks', subtypes=''))
 
     examples.append(MarginaliaExamples(name='Score', image='score', subtypes=[
         {'name': 'Bracketing', 'image': 'score SUBTYPE - bracketing'},
