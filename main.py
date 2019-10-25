@@ -19,7 +19,7 @@ from search_views import *
 from api import *
 
 
-if app.config['ENVIRONMENT'] == 'TESTING' or app.config['ENVIRONMENT'] == 'STAGING':
+if app.config['ENVIRONMENT'] == 'TESTING' or app.config['ENVIRONMENT'] == 'STAGING' or app.config['ENVIRONMENT'] == 'DEVELOPMENT':
 
     from flask_security import Security, login_required, SQLAlchemySessionUserDatastore
     from models.import_models import ImportItem
@@ -35,7 +35,7 @@ if app.config['ENVIRONMENT'] == 'TESTING' or app.config['ENVIRONMENT'] == 'STAGI
     security = Security(app, user_datastore)
 
 if __name__ == '__main__':
-    if app.config['ENVIRONMENT'] == 'STAGING' or app.config['ENVIRONMENT'] == 'TESTING':
+    if app.config['ENVIRONMENT'] == 'STAGING' or app.config['ENVIRONMENT'] == 'TESTING' or app.config['ENVIRONMENT'] == 'DEVELOPMENT':
         app.run(debug=True)
 
     else:
