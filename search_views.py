@@ -139,7 +139,7 @@ def basic_search():
             'revision of original', 'tilde', 'triangle', 'triple score', 'underlining', 'unfilled matrix',
             'x mark', 'tallied score']
 
-        authors = Author.query.all()
+        authors = Author.query.order_by(Author.last_name).all()
         authors_list = []
         for a in authors:
             authors_list.append({'name': a.first_name + ' ' + a.last_name, 'id': a.id})
