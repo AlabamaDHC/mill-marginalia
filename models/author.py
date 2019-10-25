@@ -18,14 +18,14 @@ class Author(db.Model):
         self.image_caption = image_caption
 
 
-    def __init__(self, author):
-        self.id = author.id
-        self.first_name = author.first_name
-        self.last_name = author.last_name
-        self.image = author.image
-        self.image_caption = author.image_caption
-        self.books = author.books
-        self.public = author.public
+    #def __init__(self, author):
+    #    self.id = author.id
+    #    self.first_name = author.first_name
+    #    self.last_name = author.last_name
+    #    self.image = author.image
+    #    self.image_caption = author.image_caption
+    #    self.books = author.books
+    #    self.public = author.public
 
 
     @hybrid_property
