@@ -19,29 +19,29 @@ from models.import_models import ImportItem
 
 
 @app.route("/admin")
-@login_required
+#@login_required
 def admin_dashboard():
     return render_template('admin/dashboard.html')
 
 @app.route('/admin/marginalia')
-@login_required
+#@login_required
 def admin_marginalia():
     marginalia = Marginalia.query.all()
     return render_template('admin/table-pages.html', marginalia=marginalia)
 
 @app.route('/admin/marginalia/<marg_id>', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_marginalia_form(marg_id):
     return ""
 
 @app.route('/admin/pages')
-@login_required
+#@login_required
 def admin_pages():
     pages = Page.query.all()
     return render_template('admin/table-pages.html', pages=pages)
 
 @app.route('/admin/pages/<page_id>', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_page_form(page_id):
     page = Page.query.filter_by(id=page_id).first()
     if request.method == 'GET':
@@ -64,14 +64,14 @@ def admin_page_form(page_id):
 
 
 @app.route('/admin/books')
-@login_required
+#@login_required
 def admin_books():
     books = Book.query.all()
     return render_template('admin/table-books.html', books=books)
 
 
 @app.route('/admin/books/<book_id>', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_book_form(book_id):
     # book = Book.query.filter_by(slug=book_slug).first()
     book = db.session.query(Book).get(book_id)
@@ -150,7 +150,7 @@ def admin_book_form(book_id):
 
 
 @app.route('/admin/import/run_error_checks')
-@login_required
+#@login_required
 def admin_run_error_checks():
     sheet = request.args.get('sheet', '')
     error_only = request.args.get('errorsonly', '')
@@ -179,7 +179,7 @@ def admin_run_error_checks():
     return redirect(url_for('admin_failed_imports')+'?sheet='+sheet)
 
 @app.route('/admin/import/run_import')
-@login_required
+#@login_required
 def admin_run_import():
     # i = ImportItem.query.get_or_404(import_id)
     sheet = request.args.get('sheet', '')
@@ -356,7 +356,7 @@ def admin_run_import():
 
 
 @app.route('/admin/import/failedimports', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_failed_imports():
 
     if request.method == 'GET':
@@ -395,7 +395,7 @@ def admin_failed_imports():
 
 
 @app.route('/admin/import', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_import():
     if request.method == 'GET':
         return render_template('admin/import.html', book_map=default_book_import_mapping)
@@ -432,7 +432,7 @@ def admin_import():
 
 
 @app.route('/admin/import_OLD', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def admin_import_OLD():
     if request.method == 'GET':
         return render_template('admin/import-OLD.html', book_map=default_book_import_mapping)
@@ -672,7 +672,7 @@ def admin_import_OLD():
 
 
 @app.route('/admin/users')
-@login_required
+#@login_required
 def admin_users():
     users = User.query.all()
     return render_template('admin/table-users.html', users=users)
