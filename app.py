@@ -7,8 +7,12 @@ app = Flask(__name__)
 
 app.url_map.converters['list'] = ListConverter
 
-app.config['ENVIRONMENT'] = 'STAGING'
+app.config['ENVIRONMENT'] = 'DEVELOPMENT'
 
+if app.config['ENVIRONMENT']=='DEVELOPMENT':
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root@localhost/mill"
+    app.config['DEBUG'] = True
 
 if app.config['ENVIRONMENT']=='TESTING':
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
